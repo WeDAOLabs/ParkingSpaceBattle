@@ -1,6 +1,6 @@
 # ProjectInfo
 
-- 项目名称
+- 项目名称: parking on-chain
 - 所选赛道（Public Goods，Layer2 Application，Zero Knowledge 主赛道三选一）
 - 项目图片（1张有代表性的图片，不要过长）
 - 简介
@@ -11,3 +11,4 @@
 - 项目 github repo 链接
 - 声明未基于之前的项目, 如: 该项目是本次hackathon期间，从0到1开发的项目，完全原创。
 - 项目 Demo 链接（选填）
+ 
