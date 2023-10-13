@@ -1,8 +1,14 @@
-# ProjectInfo
+<div align="center">
+<h1>LotLoot🏝️</h1>
+<h3>A Fully On-Chain Game integrated with SocialFi</h3>
+<img src="./assets/logo_lotloot.jpg" width="900">
+</div>
+<br/>
 
 - 项目名称: LotLoot
 - 所选赛道：Layer2 Application
-- 项目图片（1张有代表性的图片，不要过长）
+- 项目图片
+  - TODO 游戏截图
 - 简介：LotLoot是一个基于区块链技术的社交抢车位游戏。玩家可以通过社交账号登录，拥有多辆车和5个车位，并与其他玩家互动，以获得代币收益。
   玩法：1. 账号注册与登录:
   用户需要使用社交账号（如Facebook, Twitter等）登录游戏；首次登录的用户将获得随机分配的3辆初始车辆和5个车位。
