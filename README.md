@@ -1,7 +1,7 @@
 # ProjectInfo
 
-- 项目名称: parking on-chain
-- 所选赛道（Public Goods，Layer2 Application，Zero Knowledge 主赛道三选一）
+- 项目名称: LotLoot
+- 所选赛道：Layer2 Application
 - 项目图片（1张有代表性的图片，不要过长）
 - 简介
 - 队长和队员
