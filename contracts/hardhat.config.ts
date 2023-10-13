@@ -31,6 +31,12 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 1337,
     },
+    polygon_testnet: {
+      url: POLYGON_TESTNET_URL,
+      chainId: 80001,
+      gasPrice: 20000000000,
+      accounts: [`0x${POLYGON_TESTNET_DEPLOYER_PRIVATE_KEY}`],
+    },
   },
   mocha: {
     timeout: 10 * 60 * 1000,

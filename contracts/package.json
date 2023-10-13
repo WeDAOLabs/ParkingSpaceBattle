@@ -4,7 +4,8 @@
     "scripts": {
         "test": "npx hardhat test",
         "test:grep": "npx hardhat test --grep",
-        "compile": "rm -rf ./abi && npx hardhat export-abi && find ./abi/contracts -name '*.json'|xargs -I file npx abi-types-generator file --provider=ethers_v5"
+        "compile": "rm -rf ./abi && npx hardhat export-abi && find ./abi/contracts -name '*.json'|xargs -I file npx abi-types-generator file --provider=ethers_v5",
+        "deploy": "npx hardhat run --network"
     },
     "repository": {
         "type": "git",
