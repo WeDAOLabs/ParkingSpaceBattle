@@ -9,6 +9,7 @@ import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { StringUtil } from "../core/utils/StringUtil";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { registerDataModel } from "./DataRegister";
+import { Toast } from "@/plugins/Toast";
 
 interface WalletCache {
   address: string;
@@ -99,8 +100,19 @@ export class WalletData extends Singleton {
   private async loadData() {
     const data: any = await IndexDB.instance.getItem(this.cacheKey);
     if (data) {
-      this.data.address = data?.address ?? "";
-      this.data.chainId = data?.chainId ?? -1;
+      // TODO
+      let chainId = this.ethereum ? 0 : -1;
+      if (chainId === 0) {
+        const network = await this.provider.getNetwork();
+        chainId = network.chainId;
+      }
+
+      if (chainId === data.chainId) {
+        this.data.address = data?.address ?? "";
+        this.data.chainId = data?.chainId ?? -1;
+      } else {
+        IndexDB.instance.deleteItem(this.cacheKey);
+      }
     }
   }
 
@@ -119,6 +131,7 @@ export class WalletData extends Singleton {
     if (ChainIds.findIndex((id) => id === currentId) >= 0) {
       return Promise.resolve(true);
     }
+
     const chainId0x = await this.ethereum.request({
       method: "eth_chainId",
     });
@@ -140,9 +153,11 @@ export class WalletData extends Singleton {
   public async chainChange(chainId: number) {
     // TODO
     if (chainId !== ChainID.Mumbai) {
-      this.disconnect();
+      console.log("huanwang");
+      await this.disconnect();
       EventBus.instance.emit(GameEventWalletDisconnect.event);
     } else {
+      console.log("meihuan");
       this.data.chainId = chainId;
       this.saveData();
     }
@@ -150,7 +165,7 @@ export class WalletData extends Singleton {
 
   public async connectWallet(): Promise<void> {
     if (!this.hasProvider) {
-      console.error(`there's no provider`);
+      Toast.error(`there's no provider`);
       return Promise.resolve();
     }
     const chainId0x = await this.ethereum.request({
@@ -160,7 +175,7 @@ export class WalletData extends Singleton {
     const chainId = parseInt(chainId0x, 16);
     const idx = ChainIds.findIndex((id) => id === chainId);
     if (idx < 0) {
-      console.error(
+      Toast.error(
         `chain ${chainId} is not supported, please switch your network`
       );
       return Promise.resolve();
@@ -182,8 +197,10 @@ export class WalletData extends Singleton {
   }
 
   public async disconnect() {
+    console.log("kshjfkjhdkjashdfkajslh");
     this.data.address = "";
     this.data.chainId = -1;
+    await IndexDB.instance.deleteItem(this.cacheKey);
     this.saveData();
   }
 }

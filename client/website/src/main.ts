@@ -5,6 +5,8 @@ import Antd from "ant-design-vue";
 import { ethers } from "ethers";
 import "ant-design-vue/dist/reset.css";
 import { dataModels } from "./data/DataRegister";
+import { message } from "ant-design-vue";
+import { Toast } from "./plugins/Toast";
 
 const app = createApp(App);
 app.use(Antd);
@@ -15,6 +17,10 @@ const startUp = async () => {
     let dataModal = dataModels[i];
     await dataModal.init();
   }
+
+  app.config.globalProperties.$message = message;
+
+  Toast.$app = app;
 
   app.mount("#app");
 };

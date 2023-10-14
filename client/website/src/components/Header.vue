@@ -25,6 +25,7 @@ import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { GameEventWalletChainChanged } from "../events/GameEventWalletChainChanged";
 import { ChainID } from "../const/enum/Chain";
 import { walletData } from "../data/WalletData";
+import { Toast } from "../plugins/Toast";
 
 export default defineComponent({
   name: "Header",
@@ -41,17 +42,18 @@ export default defineComponent({
     const connectWallet = async () => {
       const isChainValid = await walletData.isChainValid();
       if (!isChainValid) {
-        // console.log("Please switch to the Polygon network")
+        Toast.error("Please switch to the Polygon network");
         return Promise.resolve();
       }
       if (!StringUtil.isEmpty(walletData.address)) {
-        console.warn("Wallet already connected");
+        Toast.warn("Wallet already connected");
         return Promise.resolve();
       }
       try {
         await walletData.connectWallet();
       } catch (e) {
-        console.error("Connect wallet failed");
+        Toast.error("Connect wallet failed");
+        console.error(e);
       }
     };
 
