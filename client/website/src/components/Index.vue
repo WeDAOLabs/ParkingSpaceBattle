@@ -32,8 +32,8 @@
 
 <script lang="ts">
 import {defineComponent, ref, onBeforeMount, computed} from "vue";
-import ParkingList from "@/components/ParkingList.vue";
-import CarList from "@/components/CarList.vue";
+import ParkingList from "./ParkingList.vue";
+import CarList from "./CarList.vue";
 
 export default defineComponent({
   name: "Index",
