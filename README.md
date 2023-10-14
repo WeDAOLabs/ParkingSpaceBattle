@@ -30,6 +30,7 @@
 - 队长和队员：
   1. 队长：
   1. 队员：
+
 - 本项目在这次黑客松的目标：实现LotLoot全链游戏从0到1开发，聚合以太坊生态NFT&Token，利用代币机制提升游戏玩法多样性，通过博弈方式达到预期收益，玩法机制结合Game和Social，对于Fi属性有很好的拓展，项目能够给予链上应用新赋能。
 - 黑客松前两日的进度：
   1. Day1：
@@ -43,5 +44,15 @@
 - 项目 github repo 链接：https://github.com/WeDAOLabs/ParkingSpaceBattle
 - 声明未基于之前的项目: 该项目是本次hackathon期间，从0到1开发的项目，完全原创。
 - 项目 Demo 链接（选填）
+
+## Contributors (sorted by frist charactor)
+-  0x00pluto
+-  0xSoren
+-  0xSkipper
+-  Cybereastern
+-  enixlee
+-  Kevin
+-  swordofJR
+-  zhouzheng66
 
 
