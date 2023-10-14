@@ -125,3 +125,97 @@ package-lock.json
 
 # Eon
 .eon/deploy-localhost-*.json
+
+# wesite Vue
+.DS_Store
+node_modules
+/dist
+
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# website react
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+*.production
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+.env.*
+
+# contracts
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Oo]bj/
+[Bb]in/
+
+# Other files and folders
+.settings/
+
+# Executables
+*.swf
+*.air
+*.ipa
+*.apk
+
+
+node_modules
+.env
+coverage
+coverage.json
+typechain
+typechain-types
+
+#Hardhat files
+cache
+artifacts
+
+#export files
+abi
+ethereum-abi-types
+# OpenZeppelin
+.openzeppelin/unknown-*.json
+
+# IDEA
+.idea
+
+.DS_Store
+

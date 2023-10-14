@@ -1,18 +1,17 @@
-import {createApp} from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 // @ts-ignore
-import Antd from 'ant-design-vue'
+import Antd from "ant-design-vue";
+import { ethers } from "ethers";
+import "ant-design-vue/dist/reset.css";
+import { dataModels } from "./data/DataRegister";
 
-// 用5.7.2版本的
-// import {ethers} from "ethers"
+const app = createApp(App);
 
-import 'ant-design-vue/dist/reset.css'
+app.use(Antd);
 
+dataModels.forEach((dataModal) => dataModal.init());
 
-const app = createApp(App)
+app.config.globalProperties.$ethers = ethers;
 
-app.use(Antd)
-
-// app.config.globalProperties.$ethers = ethers;
-
-app.mount('#app')
+app.mount("#app");
