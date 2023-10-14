@@ -2,10 +2,10 @@
   <div class="carList">
     <a-row justify="space-around">
       <a-col :span="4" v-for="(item, index) in userCarStateList" :key="index">
-        <a-row justify="center" align="middle" class="car-0" v-if="item===0">
+        <a-row justify="center" align="middle" class="car-0" v-if="item === 0">
           <a-button @click="funcFreeMintCar(index)">Free Mint</a-button>
         </a-row>
-        <a-row justify="center" align="middle" class="car-1" v-if="item===1">
+        <a-row justify="center" align="middle" class="car-1" v-if="item === 1">
           <a-col :span="24">
             <h2>车辆URL: XXX</h2>
           </a-col>
@@ -16,7 +16,7 @@
             <a-button>去升级</a-button>
           </a-col>
         </a-row>
-        <a-row justify="center" align="middle" class="car-2" v-if="item===2">
+        <a-row justify="center" align="middle" class="car-2" v-if="item === 2">
           <a-col :span="24">
             <h2>车辆URL: XXX</h2>
           </a-col>
@@ -33,14 +33,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
   name: "CarList",
   setup() {
-    const userCarStateList = ref([2, 1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1]);// 0表示未mint 1表示空闲 2表示停放
+    const userCarStateList = ref([2, 1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1]); // 0表示未mint 1表示空闲 2表示停放
 
-    const funcFreeMintCar = (index) => {
+    const funcFreeMintCar = (index: any) => {
       userCarStateList.value[index] = 1;
     };
 
