@@ -43,6 +43,20 @@ export class WalletData extends Singleton {
     return this.data.address;
   }
 
+  public get shortAddress(): string {
+    if (StringUtil.isEmpty(this.data.address)) {
+      return "";
+    }
+
+    return `0x${this.data.address.substring(
+      0,
+      4
+    )}...${this.data.address.substring(
+      this.data.address.length - 4,
+      this.data.address.length
+    )}`;
+  }
+
   public get chainId(): number {
     return this.data.chainId;
   }

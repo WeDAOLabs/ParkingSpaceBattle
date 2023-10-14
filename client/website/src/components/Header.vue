@@ -33,7 +33,9 @@ export default defineComponent({
   setup() {
     const isLogin = ref(walletData.isAuth);
     const userAddress = ref(
-      !StringUtil.isEmpty(walletData.address) ? walletData.address : "Sign In"
+      !StringUtil.isEmpty(walletData.address)
+        ? walletData.shortAddress
+        : "Sign In"
     );
 
     const connectWallet = async () => {
@@ -69,7 +71,7 @@ export default defineComponent({
     });
 
     const onWalletConnect = () => {
-      userAddress.value = walletData.address;
+      userAddress.value = walletData.shortAddress;
       isLogin.value = walletData.isAuth;
     };
 
