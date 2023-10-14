@@ -9,6 +9,7 @@ import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { StringUtil } from "../core/utils/StringUtil";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { registerDataModel } from "./DataRegister";
+import { Toast } from "@/plugins/Toast";
 
 interface WalletCache {
   address: string;
@@ -156,7 +157,7 @@ export class WalletData extends Singleton {
 
   public async connectWallet(): Promise<void> {
     if (!this.hasProvider) {
-      console.error(`there's no provider`);
+      Toast.error(`there's no provider`);
       return Promise.resolve();
     }
     const chainId0x = await this.ethereum.request({
@@ -166,7 +167,7 @@ export class WalletData extends Singleton {
     const chainId = parseInt(chainId0x, 16);
     const idx = ChainIds.findIndex((id) => id === chainId);
     if (idx < 0) {
-      console.error(
+      Toast.error(
         `chain ${chainId} is not supported, please switch your network`
       );
       return Promise.resolve();
