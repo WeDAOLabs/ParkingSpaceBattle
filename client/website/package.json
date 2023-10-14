@@ -12,8 +12,7 @@
     "ethers": "^5.7.2",
     "eventemitter3": "^5.0.1",
     "viem": "^0.3.39",
-    "vue": "^3.0.0",
-    "wagmi": "^1.1.1"
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.15",
