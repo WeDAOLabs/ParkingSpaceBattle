@@ -1,16 +1,22 @@
-import { message } from "ant-design-vue";
-const [messageApi, contextHolder] = message.useMessage();
-
 export class Toast {
+  public static $app: any = null!;
+
+  private static message(): any {
+    return this.$app.config.globalProperties.$message;
+  }
+
   static success(msg: string) {
-    messageApi.success(msg);
+    // @ts-ignore
+    this.message().success(msg);
   }
 
   static error(msg: string) {
-    messageApi.error(msg);
+    // @ts-ignore
+    this.message().error(msg);
   }
 
   static warn(msg: string) {
-    messageApi.warning(msg);
+    // @ts-ignore
+    this.message().warning(msg);
   }
 }

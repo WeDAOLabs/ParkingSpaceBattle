@@ -41,7 +41,6 @@ export class WalletData extends Singleton {
   }
 
   public get address(): string {
-    console.log("查询", this.data);
     return this.data.address;
   }
 
@@ -102,7 +101,13 @@ export class WalletData extends Singleton {
     const data: any = await IndexDB.instance.getItem(this.cacheKey);
     if (data) {
       // TODO
-      if (ChainID.Mumbai === data.chainId) {
+      let chainId = this.ethereum ? 0 : -1;
+      if (chainId === 0) {
+        const network = await this.provider.getNetwork();
+        chainId = network.chainId;
+      }
+
+      if (chainId === data.chainId) {
         this.data.address = data?.address ?? "";
         this.data.chainId = data?.chainId ?? -1;
       } else {
@@ -126,6 +131,7 @@ export class WalletData extends Singleton {
     if (ChainIds.findIndex((id) => id === currentId) >= 0) {
       return Promise.resolve(true);
     }
+
     const chainId0x = await this.ethereum.request({
       method: "eth_chainId",
     });
@@ -147,9 +153,11 @@ export class WalletData extends Singleton {
   public async chainChange(chainId: number) {
     // TODO
     if (chainId !== ChainID.Mumbai) {
-      this.disconnect();
+      console.log("huanwang");
+      await this.disconnect();
       EventBus.instance.emit(GameEventWalletDisconnect.event);
     } else {
+      console.log("meihuan");
       this.data.chainId = chainId;
       this.saveData();
     }
@@ -189,9 +197,10 @@ export class WalletData extends Singleton {
   }
 
   public async disconnect() {
+    console.log("kshjfkjhdkjashdfkajslh");
     this.data.address = "";
     this.data.chainId = -1;
-    IndexDB.instance.deleteItem(this.cacheKey);
+    await IndexDB.instance.deleteItem(this.cacheKey);
     this.saveData();
   }
 }
