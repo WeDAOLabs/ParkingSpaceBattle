@@ -1,4 +1,4 @@
-import { APP_NAME } from "@/const/Constants";
+import { APP_NAME } from "../const/Constants";
 
 export class IndexDB {
   private static _instance: IndexDB;
@@ -67,8 +67,9 @@ export class IndexDB {
       );
       const store = transaction.objectStore(this.dataStoreName);
       const getRequest = store.get(key);
-      getRequest.onsuccess = (event: any) =>
-        resolve(event.target.result.value as T);
+      getRequest.onsuccess = (event: any) => {
+        resolve(event.target?.result?.value as T);
+      };
 
       getRequest.onerror = (event) => reject(event);
     });

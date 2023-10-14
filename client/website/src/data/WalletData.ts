@@ -2,13 +2,13 @@ import { ethers } from "ethers";
 import { Singleton } from "../core/game/Singleton";
 import { ChainID } from "../const/enum/Chain";
 import { EventBus } from "../plugins/EventBus";
+import { IndexDB } from "../plugins/indexDB";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 import { GameEventWalletChainChanged } from "../events/GameEventWalletChainChanged";
 import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { StringUtil } from "../core/utils/StringUtil";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { registerDataModel } from "./DataRegister";
-import { GameEventSample } from "../events/GameEventSample";
 
 interface WalletCache {
   address: string;
@@ -20,13 +20,15 @@ const ChainIds = Object.keys(ChainID)
   .map((key) => ChainID[key as keyof typeof ChainID]);
 
 export class WalletData extends Singleton {
-  private _authed: boolean = false;
-
   private _provider: any = null;
   private data: WalletCache = {
     address: "",
     chainId: -1,
   };
+
+  public get cacheKey(): string {
+    return "DB:WalletData";
+  }
 
   public get ethereum(): any {
     //@ts-ignore
@@ -53,7 +55,7 @@ export class WalletData extends Singleton {
   }
 
   public get isAuth(): boolean {
-    return this._authed;
+    return !StringUtil.isEmpty(this.data.address);
   }
 
   constructor() {
@@ -61,7 +63,9 @@ export class WalletData extends Singleton {
     this.registerProviderEvent();
   }
 
-  init() {}
+  async init() {
+    await this.loadData();
+  }
 
   private registerProviderEvent() {
     if (!this.hasProvider) {
@@ -78,8 +82,16 @@ export class WalletData extends Singleton {
     });
   }
 
-  private saveData() {
-    // TODO
+  private async loadData() {
+    const data = await IndexDB.instance.getItem(this.cacheKey);
+    console.log("链接信息", data);
+  }
+
+  private async saveData() {
+    await IndexDB.instance.addItem(this.cacheKey, {
+      address: this.data.address,
+      chainId: this.data.chainId,
+    });
   }
 
   public async isChainValid(): Promise<boolean> {
@@ -109,8 +121,14 @@ export class WalletData extends Singleton {
   }
 
   public async chainChange(chainId: number) {
-    this.data.chainId = chainId;
-    this.saveData();
+    // TODO
+    if (chainId !== ChainID.Mumbai) {
+      this.disconnect();
+      EventBus.instance.emit(GameEventWalletDisconnect.event);
+    } else {
+      this.data.chainId = chainId;
+      this.saveData();
+    }
   }
 
   public async connectWallet(): Promise<void> {
@@ -150,11 +168,6 @@ export class WalletData extends Singleton {
     this.data.address = "";
     this.data.chainId = -1;
     this.saveData();
-  }
-
-  public async signIn() {
-    this._authed = true;
-    EventBus.instance.emit(GameEventSample.event);
   }
 }
 export const walletData: Readonly<WalletData> = WalletData.getInstance();
