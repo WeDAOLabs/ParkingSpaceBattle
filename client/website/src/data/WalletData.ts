@@ -55,6 +55,7 @@ export class WalletData extends Singleton {
   }
 
   public get isAuth(): boolean {
+    console.log("check 登录状态", !StringUtil.isEmpty(this.data.address));
     return !StringUtil.isEmpty(this.data.address);
   }
 
@@ -83,8 +84,12 @@ export class WalletData extends Singleton {
   }
 
   private async loadData() {
-    const data = await IndexDB.instance.getItem(this.cacheKey);
-    console.log("链接信息", data);
+    const data: any = await IndexDB.instance.getItem(this.cacheKey);
+    if (data) {
+      this.data.address = data?.address ?? "";
+      this.data.chainId = data?.chainId ?? -1;
+    }
+    console.log("登录状态", this.data);
   }
 
   private async saveData() {
