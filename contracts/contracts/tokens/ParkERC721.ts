@@ -9,12 +9,22 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract LOOTLOTPARK is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     address NFTMinter;
     uint256 private _nextTokenId;
+<<<<<<< HEAD
     mapping(address => uint256) private lastMinted;
     event Minted(address indexed to, uint256 tokenId);
 
     constructor(
         address initialOwner
     ) ERC721("LOOTLOTPARK", "LLP") Ownable(initialOwner) {}
+=======
+    event Minted(address indexed to, uint256 tokenId);
+
+    constructor(address initialOwner)
+        ERC721("LOOTLOTPARK", "LLP")
+        Ownable(initialOwner)
+    {}
+    
+>>>>>>> a1dee0c3518f6404c923b7c7b122a8fd1f5ec5ae
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://lotloot.osairo.xyz/lotloot_parking_meta.json?tokenid=";
@@ -24,6 +34,7 @@ contract LOOTLOTPARK is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+<<<<<<< HEAD
         lastMinted[to] = tokenId;
         emit Minted(to, tokenId);
     }
@@ -38,10 +49,23 @@ contract LOOTLOTPARK is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
 
     // the gammer mint
     function NFTMinterMint(address to, string memory uri) public {
+=======
+        emit Minted(to, tokenId);
+    }
+     function setNFTMinter(address _NFTMinter) public onlyOwner {
+        NFTMinter = _NFTMinter;
+    }
+    function getNFTMinter() public view returns (address) {
+        return NFTMinter;
+    }
+    // the gammer mint
+    function NFTMinterMint(address to, string memory uri) public{
+>>>>>>> a1dee0c3518f6404c923b7c7b122a8fd1f5ec5ae
         require(msg.sender == NFTMinter, "Only NFTMinter can mint");
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+<<<<<<< HEAD
         lastMinted[to] = tokenId;
         emit Minted(to, tokenId);
     }
@@ -66,3 +90,28 @@ contract LOOTLOTPARK is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         return super.supportsInterface(interfaceId);
     }
 }
+=======
+        emit Minted(to, tokenId);
+    }
+
+    // The following functions are overrides required by Solidity.
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
+    }
+}
+>>>>>>> a1dee0c3518f6404c923b7c7b122a8fd1f5ec5ae
