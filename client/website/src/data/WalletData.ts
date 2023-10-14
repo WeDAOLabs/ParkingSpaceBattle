@@ -40,6 +40,7 @@ export class WalletData extends Singleton {
   }
 
   public get address(): string {
+    console.log("查询", this.data);
     return this.data.address;
   }
 
@@ -99,8 +100,13 @@ export class WalletData extends Singleton {
   private async loadData() {
     const data: any = await IndexDB.instance.getItem(this.cacheKey);
     if (data) {
-      this.data.address = data?.address ?? "";
-      this.data.chainId = data?.chainId ?? -1;
+      // TODO
+      if (ChainID.Mumbai === data.chainId) {
+        this.data.address = data?.address ?? "";
+        this.data.chainId = data?.chainId ?? -1;
+      } else {
+        IndexDB.instance.deleteItem(this.cacheKey);
+      }
     }
   }
 
@@ -184,6 +190,7 @@ export class WalletData extends Singleton {
   public async disconnect() {
     this.data.address = "";
     this.data.chainId = -1;
+    IndexDB.instance.deleteItem(this.cacheKey);
     this.saveData();
   }
 }
