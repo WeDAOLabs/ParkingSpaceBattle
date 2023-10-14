@@ -3,16 +3,17 @@
   <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
   <!--  <Demo/>-->
   <Index/>
+  <Search/>
 </template>
 
 <script setup lang="ts">
 import {onBeforeMount} from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
 import Demo from './components/Demo.vue';
 import Index from './components/Index.vue';
+import Search from './components/Search.vue';
 
 const components = {
-  Demo, Index
+  Demo, Index, Search
 };
 
 onBeforeMount(() => {
@@ -20,7 +21,6 @@ onBeforeMount(() => {
   const clientHeight = document.documentElement.clientHeight / 720;
   const clientZoom = clientHeight < clientWidth ? clientHeight : clientWidth;
 
-  // 缩放
   document.documentElement.style.zoom = String(clientZoom);
   // background UI
   // document.documentElement.style.background = 'linear-gradient(30deg, #9FA5D5, #E8F5C8) no-repeat fixed';
@@ -35,6 +35,5 @@ onBeforeMount(() => {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

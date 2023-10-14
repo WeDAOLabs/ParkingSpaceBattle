@@ -28,5 +28,5 @@ contract Lootlot is ERC20, ERC20Burnable, Ownable {
         require(msg.sender == gameAddress, "Only Game can mint");
         _mint(userAddress, amount);
     }
-    
+
 }

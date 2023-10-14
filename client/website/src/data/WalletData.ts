@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { Singleton } from "../core/game/Singleton";
 import { ChainID } from "../const/enum/Chain";
 import { EventBus } from "../plugins/EventBus";
+import { IndexDB } from "../plugins/indexDB";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 import { GameEventWalletChainChanged } from "../events/GameEventWalletChainChanged";
 import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
@@ -25,6 +26,10 @@ export class WalletData extends Singleton {
     chainId: -1,
   };
 
+  public get cacheKey(): string {
+    return "DB:WalletData";
+  }
+
   public get ethereum(): any {
     //@ts-ignore
     return window?.ethereum;
@@ -38,6 +43,20 @@ export class WalletData extends Singleton {
     return this.data.address;
   }
 
+  public get shortAddress(): string {
+    if (StringUtil.isEmpty(this.data.address)) {
+      return "";
+    }
+
+    return `0x${this.data.address.substring(
+      0,
+      4
+    )}...${this.data.address.substring(
+      this.data.address.length - 4,
+      this.data.address.length
+    )}`;
+  }
+
   public get chainId(): number {
     return this.data.chainId;
   }
@@ -49,12 +68,18 @@ export class WalletData extends Singleton {
     return this._provider;
   }
 
+  public get isAuth(): boolean {
+    return !StringUtil.isEmpty(this.data.address);
+  }
+
   constructor() {
     super();
     this.registerProviderEvent();
   }
 
-  init() {}
+  async init() {
+    await this.loadData();
+  }
 
   private registerProviderEvent() {
     if (!this.hasProvider) {
@@ -68,6 +93,21 @@ export class WalletData extends Singleton {
     );
     this.ethereum.on("disconnect", () => {
       EventBus.instance.emit(GameEventWalletDisconnect.event);
+    });
+  }
+
+  private async loadData() {
+    const data: any = await IndexDB.instance.getItem(this.cacheKey);
+    if (data) {
+      this.data.address = data?.address ?? "";
+      this.data.chainId = data?.chainId ?? -1;
+    }
+  }
+
+  private async saveData() {
+    await IndexDB.instance.addItem(this.cacheKey, {
+      address: this.data.address,
+      chainId: this.data.chainId,
     });
   }
 
@@ -98,8 +138,14 @@ export class WalletData extends Singleton {
   }
 
   public async chainChange(chainId: number) {
-    this.data.chainId = chainId;
-    this.saveData();
+    // TODO
+    if (chainId !== ChainID.Mumbai) {
+      this.disconnect();
+      EventBus.instance.emit(GameEventWalletDisconnect.event);
+    } else {
+      this.data.chainId = chainId;
+      this.saveData();
+    }
   }
 
   public async connectWallet(): Promise<void> {
@@ -139,10 +185,6 @@ export class WalletData extends Singleton {
     this.data.address = "";
     this.data.chainId = -1;
     this.saveData();
-  }
-
-  private saveData() {
-    // TODO
   }
 }
 export const walletData: Readonly<WalletData> = WalletData.getInstance();
