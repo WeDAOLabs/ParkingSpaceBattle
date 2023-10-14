@@ -1,16 +1,18 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
-  <Demo/>
+  <!--  <Demo/>-->
+  <Index/>
 </template>
 
 <script setup lang="ts">
 import {onBeforeMount} from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
 import Demo from './components/Demo.vue';
+import Index from './components/Index.vue';
 
 const components = {
-  Demo,
+  Demo, Index
 };
 
 onBeforeMount(() => {
