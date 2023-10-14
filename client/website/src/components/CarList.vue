@@ -1,13 +1,20 @@
 <template>
   <div class="carList">
     <a-row justify="space-around">
-      <a-col :span="4" v-for="(item, index) in userCarStateList" :key="index">
+      <a-col :span="4">
+        <a-row justify="center" align="middle" class="car-0">
+          <a-button @click="funcBuyCar">购买</a-button>
+        </a-row>
+      </a-col>
+      <a-col :span="4" v-for="(item, index) in userCarStateList" :key="index" class="carMargin">
         <a-row justify="center" align="middle" class="car-0" v-if="item === 0">
           <a-button @click="funcFreeMintCar(index)">Free Mint</a-button>
         </a-row>
         <a-row justify="center" align="middle" class="car-1" v-if="item === 1">
+
           <a-col :span="24">
             <h2>车辆URL: XXX</h2>
+            <h3>车辆ID: XXX</h3>
           </a-col>
           <a-col :span="12">
             <a-button>去停车</a-button>
@@ -33,20 +40,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import {defineComponent, ref} from "vue";
 
 export default defineComponent({
   name: "CarList",
   setup() {
     const userCarStateList = ref([2, 1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1]); // 0表示未mint 1表示空闲 2表示停放
 
-    const funcFreeMintCar = (index: any) => {
+    const funcFreeMintCar = (index: number) => {
       userCarStateList.value[index] = 1;
+    };
+
+    const funcBuyCar = () => {
     };
 
     return {
       userCarStateList,
       funcFreeMintCar,
+      funcBuyCar
     };
   },
 });
@@ -75,5 +86,9 @@ export default defineComponent({
   height: 8rem;
   box-sizing: content-box;
   background-color: #fff9e6;
+}
+
+.carMargin {
+  margin: 0.25rem 0.5rem;
 }
 </style>
