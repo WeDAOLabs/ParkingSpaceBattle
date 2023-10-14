@@ -7,7 +7,6 @@
 
 <script setup lang="ts">
 import {onBeforeMount} from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
 import Demo from './components/Demo.vue';
 import Index from './components/Index.vue';
 
@@ -20,7 +19,6 @@ onBeforeMount(() => {
   const clientHeight = document.documentElement.clientHeight / 720;
   const clientZoom = clientHeight < clientWidth ? clientHeight : clientWidth;
 
-  // 缩放
   document.documentElement.style.zoom = String(clientZoom);
   // background UI
   // document.documentElement.style.background = 'linear-gradient(30deg, #9FA5D5, #E8F5C8) no-repeat fixed';
