@@ -3,5 +3,9 @@
     "contractName": "Sample",
     "address": "0x7B0312b3A1eEeD6C789b75d2556059063806830a"
   },
-  "manifestVersion": "0.0.1"
+  "manifestVersion": "0.0.1",
+  "ERC6551Registry": {
+    "contractName": "ERC6551Registry",
+    "address": "0x38cf1C772EC1121b5a9cc1A4CCE07B25c71305eE"
+  }
 }
