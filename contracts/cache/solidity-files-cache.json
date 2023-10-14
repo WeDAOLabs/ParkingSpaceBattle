@@ -2393,8 +2393,8 @@
       ]
     },
     "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\tokens\\LLTToken.sol": {
-      "lastModificationDate": 1697271428130,
-      "contentHash": "8b563a47cf3f1195c6123eda03581da6",
+      "lastModificationDate": 1697272183505,
+      "contentHash": "0383382fc7fc780a9cfe6a3248573f4d",
       "sourceName": "contracts/tokens/LLTToken.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -2433,6 +2433,92 @@
       ],
       "artifacts": [
         "LLTToken"
+      ]
+    },
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\tokens\\CarERC721.sol": {
+      "lastModificationDate": 1697272029439,
+      "contentHash": "e5fcd667a995ed77e65b245fe0934ee4",
+      "sourceName": "contracts/tokens/CarERC721.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "CarERC721"
+      ]
+    },
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\tokens\\ParkERC721.sol": {
+      "lastModificationDate": 1697272095331,
+      "contentHash": "a2bf9943d4c592384a2cb7d3e52b9b4c",
+      "sourceName": "contracts/tokens/ParkERC721.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ParkERC721"
       ]
     }
   }

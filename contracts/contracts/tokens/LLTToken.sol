@@ -51,7 +51,10 @@ contract LLTToken is
         _unpause();
     }
 
-    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+    function mint(
+        address to,
+        uint256 amount
+    ) public onlyRole(MINTER_ROLE) whenNotPaused {
         _mint(to, amount);
     }
 
