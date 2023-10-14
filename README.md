@@ -28,8 +28,8 @@
   1. 未来扩展:
   游戏将不断推出新的车辆、车位和社交功能，以丰富游戏体验和增加玩家互动；通过LotLoot，玩家不仅可以享受游戏的乐趣，还能通过社交互动和策略选择，获得实质的代币收益。同时，区块链技术的应用，也将为玩家提供一个安全、公正、透明的游戏环境。
 - 队长和队员：
-  1. 队长：
-  1. 队员：
+  1. 队长：enixlee 
+  1. 队员：see contributors part [https://github.com/WeDAOLabs/ParkingSpaceBattle/edit/main/README.md#contributors-sorted-by-frist-charactor]
 
 - 本项目在这次黑客松的目标：实现LotLoot全链游戏从0到1开发，聚合以太坊生态NFT&Token，利用代币机制提升游戏玩法多样性，通过博弈方式达到预期收益，玩法机制结合Game和Social，对于Fi属性有很好的拓展，项目能够给予链上应用新赋能。
 - 黑客松前两日的进度：
