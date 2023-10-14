@@ -1,5 +1,5 @@
 <div align="center">
-<h1>**LotLoot**</h1>
+<h1>LotLoot</h1>
 <h2>🅿️🚗🚕🚙</h2>
 <h3>A Fully On-Chain Game integrated with SocialFi</h3>
 <img src="./assets/logo_lotloot.jpg" width="900">
