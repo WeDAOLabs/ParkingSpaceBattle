@@ -1,7 +1,6 @@
 <template>
   <div class="index">
     <Header class="margin-top" />
-
     <div v-if="!isLogin">
       <a-divider />
       <a-row>
@@ -110,7 +109,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.top-bar {
-  margin-top: -40px;
-}
+
 </style>

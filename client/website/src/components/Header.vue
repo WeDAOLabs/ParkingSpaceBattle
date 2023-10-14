@@ -1,15 +1,15 @@
 <template>
-    <div class="index">
-      <a-row class="top-bar">
+    <div>
+      <a-row>
         <a-col :offset="1" :span="3">
-          <a-row><h1>LOGO</h1></a-row>>
+          <a-image :width="438" :src="require('../assets/logo.jpg')" :preview="false"/>
         </a-col>
         <a-col :offset="16" :span="2">
-            <a-button v-if="!isLogin" @click="funcLogin">登录</a-button>
+            <a-button v-if="!isLogin" @click="connectWallet">Sign In</a-button>
             <h3 v-else>address:{{ userAddress }}</h3>
         </a-col>
-    </a-row>
-</div>
+      </a-row>
+    </div>
 </template>
   
   <script lang="ts">
@@ -24,7 +24,7 @@
       const isLogin = ref(walletData.isAuth);
       const userAddress = ref('0x12345');
   
-      const funcLogin = async () => {
+      const connectWallet = async () => {
         await walletData.signIn();
         isLogin.value = walletData.isAuth;
       };
@@ -36,7 +36,7 @@
       return {
         isLogin,
         userAddress,
-        funcLogin
+        connectWallet
       };
     },
   });
