@@ -8,7 +8,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract LOOTLOTCAR is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     uint256 private _nextTokenId;
-    address NFTminter;
+    address NFTMinter;
+    event Minted(address indexed to, uint256 tokenId);
 
     constructor(address initialOwner)
         ERC721("LOOTLOTCAR", "LLC")
@@ -23,19 +24,21 @@ contract LOOTLOTCAR is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+        emit Minted(to, tokenId);
     }
-    function setNFTminter(address _NFTminter) public onlyOwner {
-        NFTminter = _NFTminter;
+    function setNFTMinter(address _NFTMinter) public onlyOwner {
+        NFTMinter = _NFTMinter;
     }
-    function getNFTminter() public view returns (address) {
-        return NFTminter;
+    function getNFTMinter() public view returns (address) {
+        return NFTMinter;
     }
     // the gammer mint
-    function NFTminterMint(address to, string memory uri) public{
-        require(msg.sender == NFTminter, "Only NFTminter can mint");
+    function NFTMinterMint(address to, string memory uri) public{
+        require(msg.sender == NFTMinter, "Only NTFMinter can mint");
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
+        emit Minted(to, tokenId);
     }
 
     // The following functions are overrides required by Solidity.
