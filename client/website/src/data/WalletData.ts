@@ -8,6 +8,7 @@ import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { StringUtil } from "../core/utils/StringUtil";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { registerDataModel } from "./DataRegister";
+import { GameEventSample } from "../events/GameEventSample";
 
 interface WalletCache {
   address: string;
@@ -19,6 +20,8 @@ const ChainIds = Object.keys(ChainID)
   .map((key) => ChainID[key as keyof typeof ChainID]);
 
 export class WalletData extends Singleton {
+  private _authed: boolean = false;
+
   private _provider: any = null;
   private data: WalletCache = {
     address: "",
@@ -49,6 +52,10 @@ export class WalletData extends Singleton {
     return this._provider;
   }
 
+  public get isAuth(): boolean {
+    return this._authed;
+  }
+
   constructor() {
     super();
     this.registerProviderEvent();
@@ -69,6 +76,10 @@ export class WalletData extends Singleton {
     this.ethereum.on("disconnect", () => {
       EventBus.instance.emit(GameEventWalletDisconnect.event);
     });
+  }
+
+  private saveData() {
+    // TODO
   }
 
   public async isChainValid(): Promise<boolean> {
@@ -141,8 +152,9 @@ export class WalletData extends Singleton {
     this.saveData();
   }
 
-  private saveData() {
-    // TODO
+  public async signIn() {
+    this._authed = true;
+    EventBus.instance.emit(GameEventSample.event);
   }
 }
 export const walletData: Readonly<WalletData> = WalletData.getInstance();

@@ -1,17 +1,9 @@
 <template>
   <div class="index">
-    <a-row class="top-bar">
-      <a-col :offset="1" :span="3">
-        <h1>LOGO</h1>
-      </a-col>
-      <a-col :offset="16" :span="2">
-        <a-button v-if="!isLogin" @click="funcLogin">登录</a-button>
-        <h3 v-else>address:{{ userAddress }}</h3>
-      </a-col>
-    </a-row>
+    <Header class="margin-top" />
 
     <div v-if="!isLogin">
-      <a-divider/>
+      <a-divider />
       <a-row>
         <a-col :offset="5" :span="10">
           <h1>展示游戏大图介绍内容</h1>
@@ -19,36 +11,31 @@
       </a-row>
     </div>
     <div v-else>
-      <a-divider/>
-      <ParkingList/>
-      <a-divider/>
-      <CarList/>
-
+      <a-divider />
+      <ParkingList />
+      <a-divider />
+      <CarList />
     </div>
-
-
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onBeforeMount, computed} from "vue";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import Header from "./Header.vue";
 import ParkingList from "./ParkingList.vue";
 import CarList from "./CarList.vue";
+import { walletData } from "../data/WalletData";
+import { EventBus } from "../plugins/EventBus";
+import { GameEventSample } from "../events/GameEventSample";
 
 export default defineComponent({
   name: "Index",
 
-  components: {ParkingList, CarList},
+  components: { Header, ParkingList, CarList },
   setup() {
-    const isLogin = ref(false);
-    const userAddress = ref('0x12345');
+    const isLogin = ref(walletData.isAuth);
 
     const showSkin = ref(false);
-
-
-    const funcLogin = () => {
-      isLogin.value = true;
-    };
 
     // async function someAsyncOperation() {
     //   return new Promise((resolve, reject) => {
@@ -103,11 +90,20 @@ export default defineComponent({
     //   });
     // };
 
+    onBeforeMount(() => {
+      EventBus.instance.on(GameEventSample.event, onSignIn);
+    });
+
+    onUnmounted(()=>{
+      EventBus.instance.off(GameEventSample.event, onSignIn);
+    });
+
+    const onSignIn = ()=>{
+      isLogin.value = true;
+    };
 
     return {
       isLogin,
-      userAddress,
-      funcLogin
     };
   },
 });
@@ -117,6 +113,4 @@ export default defineComponent({
 .top-bar {
   margin-top: -40px;
 }
-
-
 </style>
