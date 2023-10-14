@@ -1,18 +1,14 @@
-import {createApp} from 'vue'
-import App from './App.vue'
+import { createApp } from "vue";
+import App from "./App.vue";
 // @ts-ignore
-import Antd from 'ant-design-vue'
+import Antd from "ant-design-vue";
+import { ethers } from "ethers";
+import "ant-design-vue/dist/reset.css";
 
-// 用5.7.2版本的
-// import {ethers} from "ethers"
+const app = createApp(App);
 
-import 'ant-design-vue/dist/reset.css'
+app.use(Antd);
 
+app.config.globalProperties.$ethers = ethers;
 
-const app = createApp(App)
-
-app.use(Antd)
-
-// app.config.globalProperties.$ethers = ethers;
-
-app.mount('#app')
+app.mount("#app");
