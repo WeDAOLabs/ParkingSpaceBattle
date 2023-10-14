@@ -20,28 +20,10 @@
     </div>
     <div v-else>
       <a-divider/>
-      <a-row justify="space-around">
+      <ParkingList/>
+      <a-divider/>
+      <CarList/>
 
-        <a-col :span="4" v-for="(item, index) in userCarPortStateList" :key="index">
-          <a-row justify="center" align="middle" class="carport-0" v-if="item===0">
-            <a-button @click="funcFreeMint(index)">Free Mint</a-button>
-          </a-row>
-          <a-row justify="center" align="middle" class="carport-1" v-if="item===1">
-            <h2>空车位</h2>
-          </a-row>
-          <a-row justify="center" align="middle" class="carport-2" v-if="item===2">
-            <a-col :span="24">
-              <h3>当前车辆URL: xxx</h3>
-            </a-col>
-            <a-col :span="24">
-              <a-button @click="funcSticker(index)">贴条</a-button>
-            </a-col>
-            <a-col :span="24">
-              <p>预计收益: 123 LLT</p>
-            </a-col>
-          </a-row>
-        </a-col>
-      </a-row>
     </div>
 
 
@@ -50,33 +32,82 @@
 
 <script lang="ts">
 import {defineComponent, ref, onBeforeMount, computed} from "vue";
+import ParkingList from "@/components/ParkingList.vue";
+import CarList from "@/components/CarList.vue";
 
 export default defineComponent({
   name: "Index",
+
+  components: {ParkingList, CarList},
   setup() {
     const isLogin = ref(false);
     const userAddress = ref('0x12345');
-    const userCarPortStateList = ref([1, 2, 1, 0, 0]);// 0表示未mint 1表示车位空 2表示占用
 
-    const funcFreeMint = (index) => {
-      userCarPortStateList.value[index] = 1;
-    };
+    const showSkin = ref(false);
 
-    const funcSticker = (index) => {
-      userCarPortStateList.value[index] = 1;
-    };
 
     const funcLogin = () => {
       isLogin.value = true;
     };
 
+    // async function someAsyncOperation() {
+    //   return new Promise((resolve, reject) => {
+    //     // 模拟异步操作，比如网络请求
+    //     setTimeout(() => {
+    //       // 模拟操作成功，将结果返回
+    //       resolve('操作成功！');
+    //
+    //       // 如果出现错误，可以使用 reject
+    //       // reject('操作失败！');
+    //     }, 2000);
+    //   });
+    // }
+    //
+    // async function funcLogin() {
+    //   isLogin.value = true;
+    //
+    //   try {
+    //     // 异步操作，比如网络请求、文件读取等
+    //     showSkin.value = true;
+    //     const result = await someAsyncOperation();
+    //     console.log('操作结果:', result);
+    //     showSkin.value = false;
+    //   } catch (error) {
+    //     console.error('发生错误:', error);
+    //     showSkin.value = false;
+    //   }
+    // }
+
+    // const funcLogin = async () => {
+    //   try {
+    //     showSkin.value = true;
+    //     const result = await someAsyncOperation();
+    //     console.log('操作结果:', result);
+    //     showSkin.value = false;
+    //     isLogin.value = true;
+    //   } catch (error) {
+    //     console.error('发生错误:', error);
+    //   }
+    // };
+    //
+    // const someAsyncOperation = async () => {
+    //   return new Promise((resolve, reject) => {
+    //     // 模拟异步操作，比如网络请求
+    //     setTimeout(() => {
+    //       // 模拟操作成功，将结果返回
+    //       resolve('操作成功！');
+    //
+    //       // 如果出现错误，可以使用 reject
+    //       // reject('操作失败！');
+    //     }, 2000);
+    //   });
+    // };
+
+
     return {
       isLogin,
       userAddress,
-      userCarPortStateList,
-      funcLogin,
-      funcFreeMint,
-      funcSticker
+      funcLogin
     };
   },
 });
@@ -87,28 +118,5 @@ export default defineComponent({
   margin-top: -40px;
 }
 
-.carport-0 {
-  border: 1px solid #8ce6b0;
-  border-radius: 0.5rem;
-  height: 15rem;
-  box-sizing: content-box;
-  background-color: #edfff3;
-}
-
-.carport-1 {
-  border: 1px solid #abdcff;
-  border-radius: 0.5rem;
-  height: 15rem;
-  box-sizing: content-box;
-  background-color: #f0faff;
-}
-
-.carport-2 {
-  border: 1px solid #ffd77a;
-  border-radius: 0.5rem;
-  height: 15rem;
-  box-sizing: content-box;
-  background-color: #fff9e6;
-}
 
 </style>
