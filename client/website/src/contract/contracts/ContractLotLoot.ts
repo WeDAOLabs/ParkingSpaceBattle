@@ -1,6 +1,8 @@
 import { ContractBase } from "./ContractBase";
 import ContractLotLootABI from "../abi/contracts/systems/core/LotLoot.sol/LotLoot.json";
 import { contractData } from "../../data/ContractData";
+import { EventBus } from "../../plugins/EventBus";
+import { GameEventParkCar } from "@/events/GameEventParkCar";
 
 export class ContractLotLoot extends ContractBase {
   static create(): any {
@@ -32,6 +34,43 @@ export class ContractLotLoot extends ContractBase {
   }
 
   public registerEvents() {
-    // TODO
+    this.contract.on(
+      "ParkCar",
+      (who: string, carTokenId: number, parkingTokenId: number) => {
+        console.log("ParkCar", who, carTokenId, parkingTokenId);
+        EventBus.instance.emit(
+          GameEventParkCar.event,
+          who,
+          carTokenId,
+          parkingTokenId
+        );
+      }
+    );
+
+    this.contract.on(
+      "UnParkCar",
+      (who: string, carTokenId: number, parkingTokenId: number) => {
+        console.log("UnParkCar", who, carTokenId, parkingTokenId);
+        EventBus.instance.emit(
+          GameEventParkCar.event,
+          who,
+          carTokenId,
+          parkingTokenId
+        );
+      }
+    );
+
+    this.contract.on(
+      "FineCar",
+      (who: string, carTokenId: number, parkingTokenId: number) => {
+        console.log("FineCar", who, carTokenId, parkingTokenId);
+        EventBus.instance.emit(
+          GameEventParkCar.event,
+          who,
+          carTokenId,
+          parkingTokenId
+        );
+      }
+    );
   }
 }
