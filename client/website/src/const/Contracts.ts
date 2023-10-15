@@ -4,6 +4,7 @@ export interface IContractAddress {
   ParkingStore: string;
   CarERC721: string;
   ParkingERC721: string;
+  LotLoot: string;
 }
 
 export const CONTRACT_ADDRESS_MUMBAI = {
@@ -12,6 +13,7 @@ export const CONTRACT_ADDRESS_MUMBAI = {
   ParkingStore: "0xdf93FbeDc34fdF55643419801F488d8971A0FFbf",
   CarERC721: "0x4DDbF5Ddf8819dE761fC708F8A522D341E03cBE5",
   ParkingERC721: "0xb792f1E31D3a19DB2C8A88eE10b35D8bC2DEA6A5",
+  LotLoot: "0x2867E168855aA631255612EA925dC361BA294dE7",
 };
 
 export const CONTRACT_ADDRESS_ARBITRUM = {
@@ -20,4 +22,5 @@ export const CONTRACT_ADDRESS_ARBITRUM = {
   ParkingStore: "",
   CarERC721: "",
   ParkingERC721: "",
+  LotLoot: "",
 };

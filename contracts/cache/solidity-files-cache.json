@@ -1629,8 +1629,8 @@
       ]
     },
     "/Users/lijiang/Documents/work/hackathon/ETH-HangZhou/ParkingSpaceBattle/contracts/contracts/systems/core/LotLoot.sol": {
-      "lastModificationDate": 1697352651069,
-      "contentHash": "cb01d225b51e9eccba4ed123dc5ddc6b",
+      "lastModificationDate": 1697373418402,
+      "contentHash": "d19457405edcd9cd77cda7236ff46765",
       "sourceName": "contracts/systems/core/LotLoot.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -1661,8 +1661,11 @@
         "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol",
         "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
         "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
-        "../../tokens/CarERC721.sol",
-        "../../tokens/ParkingERC721.sol"
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
+        "../../interface/IERC721Ext.sol",
+        "../../interface/IERC6551Account.sol",
+        "../../interface/IERC6551Registry.sol",
+        "../../tokens/LLTToken.sol"
       ],
       "versionPragmas": [
         "^0.8.20"

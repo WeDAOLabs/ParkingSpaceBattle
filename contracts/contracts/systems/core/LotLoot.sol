@@ -15,6 +15,10 @@ contract LotLoot is
     AccessControlEnumerableUpgradeable,
     UUPSUpgradeable
 {
+    event ParkCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
+    event UnParkCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
+    event FineCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
+
     LLTToken lltToken;
     IERC721Ext carNFT;
     IERC721Ext parkingNFT;
@@ -55,22 +59,6 @@ contract LotLoot is
         _grantRole(UPGRADER_ROLE, msg.sender);
     }
 
-    function upgradeNFT(
-        address _carAddress,
-        address _parkingAddress
-    ) public onlyRole(UPGRADER_ROLE) {
-        carNFT = IERC721Ext(_carAddress);
-        parkingNFT = IERC721Ext(_parkingAddress);
-    }
-
-    function upgradeERC6551(
-        address _registry,
-        address payable _account
-    ) public onlyRole(UPGRADER_ROLE) {
-        registry = IERC6551Registry(_registry);
-        account = IERC6551Account(_account);
-    }
-
     function parkCar(uint _carTokenId, uint _parkTokenId) public {
         require(
             carNFT.ownerOf(_carTokenId) == msg.sender,
@@ -84,6 +72,8 @@ contract LotLoot is
         require(parks[_parkTokenId].carTokenId == 0, "Park is already full");
         cars[_carTokenId] = carInfo(block.timestamp, _parkTokenId);
         parks[_parkTokenId] = parkInfo(block.timestamp, _carTokenId);
+
+        emit ParkCar(msg.sender, _carTokenId, _parkTokenId);
     }
 
     function unParkCar(uint _carTokenId) public {
@@ -91,8 +81,11 @@ contract LotLoot is
         require(cars[_carTokenId].parkTokenId != 0, "Car is not parked");
 
         _handleUnparkCar(_carTokenId);
+        uint parkingTokenId = cars[_carTokenId].parkTokenId;
         cars[_carTokenId].parkTokenId = 0;
         parks[cars[_carTokenId].parkTokenId].carTokenId = 0;
+
+        emit UnParkCar(msg.sender, _carTokenId, parkingTokenId);
     }
 
     function fineCar(uint _parkTokenId) public {
@@ -105,8 +98,13 @@ contract LotLoot is
             "Not owner of park"
         );
         _handleFineCar(_parkTokenId);
+        uint carTokenId = parks[_parkTokenId].carTokenId;
+        address carOwner = carNFT.ownerOf(carTokenId);
+
         parks[_parkTokenId].carTokenId = 0;
         cars[parks[_parkTokenId].carTokenId].parkTokenId = 0;
+
+        emit FineCar(carOwner, carTokenId, _parkTokenId);
     }
 
     function viewCarOnPark(uint _carTokenId) public view returns (uint) {
