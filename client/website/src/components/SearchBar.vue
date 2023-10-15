@@ -42,6 +42,10 @@ export default defineComponent({
     };
 
     const funcOnSearch = () => {
+      if (!walletData.isAuth) {
+        Toast.warn("SignIn first");
+        return;
+      }
       const inputValue = searchValue.value.trim();
       if (!REG_ETH_ADDRESS.test(inputValue)) {
         Toast.warn("It's not an address");
