@@ -217,6 +217,10 @@ import { EventBus } from "../plugins/EventBus";
 import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
 import { GO_HOME } from "../const/Constants";
 import { homeData } from "../data/HomeData";
+import { playerData } from "../data/PlayerData";
+import { walletData } from "../data/WalletData";
+import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { Loading } from "../plugins/Loading";
 
 export default defineComponent({
   name: "ParkingList",
@@ -224,16 +228,29 @@ export default defineComponent({
   setup() {
     onBeforeMount(() => {
       EventBus.instance.on(GameEventGoFriendHome.eventAsync, onPageRefresh);
+      EventBus.instance.on(GameEventWalletConnected.eventAsync, onSignIn);
     });
 
     onUnmounted(() => {
       EventBus.instance.off(GameEventGoFriendHome.eventAsync, onPageRefresh);
+      EventBus.instance.off(GameEventWalletConnected.eventAsync, onSignIn);
     });
 
-    const onPageRefresh = (address: any) => {
+    const onPageRefresh = async (address: any) => {
+      Loading.open();
       isUserHome.value = address === GO_HOME;
       if (!homeData.isInHome) {
+        await refreshFriendHome();
+      } else {
+        await refreshHome();
       }
+      Loading.close();
+    };
+
+    const onSignIn = async () => {
+      Loading.open();
+      await refreshHome();
+      Loading.close();
     };
 
     const isMinted = ref(false);
@@ -284,6 +301,16 @@ export default defineComponent({
     const funcAffirmLeave = () => {
       showLeaveModel.value = false;
       userParkingStateList.value[userParkingStateIndex.value] = 1;
+    };
+
+    const refreshFriendHome = async () => {
+      const player = await playerData.getPlayerData(homeData.currentPlyer);
+      isMinted.value = player && player.hasParkings ? true : false;
+    };
+
+    const refreshHome = async () => {
+      const player = await playerData.getPlayerData(walletData.address);
+      isMinted.value = player && player.hasParkings ? true : false;
     };
 
     return {
