@@ -45,7 +45,7 @@ import {defineComponent, ref} from "vue";
 export default defineComponent({
   name: "CarList",
   setup() {
-    const userCarStateList = ref([2, 1, 1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1]); // 0表示未mint 1表示空闲 2表示停放
+    const userCarStateList = ref([2, 1, 1, 1]); // 0表示未mint 1表示空闲 2表示停放
 
     const funcFreeMintCar = (index: number) => {
       userCarStateList.value[index] = 1;
@@ -64,7 +64,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 
 
 .car-0 {
