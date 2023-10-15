@@ -31,11 +31,11 @@ describe('test CarERC721', async () => {
       contract.connect(add1).safeMint(add1.address, tokenId2)
     ).to.be.revertedWith(revertedWith);
 
-    await contract.addMinterRole(add1.address);
+    await contract.grantRole(ethers.utils.id('MINTER_ROLE'), add1.address);
     await contract.connect(add1).safeMint(add1.address, tokenId2);
     expect(await contract.balanceOf(add1.address)).to.equal(1);
 
-    await contract.revokeMinterRole(add1.address);
+    await contract.revokeRole(ethers.utils.id('MINTER_ROLE'), add1.address);
     await expect(
       contract.connect(add1).safeMint(add1.address, tokenId2)
     ).to.be.revertedWith(revertedWith);

@@ -35,14 +35,6 @@ contract LLTToken is
         _grantRole(UPGRADER_ROLE, msg.sender);
     }
 
-    function addMinterRole(address _address) public onlyRole(UPGRADER_ROLE) {
-        _grantRole(MINTER_ROLE, _address);
-    }
-
-    function revokeMinterRole(address _address) public onlyRole(UPGRADER_ROLE) {
-        _revokeRole(MINTER_ROLE, _address);
-    }
-
     function pause() public onlyRole(PAUSER_ROLE) {
         _pause();
     }

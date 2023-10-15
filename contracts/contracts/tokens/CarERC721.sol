@@ -55,18 +55,6 @@ contract CarERC721 is
         _safeMint(to, tokenId);
     }
 
-    function addMinterRole(
-        address _address
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        _grantRole(MINTER_ROLE, _address);
-    }
-
-    function revokeMinterRole(
-        address _address
-    ) public onlyRole(DEFAULT_ADMIN_ROLE) {
-        _revokeRole(MINTER_ROLE, _address);
-    }
-
     function _beforeTokenTransfer(
         address from,
         address to,
