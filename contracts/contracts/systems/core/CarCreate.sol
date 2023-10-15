@@ -1,18 +1,18 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
-
-import "../../tokens/CarERC721.sol";
-import "../ERC6551/LotLootERC6551Account.sol";
-import "../ERC6551/LotLootERC6551Registry.sol";
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "../../interface/IERC721Ext.sol";
+import "../../interface/IERC6551Account.sol";
+import "../../interface/IERC6551Registry.sol";
 
 contract CarCreate is
     Initializable,
     PausableUpgradeable,
-    AccessControlUpgradeable
+    AccessControlEnumerableUpgradeable,
+    UUPSUpgradeable
 {
     CarERC721 carERC721;
     LotLootERC6551Account lotLootERC6551Account;
@@ -38,7 +38,7 @@ contract CarCreate is
             _lotLootERC6551Registry
         );
         __Pausable_init();
-        __AccessControl_init();
+        __AccessControlEnumerable_init();
 
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(PAUSER_ROLE, msg.sender);
