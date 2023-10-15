@@ -52,10 +52,10 @@ describe("CarStore", function () {
       .connect(owner)
       .grantRole(ethers.utils.id("MINTER_ROLE"), carStoreContract.address);
 
-    // expect(await carStoreContract.connect(addr1).mint()).to.emit(
-    //   carStoreContract,
-    //   "CarMint"
-    // );
+    expect(await carStoreContract.connect(addr1).mint()).to.emit(
+      carStoreContract,
+      "CarMint"
+    );
 
     // next
   });
