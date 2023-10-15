@@ -19,12 +19,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
 import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
 import { EventBus } from "../plugins/EventBus";
 import { walletData } from "../data/WalletData";
 import { GO_HOME, REG_ETH_ADDRESS } from "../const/Constants";
 import { Toast } from "../plugins/Toast";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 
 export default defineComponent({
   name: "SearchBar",
@@ -32,6 +33,21 @@ export default defineComponent({
   emits: ["query-and-submit"],
 
   setup() {
+    onBeforeMount(() => {
+      EventBus.instance.on(GameEventWalletAccountChanged.eventAsync, onRefresh);
+    });
+
+    onUnmounted(() => {
+      EventBus.instance.off(
+        GameEventWalletAccountChanged.eventAsync,
+        onRefresh
+      );
+    });
+
+    const onRefresh = async () => {
+      showBackButton.value = false;
+    };
+
     const searchValue = ref();
 
     const showBackButton = ref(false);

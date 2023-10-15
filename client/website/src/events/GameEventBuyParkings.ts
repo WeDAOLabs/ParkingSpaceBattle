@@ -1,6 +1,5 @@
 import { playerData } from "../data/PlayerData";
 import { GameEventBase } from "./GameEventBase";
-import { walletData } from "../data/WalletData";
 
 export class GameEventBuyParkings extends GameEventBase {
   public static readonly event: string = "game.logic.GameEventBuyParkings";
