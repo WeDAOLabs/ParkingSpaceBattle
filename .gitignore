@@ -18,7 +18,7 @@ bin-release/
 # information for Eclipse / Flash Builder.
 
 #export files
-abi
+contracts/abi
 ethereum-abi-types
 node_modules
 .env
@@ -32,8 +32,6 @@ cache
 artifacts
 
 #export files
-abi
-ethereum-abi-types
 # OpenZeppelin
 .openzeppelin/unknown-*.json
 
@@ -209,8 +207,6 @@ cache
 artifacts
 
 #export files
-abi
-ethereum-abi-types
 # OpenZeppelin
 .openzeppelin/unknown-*.json
 
