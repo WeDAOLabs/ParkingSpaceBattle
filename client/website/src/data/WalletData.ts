@@ -49,7 +49,7 @@ export class WalletData extends Singleton {
       return "";
     }
 
-    return `0x${this.data.address.substring(
+    return `${this.data.address.substring(
       0,
       4
     )}...${this.data.address.substring(
