@@ -5,10 +5,9 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "../../interface/IERC721Ext.sol";
-
+import "../../interface/IERC6551Account.sol";
+import "../../interface/IERC6551Registry.sol";
 import "../../tokens/LLTToken.sol";
-import "../ERC6551/ERC6551Registry.sol";
-import "../ERC6551/StandardERC6551Account.sol";
 
 contract LotLoot is
     Initializable,
@@ -16,11 +15,15 @@ contract LotLoot is
     AccessControlEnumerableUpgradeable,
     UUPSUpgradeable
 {
+    event ParkCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
+    event UnParkCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
+    event FineCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
+
     LLTToken lltToken;
     IERC721Ext carNFT;
     IERC721Ext parkingNFT;
-    ERC6551Registry registry;
-    StandardERC6551Account account;
+    IERC6551Registry registry;
+    IERC6551Account account;
 
     struct carInfo {
         uint startTime;
@@ -45,31 +48,15 @@ contract LotLoot is
         address _carNFT,
         address _parkingNFT,
         address _registry,
-        address _account
+        address payable _account
     ) public initializer {
         lltToken = LLTToken(_lltToken);
         carNFT = IERC721Ext(_carNFT);
         parkingNFT = IERC721Ext(_parkingNFT);
-        registry = ERC6551Registry(_registry);
-        account = StandardERC6551Account(_account);
+        registry = IERC6551Registry(_registry);
+        account = IERC6551Account(_account);
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(UPGRADER_ROLE, msg.sender);
-    }
-
-    function upgradeNFT(
-        address _carAddress,
-        address _parkingAddress
-    ) public onlyRole(UPGRADER_ROLE) {
-        carNFT = IERC721Ext(_carAddress);
-        parkingNFT = IERC721Ext(_parkingAddress);
-    }
-
-    function upgradeERC6551(
-        address _registry,
-        address _account
-    ) public onlyRole(UPGRADER_ROLE) {
-        registry = ERC6551Registry(_registry);
-        account = StandardERC6551Account(_account);
     }
 
     function parkCar(uint _carTokenId, uint _parkTokenId) public {
@@ -85,6 +72,8 @@ contract LotLoot is
         require(parks[_parkTokenId].carTokenId == 0, "Park is already full");
         cars[_carTokenId] = carInfo(block.timestamp, _parkTokenId);
         parks[_parkTokenId] = parkInfo(block.timestamp, _carTokenId);
+
+        emit ParkCar(msg.sender, _carTokenId, _parkTokenId);
     }
 
     function unParkCar(uint _carTokenId) public {
@@ -92,41 +81,68 @@ contract LotLoot is
         require(cars[_carTokenId].parkTokenId != 0, "Car is not parked");
 
         _handleUnparkCar(_carTokenId);
+        uint parkingTokenId = cars[_carTokenId].parkTokenId;
         cars[_carTokenId].parkTokenId = 0;
         parks[cars[_carTokenId].parkTokenId].carTokenId = 0;
+
+        emit UnParkCar(msg.sender, _carTokenId, parkingTokenId);
     }
 
-    function fineCar(uint _carTokenId) public {
-        require(cars[_carTokenId].parkTokenId != 0, "Car is not parked");
-        require(carNFT.ownerOf(_carTokenId) != msg.sender, "It is your car");
+    function fineCar(uint _parkTokenId) public {
         require(
-            parkingNFT.ownerOf(cars[_carTokenId].parkTokenId) == msg.sender,
+            parks[_parkTokenId].carTokenId != 0,
+            "There are no cars in this space"
+        );
+        require(
+            parkingNFT.ownerOf(_parkTokenId) == msg.sender,
             "Not owner of park"
         );
-        _handleFineCar(_carTokenId, cars[_carTokenId].parkTokenId);
-        cars[_carTokenId].parkTokenId = 0;
-        parks[cars[_carTokenId].parkTokenId].carTokenId = 0;
+        _handleFineCar(_parkTokenId);
+        uint carTokenId = parks[_parkTokenId].carTokenId;
+        address carOwner = carNFT.ownerOf(carTokenId);
+
+        parks[_parkTokenId].carTokenId = 0;
+        cars[parks[_parkTokenId].carTokenId].parkTokenId = 0;
+
+        emit FineCar(carOwner, carTokenId, _parkTokenId);
     }
 
     function viewCarOnPark(uint _carTokenId) public view returns (uint) {
         return cars[_carTokenId].parkTokenId;
     }
 
-    function _handleFineCar(uint _carTokenId, uint _parkTokenId) internal {}
+    function viewParkOnCar(uint _parkTokenId) public view returns (uint) {
+        return parks[_parkTokenId].carTokenId;
+    }
+
+    function _handleFineCar(uint _parkTokenId) internal {
+        address parkAddress = registry.account(
+            address(account),
+            block.chainid,
+            address(parkingNFT),
+            _parkTokenId,
+            _parkTokenId
+        );
+        uint256 fineAmount = block.timestamp - parks[_parkTokenId].startTime;
+        if (fineAmount > 1 days) {
+            fineAmount = 1 days;
+        }
+        lltToken.mint(parkAddress, fineAmount);
+    }
 
     function _handleUnparkCar(uint _carTokenId) internal {
-        // address carAddress = registry.account(
-        //     address(account),
-        //     block.chainid,
-        //     address(carNFT),
-        //     _carTokenId,
-        //     _carTokenId
-        // );
-        // uint256 mintAmount = block.timestamp - cars[_carTokenId].startTime;
-        // if (mintAmount > 1 days) {
-        //     mintAmount = 1 days;
-        // }
-        // lltToken.mint(carAddress, mintAmount);
+        address carAddress = registry.account(
+            address(account),
+            block.chainid,
+            address(carNFT),
+            _carTokenId,
+            _carTokenId
+        );
+        uint256 mintAmount = block.timestamp - cars[_carTokenId].startTime;
+        if (mintAmount > 1 days) {
+            mintAmount = 1 days;
+        }
+        lltToken.mint(carAddress, mintAmount);
     }
 
     function _authorizeUpgrade(

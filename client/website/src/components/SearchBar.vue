@@ -1,18 +1,17 @@
 <template>
   <div class="search-bar">
     <a-row justify="left" align="middle">
-      <a-col :offset="1" :span="1" class="test01">
+      <a-col :offset="1" :span="1">
         <a-button v-if="showBackButton" @click="funcBack">返回</a-button>
       </a-col>
-
-      <a-col :offset="1" :span="18" class="test02">
+      <a-col :offset="1" :span="18">
         <a-input-search
-          size="large"
-          enter-button
-          @search="funcOnSearch"
-          allowClear
-          v-model:value="searchValue"
-          placeholder="input wallet address"
+            size="large"
+            enter-button
+            @search="funcOnSearch"
+            allowClear
+            v-model:value="searchValue"
+            placeholder="input wallet address"
         />
       </a-col>
     </a-row>
@@ -20,12 +19,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
-import { EventBus } from "../plugins/EventBus";
-import { walletData } from "../data/WalletData";
-import { GO_HOME, REG_ETH_ADDRESS } from "../const/Constants";
-import { Toast } from "../plugins/Toast";
+import {defineComponent, ref} from "vue";
+import {GameEventGoFriendHome} from "../events/GameEventGoFriendHome";
+import {EventBus} from "../plugins/EventBus";
+import {walletData} from "../data/WalletData";
+import {GO_HOME, REG_ETH_ADDRESS} from "../const/Constants";
+import {Toast} from "../plugins/Toast";
 
 export default defineComponent({
   name: "SearchBar",
@@ -42,11 +41,17 @@ export default defineComponent({
     };
 
     const funcOnSearch = () => {
-      const inputValue = searchValue.value.trim();
-      if (!REG_ETH_ADDRESS.test(inputValue)) {
-        Toast.warn("It's not an address");
+      if (!walletData.isAuth) {
+        Toast.warn("SignIn first");
         return;
       }
+      const inputValue = searchValue.value.trim();
+
+      // TODO:方便测试
+      // if (!REG_ETH_ADDRESS.test(inputValue)) {
+      //   Toast.warn("It's not an address");
+      //   return;
+      // }
 
       if (inputValue === walletData.address) {
         Toast.warn(`It's your address.`);
@@ -69,14 +74,14 @@ export default defineComponent({
 
 <style scoped>
 .search-bar {
+  padding: 0.5rem;
   margin-top: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border: 1px solid #abdcff;
+  border-radius: 0.5rem;
+  box-sizing: content-box;
+  background-color: #f0faff;
 }
 
-/*.test01 {*/
-/*  background-color: red;*/
-/*}*/
-
-/*.test02 {*/
-/*  background-color: greenyellow;*/
-/*}*/
 </style>

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { ethers, upgrades } from 'hardhat';
 
-describe('Testing the game', function () {
+describe('LotLoot', function () {
   let lltToken: Contract;
   let carERC721: Contract;
   let parkERC721: Contract;
@@ -22,7 +22,7 @@ describe('Testing the game', function () {
     const CarStore = await ethers.getContractFactory('CarStore');
     const ParkingStore = await ethers.getContractFactory('ParkingStore');
     const LotLoot = await ethers.getContractFactory('LotLoot');
-    const ttlTokenFactory = await ethers.getContractFactory('TTLToken');
+    const ttlTokenFactory = await ethers.getContractFactory('LLTToken');
     lltToken = await upgrades.deployProxy(ttlTokenFactory);
     erc6551Registry = await upgrades.deployProxy(ERC6551Registry);
     erc6551Account = await upgrades.deployProxy(ERC6551Account);
@@ -122,6 +122,14 @@ describe('Testing the game', function () {
 
     await lotLoot.connect(addr1).parkCar(carTokenId1, parkTokenId2);
     await lotLoot.connect(addr2).parkCar(carTokenId2, parkTokenId1);
+    await lltToken.connect(owner).grantRole(MINTER_ROLE, lotLoot.address);
+    const accountAddress = await erc6551Registry.account(
+      erc6551Account.address,
+      1337,
+      carERC721.address,
+      carTokenId1.toNumber(),
+      carTokenId1.toNumber()
+    );
 
     await lotLoot.connect(addr1).unParkCar(carTokenId1);
     await expect(
@@ -129,12 +137,52 @@ describe('Testing the game', function () {
     ).to.be.revertedWith('Not owner of car');
 
     expect(await lotLoot.viewCarOnPark(carTokenId1)).to.equal(0);
+    expect(await lltToken.balanceOf(accountAddress)).to.not.equal(0);
   });
-
-  it('test handle unpark', async () => {
+  it('test fine car', async () => {
     const [owner, addr1, addr2] = await ethers.getSigners();
     const MINTER_ROLE = ethers.utils.id('MINTER_ROLE');
+    // Grant role
     carERC721.connect(owner).grantRole(MINTER_ROLE, carStore.address);
     parkERC721.connect(owner).grantRole(MINTER_ROLE, parkingStore.address);
+    lltToken.connect(owner).grantRole(MINTER_ROLE, lotLoot.address);
+
+    // addr1 has one car and one parking
+    await carStore.connect(addr1).mint();
+    const carTokenId1 = await carERC721.tokenOfOwnerByIndex(addr1.address, 0);
+
+    await parkingStore.connect(addr1).mint();
+    const parkTokenId1 = await parkERC721.tokenOfOwnerByIndex(addr1.address, 0);
+
+    // addr2  has one car and one parking
+    await carStore.connect(addr2).mint();
+    const carTokenId2 = await carERC721.tokenOfOwnerByIndex(addr2.address, 0);
+
+    await parkingStore.connect(addr2).mint();
+    const parkTokenId2 = await parkERC721.tokenOfOwnerByIndex(addr2.address, 0);
+
+    const accountAddress = await erc6551Registry.account(
+      erc6551Account.address,
+      1337,
+      parkERC721.address,
+      parkTokenId2,
+      parkTokenId2
+    );
+
+    await lotLoot.connect(addr1).parkCar(carTokenId1, parkTokenId2);
+    // You must be the owner of the parking space
+    await expect(
+      lotLoot.connect(addr1).fineCar(parkTokenId2)
+    ).to.be.revertedWith('Not owner of park');
+
+    // The parking must has a car
+    await expect(
+      lotLoot.connect(addr1).fineCar(parkTokenId1)
+    ).to.be.revertedWith('There are no cars in this space');
+
+    await lotLoot.connect(addr2).fineCar(parkTokenId2);
+
+    expect(await lotLoot.viewParkOnCar(parkTokenId2)).to.equal(0);
+    expect(await lltToken.balanceOf(accountAddress)).to.not.equal(0);
   });
 });

@@ -9,10 +9,12 @@
 ## Overview
 
 - 项目名称: LotLoot
+- 试玩地址: [https://lotloot.osairo.xyz](https://lotloot.osairo.xyz)
 - 所选赛道：Layer2 Application
 - 项目图片
   - TODO 游戏截图
 - 简介：LotLoot 是一个基于区块链技术的社交抢车位游戏。玩家可以通过社交账号登录，拥有多辆车和 5 个车位，并与其他玩家互动，以获得代币收益。
+- [白皮书](./design/litepaper.md)
 - 玩法：
   1. 账号注册与登录:
      用户需要使用社交账号（如 Facebook, Twitter 等）登录游戏；首次登录的用户将获得随机分配的 3 辆初始车辆和 5 个车位。

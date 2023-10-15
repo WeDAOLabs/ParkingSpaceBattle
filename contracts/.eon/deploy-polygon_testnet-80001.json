@@ -31,5 +31,9 @@
   "ParkingStore": {
     "contractName": "ParkingStore",
     "address": "0xdf93FbeDc34fdF55643419801F488d8971A0FFbf"
+  },
+  "LotLoot": {
+    "contractName": "LotLoot",
+    "address": "0x2867E168855aA631255612EA925dC361BA294dE7"
   }
 }

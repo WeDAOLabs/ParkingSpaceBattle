@@ -151,7 +151,7 @@ export default defineComponent({
   top: 0;
   left: 0;
   width: 100%;
-  background-color: #c9c9c9; /* 页眉的背景颜色 */
+  background-color: rgba(255, 255, 204, 0.9); /* 页眉的背景颜色 */
   padding: 10px 0; /* 页眉的内边距 */
   text-align: center;
   z-index: 100; /* 控制页眉的层叠顺序 */
