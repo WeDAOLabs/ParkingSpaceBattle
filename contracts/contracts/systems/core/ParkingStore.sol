@@ -11,7 +11,7 @@ import "../../interface/IERC721Ext.sol";
 import "../../interface/IERC6551Account.sol";
 import "../../interface/IERC6551Registry.sol";
 
-contract ParkingCreate is
+contract ParkingStore is
     Initializable,
     PausableUpgradeable,
     AccessControlEnumerableUpgradeable,

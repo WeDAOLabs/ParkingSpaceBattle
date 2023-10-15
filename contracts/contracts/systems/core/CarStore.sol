@@ -11,7 +11,7 @@ import "../../interface/IERC721Ext.sol";
 import "../../interface/IERC6551Account.sol";
 import "../../interface/IERC6551Registry.sol";
 
-contract CarCreate is
+contract CarStore is
     Initializable,
     PausableUpgradeable,
     AccessControlEnumerableUpgradeable,
