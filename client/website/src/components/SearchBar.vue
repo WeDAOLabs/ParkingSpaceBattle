@@ -6,12 +6,12 @@
       </a-col>
       <a-col :offset="1" :span="18">
         <a-input-search
-            size="large"
-            enter-button
-            @search="funcOnSearch"
-            allowClear
-            v-model:value="searchValue"
-            placeholder="input wallet address"
+          size="large"
+          enter-button
+          @search="funcOnSearch"
+          allowClear
+          v-model:value="searchValue"
+          placeholder="input wallet address"
         />
       </a-col>
     </a-row>
@@ -19,12 +19,13 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
-import {GameEventGoFriendHome} from "../events/GameEventGoFriendHome";
-import {EventBus} from "../plugins/EventBus";
-import {walletData} from "../data/WalletData";
-import {GO_HOME, REG_ETH_ADDRESS} from "../const/Constants";
-import {Toast} from "../plugins/Toast";
+import { defineComponent, ref } from "vue";
+import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
+import { EventBus } from "../plugins/EventBus";
+import { walletData } from "../data/WalletData";
+import { GO_HOME, REG_ETH_ADDRESS } from "../const/Constants";
+import { Toast } from "../plugins/Toast";
+import { playerData } from "../data/PlayerData";
 
 export default defineComponent({
   name: "SearchBar",
@@ -40,18 +41,17 @@ export default defineComponent({
       EventBus.instance.emit(GameEventGoFriendHome.event, GO_HOME);
     };
 
-    const funcOnSearch = () => {
+    const funcOnSearch = async () => {
       if (!walletData.isAuth) {
         Toast.warn("SignIn first");
         return;
       }
       const inputValue = searchValue.value.trim();
 
-      // TODO:方便测试
-      // if (!REG_ETH_ADDRESS.test(inputValue)) {
-      //   Toast.warn("It's not an address");
-      //   return;
-      // }
+      if (!REG_ETH_ADDRESS.test(inputValue)) {
+        Toast.warn("It's not an address");
+        return;
+      }
 
       if (inputValue === walletData.address) {
         Toast.warn(`It's your address.`);
@@ -59,7 +59,14 @@ export default defineComponent({
       }
 
       showBackButton.value = true;
-      EventBus.instance.emit(GameEventGoFriendHome.event, inputValue);
+
+      const playerDTO = await playerData.getPlayerData(inputValue, true);
+
+      EventBus.instance.emit(
+        GameEventGoFriendHome.event,
+        inputValue,
+        playerDTO
+      );
     };
 
     return {
@@ -83,5 +90,4 @@ export default defineComponent({
   box-sizing: content-box;
   background-color: #f0faff;
 }
-
 </style>
