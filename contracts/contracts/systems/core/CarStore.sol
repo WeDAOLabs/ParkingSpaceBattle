@@ -32,8 +32,9 @@ contract CarStore is
     CountersUpgradeable.Counter private _tokenIdCounter;
 
     //TODO initial token id
-    uint256 internal _initialTokenId = 1000;
+    uint256 internal _initialTokenId;
 
+    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
@@ -56,6 +57,8 @@ contract CarStore is
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(PAUSER_ROLE, msg.sender);
         _grantRole(UPGRADER_ROLE, msg.sender);
+
+        _initialTokenId = 1000;
     }
 
 
@@ -76,7 +79,7 @@ contract CarStore is
     function mint() public whenNotPaused nonReentrant returns (uint256) {
         uint256 _tokenId = currentTokenId();
         _tokenIdCounter.increment();
-        address _to = msg.sender;
+        address _to = _msgSender();
 
         _mintCar(_to, _tokenId);
 

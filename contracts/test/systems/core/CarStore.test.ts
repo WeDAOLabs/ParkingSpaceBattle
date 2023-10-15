@@ -19,17 +19,43 @@ describe("CarStore", function () {
     );
     erc6551AccountContract = await StandardERC6551Account.deploy();
 
-    const carERC721Contract = await ethers.getContractFactory("CarERC721");
-    carNFTContract = await carERC721Contract.deploy();
+    const CarERC721Contract = await ethers.getContractFactory("CarERC721");
+    carNFTContract = await CarERC721Contract.deploy();
 
     const CarStoreContract = await ethers.getContractFactory("CarStore");
-    carStoreContract = await CarStoreContract.deploy();
+    carStoreContract = await upgrades.deployProxy(CarStoreContract, [
+      carNFTContract.address,
+      erc6551RegistryContract.address,
+      erc6551AccountContract.address,
+    ]);
+    await carStoreContract.deployed();
   });
 
   it("should be deploy", async () => {
-    expect(erc6551RegistryContract.address).to.not.null;
-    expect(erc6551AccountContract.address).to.not.null;
-    expect(carNFTContract.address).to.not.null;
-    expect(carStoreContract.address).to.not.null;
+    expect(erc6551RegistryContract).to.not.null;
+    expect(erc6551AccountContract).to.not.null;
+    expect(carNFTContract).to.not.null;
+    expect(carStoreContract).to.not.null;
+
+    expect(carNFTContract).to.be.instanceOf(Contract);
+    expect(await carNFTContract.name()).to.equal("LotLootCar");
+    expect(await carNFTContract.symbol()).to.equal("LLC");
+  });
+
+  it("mint car success", async () => {
+    const [owner, addr1, addr2, addr3] = await ethers.getSigners();
+    // no auth
+    await expect(carStoreContract.connect(addr1).mint()).to.be.reverted;
+    // car nft contract grant role to car store contract
+    carNFTContract
+      .connect(owner)
+      .grantRole(ethers.utils.id("MINTER_ROLE"), carStoreContract.address);
+
+    // expect(await carStoreContract.connect(addr1).mint()).to.emit(
+    //   carStoreContract,
+    //   "CarMint"
+    // );
+
+    // next
   });
 });
