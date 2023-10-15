@@ -24,7 +24,8 @@ import { defineComponent, ref } from "vue";
 import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
 import { EventBus } from "../plugins/EventBus";
 import { walletData } from "../data/WalletData";
-import { GO_HOME } from "../const/Constants";
+import { GO_HOME, REG_ETH_ADDRESS } from "../const/Constants";
+import { Toast } from "../plugins/Toast";
 
 export default defineComponent({
   name: "SearchBar",
@@ -41,8 +42,19 @@ export default defineComponent({
     };
 
     const funcOnSearch = () => {
+      const inputValue = searchValue.value.trim();
+      if (!REG_ETH_ADDRESS.test(inputValue)) {
+        Toast.warn("It's not an address");
+        return;
+      }
+
+      if (inputValue === walletData.address) {
+        Toast.warn(`It's your address.`);
+        return;
+      }
+
       showBackButton.value = true;
-      EventBus.instance.emit(GameEventGoFriendHome.event, searchValue.value);
+      EventBus.instance.emit(GameEventGoFriendHome.event, inputValue);
     };
 
     return {
