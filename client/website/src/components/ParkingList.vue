@@ -1,19 +1,30 @@
 <template>
   <div class="parkingList">
-
-    <a-modal v-model:open="showFreeMintParkingModel" title="Mint Parking affirm" @ok="funcAffirmFreeMintParking">
+    <a-modal
+      v-model:open="showFreeMintParkingModel"
+      title="Mint Parking affirm"
+      @ok="funcAffirmFreeMintParking"
+    >
       <p>Mint Parking</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
-    <a-modal v-model:open="showStickerModel" title="Sticker affirm" @ok="funcAffirmSticker">
+    <a-modal
+      v-model:open="showStickerModel"
+      title="Sticker affirm"
+      @ok="funcAffirmSticker"
+    >
       <p>贴条...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
-    <a-modal v-model:open="showChooseCarModel" title="Choose car" @ok="funcAffirmRobParking">
+    <a-modal
+      v-model:open="showChooseCarModel"
+      title="Choose car"
+      @ok="funcAffirmRobParking"
+    >
       <p>Choose Car...</p>
       <a-col :span="24" class="choose-car-margin">
         <a-button type="primary">Car1</a-button>
@@ -26,7 +37,11 @@
       </a-col>
     </a-modal>
 
-    <a-modal v-model:open="showLeaveModel " title="Leave affirm" @ok="funcAffirmLeave">
+    <a-modal
+      v-model:open="showLeaveModel"
+      title="Leave affirm"
+      @ok="funcAffirmLeave"
+    >
       <p>Leave affirm...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
@@ -35,31 +50,31 @@
     <div class="user-home" v-if="isUserHome">
       <a-row justify="space-around">
         <a-col
-            :span="4"
-            v-for="(item, index) in userParkingStateList"
-            :key="index"
+          :span="4"
+          v-for="(item, index) in userParkingStateList"
+          :key="index"
         >
           <a-row
-              justify="center"
-              align="middle"
-              class="parking-0"
-              v-if="item === 0"
+            justify="center"
+            align="middle"
+            class="parking-0"
+            v-if="item === 0"
           >
             <a-button @click="funcFreeMintParking(index)">Free Mint</a-button>
           </a-row>
           <a-row
-              justify="center"
-              align="middle"
-              class="parking-1"
-              v-if="item === 1"
+            justify="center"
+            align="middle"
+            class="parking-1"
+            v-if="item === 1"
           >
             <h2>空车位</h2>
           </a-row>
           <a-row
-              justify="center"
-              align="middle"
-              class="parking-2"
-              v-if="item === 2"
+            justify="center"
+            align="middle"
+            class="parking-2"
+            v-if="item === 2"
           >
             <a-col :span="24">
               <h3>当前车辆URL: xxx</h3>
@@ -77,11 +92,25 @@
 
     <div class="friend-Home" v-else>
       <a-row justify="space-around">
-        <a-col :span="4" v-for="(item, index) in userParkingStateList" :key="index">
-          <a-row justify="center" align="middle" class="parking-0" v-if="item === 0">
+        <a-col
+          :span="4"
+          v-for="(item, index) in userParkingStateList"
+          :key="index"
+        >
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-0"
+            v-if="item === 0"
+          >
             <h2>未铸造</h2>
           </a-row>
-          <a-row justify="center" align="middle" class="parking-1" v-if="item === 1">
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-1"
+            v-if="item === 1"
+          >
             <a-col :span="24">
               <h2>空车位</h2>
             </a-col>
@@ -89,7 +118,12 @@
               <a-button @click="funcRobParking(index)">抢车位</a-button>
             </a-col>
           </a-row>
-          <a-row justify="center" align="middle" class="parking-2" v-if="item === 2">
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-2"
+            v-if="item === 2"
+          >
             <a-col :span="24">
               <h3>当前车辆URL: xxx</h3>
             </a-col>
@@ -97,7 +131,12 @@
               <h3>Owner URL: xxx</h3>
             </a-col>
           </a-row>
-          <a-row justify="center" align="middle" class="parking-3" v-if="item === 3">
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-3"
+            v-if="item === 3"
+          >
             <a-col :span="24">
               <h3>当前车辆URL: xxx</h3>
             </a-col>
@@ -111,20 +150,19 @@
         </a-col>
       </a-row>
     </div>
-
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onBeforeMount, onUnmounted} from "vue";
-import {EventBus} from "../plugins/EventBus";
-import {GameEventGoFriendHome} from "../events/GameEventGoFriendHome";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import { EventBus } from "../plugins/EventBus";
+import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
+import { GO_HOME } from "../const/Constants";
 
 export default defineComponent({
   name: "ParkingList",
 
   setup() {
-
     onBeforeMount(() => {
       EventBus.instance.on(GameEventGoFriendHome.event, onPageRefresh);
     });
@@ -134,10 +172,10 @@ export default defineComponent({
     });
 
     const onPageRefresh = (address: any) => {
-      if (address === "home") {
-        isUserHome.value = true
+      if (address === GO_HOME) {
+        isUserHome.value = true;
       } else {
-        isUserHome.value = false
+        isUserHome.value = false;
       }
     };
 
@@ -147,7 +185,6 @@ export default defineComponent({
     const showStickerModel = ref(false);
     const showChooseCarModel = ref(false);
     const showLeaveModel = ref(false);
-
 
     const userParkingStateList = ref([1, 2, 1, 3, 0]); // 0表示未mint 1表示车位空 2表示他人占用 3表示自己占用(3仅出现在朋友的车库)
 
@@ -191,7 +228,6 @@ export default defineComponent({
       userParkingStateList.value[userParkingStateIndex.value] = 1;
     };
 
-
     return {
       userParkingStateIndex,
       showFreeMintParkingModel,
@@ -207,16 +243,14 @@ export default defineComponent({
       funcAffirmSticker,
       funcAffirmRobParking,
       funcAffirmLeave,
-      funcAffirmFreeMintParking
+      funcAffirmFreeMintParking,
     };
   },
 });
 </script>
 
 <style scoped>
-
 .parkingList {
-
 }
 
 .user-home {
