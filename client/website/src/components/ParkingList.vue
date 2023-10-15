@@ -26,7 +26,7 @@
       </a-col>
     </a-modal>
 
-    <a-modal v-model:open="showLeaveModel " title="Leave affirm" @ok="funcAffirmRobParking">
+    <a-modal v-model:open="showLeaveModel " title="Leave affirm" @ok="funcAffirmLeave">
       <p>Leave affirm...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
@@ -171,7 +171,6 @@ export default defineComponent({
       userParkingStateIndex.value = index;
     };
 
-
     const funcAffirmFreeMintParking = () => {
       showFreeMintParkingModel.value = false;
       userParkingStateList.value[userParkingStateIndex.value] = 1;
@@ -184,7 +183,12 @@ export default defineComponent({
 
     const funcAffirmRobParking = () => {
       showChooseCarModel.value = false;
-      // userParkingStateList.value[userParkingStateIndex.value] = 1;
+      userParkingStateList.value[userParkingStateIndex.value] = 3;
+    };
+
+    const funcAffirmLeave = () => {
+      showLeaveModel.value = false;
+      userParkingStateList.value[userParkingStateIndex.value] = 1;
     };
 
 
@@ -202,6 +206,7 @@ export default defineComponent({
       funcRobParking,
       funcAffirmSticker,
       funcAffirmRobParking,
+      funcAffirmLeave,
       funcAffirmFreeMintParking
     };
   },

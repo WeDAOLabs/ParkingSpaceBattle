@@ -3,15 +3,17 @@
   <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
   <!--  <Demo/>-->
   <Index/>
+  <Loading/>
 </template>
 
 <script setup lang="ts">
 import {onBeforeMount} from 'vue';
+import Loading from './components/Loading.vue';
 import Demo from './components/Demo.vue';
 import Index from './components/Index.vue';
 
 const components = {
-  Demo, Index
+  Loading, Demo, Index
 };
 
 onBeforeMount(() => {

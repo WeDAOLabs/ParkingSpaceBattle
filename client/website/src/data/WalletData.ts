@@ -51,7 +51,7 @@ export class WalletData extends Singleton {
 
     return `${this.data.address.substring(
       0,
-      4
+      6
     )}...${this.data.address.substring(
       this.data.address.length - 4,
       this.data.address.length
