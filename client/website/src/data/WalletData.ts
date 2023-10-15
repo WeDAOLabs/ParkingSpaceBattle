@@ -153,11 +153,9 @@ export class WalletData extends Singleton {
   public async chainChange(chainId: number) {
     // TODO
     if (chainId !== ChainID.Mumbai) {
-      console.log("huanwang");
       await this.disconnect();
       EventBus.instance.emit(GameEventWalletDisconnect.event);
     } else {
-      console.log("meihuan");
       this.data.chainId = chainId;
       this.saveData();
     }
@@ -197,7 +195,6 @@ export class WalletData extends Singleton {
   }
 
   public async disconnect() {
-    console.log("kshjfkjhdkjashdfkajslh");
     this.data.address = "";
     this.data.chainId = -1;
     await IndexDB.instance.deleteItem(this.cacheKey);

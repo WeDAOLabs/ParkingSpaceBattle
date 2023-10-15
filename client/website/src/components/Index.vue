@@ -28,6 +28,7 @@ import { EventBus } from "../plugins/EventBus";
 import { GameEventSample } from "../events/GameEventSample";
 import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 
 export default defineComponent({
   name: "Index",
@@ -93,12 +94,20 @@ export default defineComponent({
 
     onBeforeMount(() => {
       EventBus.instance.on(GameEventWalletConnected.event, onSignIn);
-      EventBus.instance.on(GameEventWalletDisconnect.event, onSignOut);
+      EventBus.instance.on(GameEventWalletDisconnect.eventAsync, onSignOut);
+      EventBus.instance.on(
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChanged
+      );
     });
 
     onUnmounted(() => {
       EventBus.instance.off(GameEventWalletConnected.event, onSignIn);
-      EventBus.instance.off(GameEventWalletDisconnect.event, onSignOut);
+      EventBus.instance.off(GameEventWalletDisconnect.eventAsync, onSignOut);
+      EventBus.instance.off(
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChanged
+      );
     });
 
     const onSignIn = () => {
@@ -108,6 +117,8 @@ export default defineComponent({
     const onSignOut = () => {
       isLogin.value = false;
     };
+
+    const onAccountChanged = () => {};
 
     return {
       isLogin,

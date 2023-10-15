@@ -26,6 +26,7 @@ import { GameEventWalletChainChanged } from "../events/GameEventWalletChainChang
 import { ChainID } from "../const/enum/Chain";
 import { walletData } from "../data/WalletData";
 import { Toast } from "../plugins/Toast";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 
 export default defineComponent({
   name: "Header",
@@ -59,8 +60,18 @@ export default defineComponent({
 
     onBeforeMount(() => {
       EventBus.instance.on(GameEventWalletConnected.event, onWalletConnect);
-      EventBus.instance.on(GameEventWalletDisconnect.event, onWalletDisConnect);
-      EventBus.instance.on(GameEventWalletChainChanged.event, onChainChanged);
+      EventBus.instance.on(
+        GameEventWalletDisconnect.eventAsync,
+        onWalletDisConnect
+      );
+      EventBus.instance.on(
+        GameEventWalletChainChanged.eventAsync,
+        onChainChanged
+      );
+      EventBus.instance.on(
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChange
+      );
     });
 
     onUnmounted(() => {
@@ -69,7 +80,14 @@ export default defineComponent({
         GameEventWalletDisconnect.event,
         onWalletDisConnect
       );
-      EventBus.instance.off(GameEventWalletChainChanged.event, onChainChanged);
+      EventBus.instance.off(
+        GameEventWalletChainChanged.eventAsync,
+        onChainChanged
+      );
+      EventBus.instance.off(
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChange
+      );
     });
 
     const onWalletConnect = () => {
@@ -85,6 +103,12 @@ export default defineComponent({
     const onChainChanged = (chainId: any) => {
       // TODO
       if (chainId === ChainID.Mumbai) {
+        onWalletConnect();
+      }
+    };
+
+    const onAccountChange = (account: string) => {
+      if (!StringUtil.isEmpty(account)) {
         onWalletConnect();
       }
     };
