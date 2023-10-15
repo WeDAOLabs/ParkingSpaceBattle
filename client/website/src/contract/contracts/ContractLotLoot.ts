@@ -2,8 +2,10 @@ import { ContractBase } from "./ContractBase";
 import ContractLotLootABI from "../abi/contracts/systems/core/LotLoot.sol/LotLoot.json";
 import { contractData } from "../../data/ContractData";
 import { EventBus } from "../../plugins/EventBus";
-import { GameEventParkCar } from "@/events/GameEventParkCar";
+import { GameEventParkCar } from "../../events/GameEventParkCar";
 import { ethers } from "ethers";
+import { GameEventUnParkCar } from "../../events/GameEventUnParkCar";
+import { GameEventFineCar } from "../../events/GameEventFineCar";
 
 export class ContractLotLoot extends ContractBase {
   static create(): any {
@@ -26,12 +28,12 @@ export class ContractLotLoot extends ContractBase {
 
   async getCarParking(carTokenId: number): Promise<number> {
     const parkingTokenId = await this.contract.viewCarOnPark(carTokenId);
-    return parkingTokenId;
+    return parkingTokenId.toNumber();
   }
 
   async getParkingCar(parkingTokenId: number): Promise<number> {
     const carTokenId = await this.contract.viewParkOnCar(parkingTokenId);
-    return carTokenId;
+    return carTokenId.toNumber();
   }
 
   public registerEvents() {
@@ -53,7 +55,7 @@ export class ContractLotLoot extends ContractBase {
       (who: string, carTokenId: number, parkingTokenId: number) => {
         console.log("UnParkCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
-          GameEventParkCar.event,
+          GameEventUnParkCar.event,
           ethers.utils.getAddress(who),
           carTokenId,
           parkingTokenId
@@ -66,7 +68,7 @@ export class ContractLotLoot extends ContractBase {
       (who: string, carTokenId: number, parkingTokenId: number) => {
         console.log("FineCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
-          GameEventParkCar.event,
+          GameEventFineCar.event,
           ethers.utils.getAddress(who),
           carTokenId,
           parkingTokenId

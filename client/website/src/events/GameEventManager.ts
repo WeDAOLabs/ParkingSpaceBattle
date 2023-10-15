@@ -6,6 +6,9 @@ import { GameEventWalletDisconnect } from "./GameEventWalletDisconnect";
 import { GameEventBuyParkings } from "./GameEventBuyParkings";
 import { GameEventGoFriendHome } from "./GameEventGoFriendHome";
 import { GameEventWalletConnected } from "./GameEventWalletConnected";
+import { GameEventParkCar } from "./GameEventParkCar";
+import { GameEventUnParkCar } from "./GameEventUnParkCar";
+import { GameEventFineCar } from "./GameEventFineCar";
 
 export class GameEventManager extends Singleton {
   public initialize() {
@@ -20,6 +23,9 @@ export class GameEventManager extends Singleton {
       new GameEventBuyParkings(),
       new GameEventGoFriendHome(),
       new GameEventWalletConnected(),
+      new GameEventParkCar(),
+      new GameEventUnParkCar(),
+      new GameEventFineCar(),
     ]);
   }
 

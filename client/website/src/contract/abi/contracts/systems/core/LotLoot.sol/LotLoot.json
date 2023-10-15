@@ -40,6 +40,31 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "who",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "carTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "parkingTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "FineCar",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": false,
         "internalType": "uint8",
         "name": "version",
@@ -47,6 +72,31 @@
       }
     ],
     "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "who",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "carTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "parkingTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "ParkCar",
     "type": "event"
   },
   {
@@ -135,6 +185,31 @@
       }
     ],
     "name": "RoleRevoked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "who",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "carTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "parkingTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "UnParkCar",
     "type": "event"
   },
   {
@@ -495,42 +570,6 @@
       }
     ],
     "name": "unParkCar",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_registry",
-        "type": "address"
-      },
-      {
-        "internalType": "address payable",
-        "name": "_account",
-        "type": "address"
-      }
-    ],
-    "name": "upgradeERC6551",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_carAddress",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_parkingAddress",
-        "type": "address"
-      }
-    ],
-    "name": "upgradeNFT",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
