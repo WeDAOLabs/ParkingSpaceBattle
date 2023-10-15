@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import { contractData } from "../ContractData";
 import { BaseDTO } from "./BaseDTO";
+import { CarStatus } from "../../const/enum/CarStatus";
 
 export class CarDTO extends BaseDTO {
   tokenId: number = 0;
@@ -13,6 +14,13 @@ export class CarDTO extends BaseDTO {
     return this.parkingTokenId > 0;
   }
 
+  public get status(): CarStatus {
+    if (this.isParking) {
+      return CarStatus.PARKED;
+    }
+    return CarStatus.EMPTY;
+  }
+
   public static async create(tokenId: number, parkingTokenId = 0) {
     const carDTO = this.fillWith({
       tokenId: tokenId,
@@ -21,7 +29,6 @@ export class CarDTO extends BaseDTO {
 
     if (!parkingTokenId) {
       const parking = await contractData.lotLootContract.getCarParking(tokenId);
-      console.log("查找停放的车厂", parking);
       carDTO.parkingTokenId = parking;
     }
 
