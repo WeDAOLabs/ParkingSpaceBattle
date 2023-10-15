@@ -135,7 +135,7 @@
                 type="primary"
                 danger
                 @click="funcRobParking(index)"
-                >抢车位</a-button
+                >Park</a-button
               >
             </a-col>
           </a-row>
@@ -227,6 +227,7 @@ import { contractData } from "../data/ContractData";
 import { Toast } from "../plugins/Toast";
 import { GameEventBuyParkings } from "../events/GameEventBuyParkings";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
+import { GameEventParkCar } from "../events/GameEventParkCar";
 
 export default defineComponent({
   name: "ParkingList",
@@ -240,6 +241,7 @@ export default defineComponent({
         GameEventWalletAccountChanged.eventAsync,
         refreshHome
       );
+      EventBus.instance.on(GameEventParkCar.eventAsync, onParkCar);
     });
 
     onUnmounted(() => {
@@ -250,6 +252,7 @@ export default defineComponent({
         GameEventWalletAccountChanged.eventAsync,
         refreshHome
       );
+      EventBus.instance.off(GameEventParkCar.eventAsync, onParkCar);
     });
 
     const onPageRefresh = async (address: any) => {
@@ -289,9 +292,29 @@ export default defineComponent({
       userParkingStateIndex.value = index;
     };
 
-    const funcRobParking = (index: number) => {
-      showChooseCarModel.value = true;
-      userParkingStateIndex.value = index;
+    const funcRobParking = async (index: number) => {
+      const player = await playerData.getPlayerData(homeData.currentPlyer);
+      const myData = await playerData.getPlayerData(walletData.address);
+      if (!player || !myData) {
+        return Promise.resolve();
+      }
+
+      const tokenId = player.parkings[index].tokenId;
+      const carIndex = myData.cars.findIndex((car) => car.isEmpty);
+      if (carIndex > 0) {
+        Loading.open();
+        try {
+          await contractData.lotLootContract.park(
+            myData.cars[carIndex].tokenId,
+            tokenId
+          );
+        } catch (e) {
+          console.error(e);
+          Loading.close();
+        }
+      } else {
+        Toast.warn(`there's no car idle`);
+      }
     };
 
     const funcLeave = (index: number) => {
@@ -354,6 +377,10 @@ export default defineComponent({
     const onParkingBought = async () => {
       Loading.close();
       await refreshHome();
+    };
+
+    const onParkCar = async () => {
+      refreshFriendHome();
     };
 
     return {

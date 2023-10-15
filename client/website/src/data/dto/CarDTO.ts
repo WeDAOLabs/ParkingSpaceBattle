@@ -14,6 +14,10 @@ export class CarDTO extends BaseDTO {
     return this.parkingTokenId > 0;
   }
 
+  public get isEmpty(): boolean {
+    return this.status === CarStatus.EMPTY;
+  }
+
   public get status(): CarStatus {
     if (this.isParking) {
       return CarStatus.PARKED;
