@@ -4,6 +4,12 @@ import { GameEventWalletAccountChanged } from "./GameEventWalletAccountChanged";
 import { GameEventWalletChainChanged } from "./GameEventWalletChainChanged";
 import { GameEventWalletDisconnect } from "./GameEventWalletDisconnect";
 import { GameEventBuyParkings } from "./GameEventBuyParkings";
+import { GameEventGoFriendHome } from "./GameEventGoFriendHome";
+import { GameEventWalletConnected } from "./GameEventWalletConnected";
+import { GameEventParkCar } from "./GameEventParkCar";
+import { GameEventUnParkCar } from "./GameEventUnParkCar";
+import { GameEventFineCar } from "./GameEventFineCar";
+import { GameEventBuyCar } from "./GameEventBuyCar";
 
 export class GameEventManager extends Singleton {
   public initialize() {
@@ -16,6 +22,12 @@ export class GameEventManager extends Singleton {
       new GameEventWalletChainChanged(),
       new GameEventWalletDisconnect(),
       new GameEventBuyParkings(),
+      new GameEventGoFriendHome(),
+      new GameEventWalletConnected(),
+      new GameEventParkCar(),
+      new GameEventUnParkCar(),
+      new GameEventFineCar(),
+      new GameEventBuyCar(),
     ]);
   }
 
@@ -24,8 +36,18 @@ export class GameEventManager extends Singleton {
   }
 
   public addListener(listener: any) {
-    EventBus.instance.on(listener.subject, async () => {
-      await listener.execAsync();
-    });
+    EventBus.instance.on(
+      listener.subject,
+      async (
+        args1: any,
+        args2: any,
+        args3: any,
+        args4: any,
+        args5: any,
+        args6: any
+      ) => {
+        await listener.execAsync(args1, args2, args3, args4, args5, args6);
+      }
+    );
   }
 }

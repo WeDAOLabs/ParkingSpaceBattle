@@ -41,7 +41,7 @@ export class WalletData extends Singleton {
   }
 
   public get address(): string {
-    return this.data.address;
+    return ethers.utils.getAddress(this.data.address);
   }
 
   public get shortAddress(): string {
@@ -49,13 +49,11 @@ export class WalletData extends Singleton {
       return "";
     }
 
+    const length = this.data.address.length;
     return `${this.data.address.substring(
       0,
       6
-    )}...${this.data.address.substring(
-      this.data.address.length - 4,
-      this.data.address.length
-    )}`;
+    )}...${this.data.address.substring(length - 4, length)}`;
   }
 
   public get chainId(): number {
@@ -191,7 +189,7 @@ export class WalletData extends Singleton {
 
     this.saveData();
 
-    EventBus.instance.emit(GameEventWalletConnected.event, accounts);
+    EventBus.instance.emit(GameEventWalletConnected.event, accounts[0]);
   }
 
   public async disconnect() {

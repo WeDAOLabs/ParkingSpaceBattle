@@ -12,7 +12,6 @@
     <div v-else>
       <SearchBar/>
       <ParkingList/>
-      <a-divider/>
       <CarList/>
     </div>
   </div>
@@ -33,12 +32,10 @@ import CarList from "./CarList.vue";
 import WelcomePage from "./WelcomePage.vue";
 
 import {walletData} from "../data/WalletData";
-import {playerData} from "../data/PlayerData";
 import {EventBus} from "../plugins/EventBus";
 import {GameEventWalletDisconnect} from "../events/GameEventWalletDisconnect";
 import {GameEventWalletConnected} from "../events/GameEventWalletConnected";
 import {GameEventWalletAccountChanged} from "../events/GameEventWalletAccountChanged";
-import {Loading} from "../plugins/Loading";
 
 export default defineComponent({
   name: "Index",
@@ -48,7 +45,7 @@ export default defineComponent({
     const isLogin = ref(walletData.isAuth);
 
     onBeforeMount(() => {
-      EventBus.instance.on(GameEventWalletConnected.event, onSignIn);
+      EventBus.instance.on(GameEventWalletConnected.eventAsync, onSignIn);
       EventBus.instance.on(GameEventWalletDisconnect.eventAsync, onSignOut);
       EventBus.instance.on(
           GameEventWalletAccountChanged.eventAsync,
@@ -58,12 +55,15 @@ export default defineComponent({
 
     onMounted(() => {
       if (isLogin.value) {
-        EventBus.instance.emit(GameEventWalletConnected.event);
+        EventBus.instance.emit(
+            GameEventWalletConnected.event,
+            walletData.address
+        );
       }
     });
 
     onUnmounted(() => {
-      EventBus.instance.off(GameEventWalletConnected.event, onSignIn);
+      EventBus.instance.off(GameEventWalletConnected.eventAsync, onSignIn);
       EventBus.instance.off(GameEventWalletDisconnect.eventAsync, onSignOut);
       EventBus.instance.off(
           GameEventWalletAccountChanged.eventAsync,
@@ -73,10 +73,6 @@ export default defineComponent({
 
     const onSignIn = async () => {
       isLogin.value = true;
-
-      Loading.open();
-      await playerData.getPlayerData(walletData.address, true);
-      Loading.close();
     };
 
     const onSignOut = () => {

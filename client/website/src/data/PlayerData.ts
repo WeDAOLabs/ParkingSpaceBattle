@@ -3,6 +3,9 @@ import { Singleton } from "../core/game/Singleton";
 import { contractData } from "./ContractData";
 import { registerDataModel } from "./DataRegister";
 import { PlayerDTO } from "./dto/PlayerDTO";
+import { ethers } from "ethers";
+import { ParkingDTO } from "./dto/ParkingDTO";
+import { CarDTO } from "./dto/CarDTO";
 
 export class PlayerData extends Singleton {
   private _playerMap: Map<string, PlayerDTO | null> = new Map();
@@ -27,8 +30,9 @@ export class PlayerData extends Singleton {
     refresh = false
   ): Promise<PlayerDTO | null> {
     let playerDTO: PlayerDTO | null = null;
+    const addr = ethers.utils.getAddress(address);
     if (!refresh) {
-      playerDTO = this._playerMap.get(address) ?? null;
+      playerDTO = this._playerMap.get(addr) ?? null;
     }
     if (playerDTO) {
       return playerDTO;
@@ -39,14 +43,29 @@ export class PlayerData extends Singleton {
     );
     // 车辆
     const cars = await contractData.carERC721Contract.getPlayerCars(address);
+
+    const parkingDTOs = [];
+    for (let i = 0; i < parkings.length; i++) {
+      parkingDTOs.push(await ParkingDTO.create(parkings[i]));
+    }
+
+    const carDTOs = [];
+    for (let i = 0; i < cars.length; i++) {
+      carDTOs.push(await CarDTO.create(cars[i]));
+    }
+
     // 收益
 
     playerDTO = PlayerDTO.fillWith({
-      parkingTokenIds: parkings,
-      carTokenIds: cars,
+      address: address,
+      parkings: parkingDTOs,
+      cars: carDTOs,
     });
 
-    this._playerMap.set(address, playerDTO);
+    if (this._playerMap.has(addr)) {
+      this._playerMap.delete(addr);
+    }
+    this._playerMap.set(addr, playerDTO);
 
     return playerDTO;
   }

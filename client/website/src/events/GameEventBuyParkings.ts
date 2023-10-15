@@ -1,3 +1,4 @@
+import { playerData } from "../data/PlayerData";
 import { GameEventBase } from "./GameEventBase";
 
 export class GameEventBuyParkings extends GameEventBase {
@@ -8,6 +9,6 @@ export class GameEventBuyParkings extends GameEventBase {
   }
 
   public async exec(to: string, tokenIds: number[]) {
-    console.log("buy parking place complete", to, tokenIds);
+    await playerData.getPlayerData(to, true);
   }
 }

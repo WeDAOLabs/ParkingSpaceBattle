@@ -1,19 +1,30 @@
 <template>
   <div class="parkingList">
-
-    <a-modal v-model:open="showFreeMintParkingModel" title="Mint Parking affirm" @ok="funcAffirmFreeMintParking">
+    <a-modal
+      v-model:open="showFreeMintParkingModel"
+      title="Mint Parking affirm"
+      @ok="funcAffirmFreeMintParking"
+    >
       <p>Mint Parking</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
-    <a-modal v-model:open="showStickerModel" title="Sticker affirm" @ok="funcAffirmSticker">
+    <a-modal
+      v-model:open="showStickerModel"
+      title="Sticker affirm"
+      @ok="funcAffirmSticker"
+    >
       <p>贴条...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
-    <a-modal v-model:open="showChooseCarModel" title="Choose car" @ok="funcAffirmRobParking">
+    <a-modal
+      v-model:open="showChooseCarModel"
+      title="Choose car"
+      @ok="funcAffirmRobParking"
+    >
       <p>Choose Car...</p>
       <a-col :span="24" class="choose-car-margin">
         <a-button type="primary">Car1</a-button>
@@ -26,35 +37,51 @@
       </a-col>
     </a-modal>
 
-    <a-modal v-model:open="showLeaveModel " title="Leave affirm" @ok="funcAffirmLeave">
+    <a-modal
+      v-model:open="showLeaveModel"
+      title="Leave affirm"
+      @ok="funcAffirmLeave"
+    >
       <p>Leave affirm...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
     <div class="user-home" v-if="isUserHome">
-      <a-row v-if="isMinted" justify="space-around">
-        <a-button>购买</a-button>
+      <a-row v-if="!isMinted" justify="space-around">
+        <a-button size="large" class="buy-parking" @click="buyParkingPlace"
+          >Buying Parking Place</a-button
+        >
       </a-row>
       <a-row v-else justify="space-around">
-        <a-col :span="4" v-for="(item, index) in userParkingStateList" :key="index">
-          <a-row justify="center" align="middle" class="parking-1" v-if="item === 1">
+        <a-col
+          :span="4"
+          v-for="(item, index) in userParkingStateList"
+          :key="index"
+        >
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-1"
+            v-if="item === 1"
+          >
           </a-row>
-          <a-row justify="center" align="middle" class="parking-2" v-if="item === 2">
-
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-2"
+            v-if="item === 2"
+          >
             <a-col :span="24">
-              <a-image
-                  :src="require('../assets/car.jpg')"
-                  :preview="false"
-              />
+              <a-image :src="require('../assets/car.jpg')" :preview="false" />
             </a-col>
             <a-col :span="20">
               <div class="car-info">
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -64,8 +91,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/erc20_llt_mini.png')"
-                        :preview="false"
+                      :src="require('../assets/erc20_llt_mini.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -76,12 +103,12 @@
             </a-col>
             <a-col :span="24">
               <a-image
-                  width="50%"
-                  height="50%"
-                  class="pointer"
-                  @click="funcSticker(index)"
-                  :src="require('../assets/sticker_button02.png')"
-                  :preview="false"
+                width="50%"
+                height="50%"
+                class="pointer"
+                @click="funcSticker(index)"
+                :src="require('../assets/sticker_button02.png')"
+                :preview="false"
               />
             </a-col>
           </a-row>
@@ -91,19 +118,36 @@
 
     <div class="friend-Home" v-else>
       <a-row justify="space-around">
-        <a-col :span="4" v-for="(item, index) in userParkingStateList" :key="index">
-          <a-row justify="center" align="middle" class="parking-1" v-if="item === 1">
+        <a-col
+          :span="4"
+          v-for="(item, index) in userParkingStateList"
+          :key="index"
+        >
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-1"
+            v-if="item === 1"
+          >
             <a-col :span="24">
-              <a-button size="large" type="primary" danger @click="funcRobParking(index)">抢车位</a-button>
+              <a-button
+                size="large"
+                type="primary"
+                danger
+                @click="funcRobParking(index)"
+                >Park</a-button
+              >
             </a-col>
           </a-row>
-          <a-row justify="center" align="middle" class="parking-2" v-if="item === 2">
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-2"
+            v-if="item === 2"
+          >
             <a-col :span="24">
               <a-row justify="center" align="middle">
-                <a-image
-                    :src="require('../assets/car.jpg')"
-                    :preview="false"
-                />
+                <a-image :src="require('../assets/car.jpg')" :preview="false" />
               </a-row>
             </a-col>
             <a-col :span="20">
@@ -111,8 +155,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -122,13 +166,15 @@
               </div>
             </a-col>
           </a-row>
-          <a-row justify="center" align="middle" class="parking-3" v-if="item === 3">
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-3"
+            v-if="item === 3"
+          >
             <a-col :span="24">
               <a-row justify="center" align="middle">
-                <a-image
-                    :src="require('../assets/car.jpg')"
-                    :preview="false"
-                />
+                <a-image :src="require('../assets/car.jpg')" :preview="false" />
               </a-row>
             </a-col>
             <a-col :span="20">
@@ -136,8 +182,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -147,8 +193,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/erc20_llt_mini.png')"
-                        :preview="false"
+                      :src="require('../assets/erc20_llt_mini.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -164,34 +210,66 @@
         </a-col>
       </a-row>
     </div>
-
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onBeforeMount, onUnmounted} from "vue";
-import {EventBus} from "../plugins/EventBus";
-import {GameEventGoFriendHome} from "../events/GameEventGoFriendHome";
-import {GO_HOME} from "../const/Constants";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import { EventBus } from "../plugins/EventBus";
+import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
+import { GO_HOME } from "../const/Constants";
+import { homeData } from "../data/HomeData";
+import { playerData } from "../data/PlayerData";
+import { walletData } from "../data/WalletData";
+import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { Loading } from "../plugins/Loading";
+import { contractData } from "../data/ContractData";
+import { Toast } from "../plugins/Toast";
+import { GameEventBuyParkings } from "../events/GameEventBuyParkings";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
+import { GameEventParkCar } from "../events/GameEventParkCar";
 
 export default defineComponent({
   name: "ParkingList",
 
   setup() {
     onBeforeMount(() => {
-      EventBus.instance.on(GameEventGoFriendHome.event, onPageRefresh);
+      EventBus.instance.on(GameEventGoFriendHome.eventAsync, onPageRefresh);
+      EventBus.instance.on(GameEventWalletConnected.eventAsync, onSignIn);
+      EventBus.instance.on(GameEventBuyParkings.eventAsync, onParkingBought);
+      EventBus.instance.on(
+        GameEventWalletAccountChanged.eventAsync,
+        refreshHome
+      );
+      EventBus.instance.on(GameEventParkCar.eventAsync, onParkCar);
     });
 
     onUnmounted(() => {
-      EventBus.instance.off(GameEventGoFriendHome.event, onPageRefresh);
+      EventBus.instance.off(GameEventGoFriendHome.eventAsync, onPageRefresh);
+      EventBus.instance.off(GameEventWalletConnected.eventAsync, onSignIn);
+      EventBus.instance.off(GameEventBuyParkings.eventAsync, onParkingBought);
+      EventBus.instance.off(
+        GameEventWalletAccountChanged.eventAsync,
+        refreshHome
+      );
+      EventBus.instance.off(GameEventParkCar.eventAsync, onParkCar);
     });
 
-    const onPageRefresh = (address: any) => {
-      if (address === GO_HOME) {
-        isUserHome.value = true;
+    const onPageRefresh = async (address: any) => {
+      Loading.open();
+      isUserHome.value = address === GO_HOME;
+      if (!isUserHome.value) {
+        await refreshFriendHome();
       } else {
-        isUserHome.value = false;
+        await refreshHome();
       }
+      Loading.close();
+    };
+
+    const onSignIn = async () => {
+      Loading.open();
+      await refreshHome();
+      Loading.close();
     };
 
     const isMinted = ref(false);
@@ -214,9 +292,29 @@ export default defineComponent({
       userParkingStateIndex.value = index;
     };
 
-    const funcRobParking = (index: number) => {
-      showChooseCarModel.value = true;
-      userParkingStateIndex.value = index;
+    const funcRobParking = async (index: number) => {
+      const player = await playerData.getPlayerData(homeData.currentPlyer);
+      const myData = await playerData.getPlayerData(walletData.address);
+      if (!player || !myData) {
+        return Promise.resolve();
+      }
+
+      const tokenId = player.parkings[index].tokenId;
+      const carIndex = myData.cars.findIndex((car) => car.isEmpty);
+      if (carIndex >= 0) {
+        Loading.open();
+        try {
+          await contractData.lotLootContract.park(
+            myData.cars[carIndex].tokenId,
+            tokenId
+          );
+        } catch (e) {
+          console.error(e);
+          Loading.close();
+        }
+      } else {
+        Toast.warn(`there's no car idle`);
+      }
     };
 
     const funcLeave = (index: number) => {
@@ -244,6 +342,47 @@ export default defineComponent({
       userParkingStateList.value[userParkingStateIndex.value] = 1;
     };
 
+    const refreshFriendHome = async () => {
+      const player = await playerData.getPlayerData(homeData.currentPlyer);
+      isMinted.value = player && player.hasParkings ? true : false;
+
+      if (player)
+        userParkingStateList.value = player.parkings.map(
+          (parking) => parking.status
+        );
+    };
+
+    const refreshHome = async () => {
+      const player = await playerData.getPlayerData(walletData.address);
+      isMinted.value = player && player.hasParkings ? true : false;
+
+      if (player) {
+        userParkingStateList.value = player.parkings.map(
+          (parking) => parking.status
+        );
+      }
+    };
+
+    const buyParkingPlace = async () => {
+      Loading.open();
+      try {
+        await contractData.parkingStoreContract.buyParkings();
+      } catch (e) {
+        Loading.close();
+        Toast.error("Buy parking place failed.");
+        console.error(e);
+      }
+    };
+
+    const onParkingBought = async () => {
+      Loading.close();
+      await refreshHome();
+    };
+
+    const onParkCar = async () => {
+      refreshFriendHome();
+    };
+
     return {
       userParkingStateIndex,
       showFreeMintParkingModel,
@@ -261,14 +400,13 @@ export default defineComponent({
       funcAffirmRobParking,
       funcAffirmLeave,
       funcAffirmFreeMintParking,
+      buyParkingPlace,
     };
   },
 });
 </script>
 <style scoped>
-
 .parkingList {
-
 }
 
 .pointer {
@@ -308,7 +446,7 @@ export default defineComponent({
   background-color: #f0faff;
   width: 220px;
   height: 290px;
-  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-image: url("../assets/parking.jpg"); /* 替换 'your-image.jpg' 为你的图片文件名 */
   background-position: center; /* 图片在div中居中显示 */
 }
 
@@ -319,7 +457,7 @@ export default defineComponent({
   background-color: #fff9e6;
   width: 220px;
   height: 290px;
-  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-image: url("../assets/parking.jpg"); /* 替换 'your-image.jpg' 为你的图片文件名 */
   background-position: center; /* 图片在div中居中显示 */
 }
 
@@ -330,7 +468,7 @@ export default defineComponent({
   background-color: #ffe5e4;
   width: 220px;
   height: 290px;
-  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-image: url("../assets/parking.jpg"); /* 替换 'your-image.jpg' 为你的图片文件名 */
   background-position: center; /* 图片在div中居中显示 */
 }
 
