@@ -4,7 +4,6 @@ import {
   IContractAddress,
 } from "../const/Contracts";
 import { ChainID } from "../const/enum/Chain";
-import { ContractSample } from "../contract/contracts/ContractSample";
 import { Singleton } from "../core/game/Singleton";
 import { registerDataModel } from "./DataRegister";
 import { walletData } from "./WalletData";
@@ -14,18 +13,10 @@ import { ContractParkingERC721 } from "../contract/contracts/ContractParkingERC7
 import { ContractCarStore } from "../contract/contracts/ContractCarStore";
 
 export class ContractData extends Singleton {
-  private _sampleContractIns: any = null!;
   private _carStoreContractIns: any = null!;
   private _parkingStoreContractIns: any = null!;
   private _carERC721ContractIns: any = null!;
   private _parkingERC721StoreContractIns: any = null!;
-
-  public get sampleContract(): any {
-    if (!this._sampleContractIns) {
-      this._sampleContractIns = ContractSample.create();
-    }
-    return this._sampleContractIns;
-  }
 
   public get carStoreContract(): any {
     if (!this._carStoreContractIns) {

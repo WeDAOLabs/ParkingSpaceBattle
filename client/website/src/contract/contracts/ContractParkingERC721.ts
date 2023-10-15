@@ -16,7 +16,7 @@ export class ContractParkingERC721 extends ContractBase {
     return contractWithSigner;
   }
 
-  public registerEvents(contractIns: any, currentGameId?: any) {
+  public registerEvents(contractIns: any) {
     if (!contractIns) {
       return;
     }

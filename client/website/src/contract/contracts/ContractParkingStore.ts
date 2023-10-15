@@ -23,7 +23,7 @@ export class ContractParkingStore extends ContractBase {
     await contract.mintMax();
   }
 
-  public registerEvents(contractIns: any, currentGameId?: any) {
+  public registerEvents(contractIns: any) {
     if (!contractIns) {
       return;
     }
