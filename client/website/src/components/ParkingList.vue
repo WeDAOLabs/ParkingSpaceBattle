@@ -255,7 +255,7 @@ export default defineComponent({
     const onPageRefresh = async (address: any) => {
       Loading.open();
       isUserHome.value = address === GO_HOME;
-      if (!homeData.isInHome) {
+      if (!isUserHome.value) {
         await refreshFriendHome();
       } else {
         await refreshHome();

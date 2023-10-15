@@ -62,8 +62,6 @@ export class PlayerData extends Singleton {
       cars: carDTOs,
     });
 
-    console.log(playerDTO);
-
     if (this._playerMap.has(addr)) {
       this._playerMap.delete(addr);
     }
