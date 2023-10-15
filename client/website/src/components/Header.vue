@@ -1,49 +1,47 @@
 <template>
   <div class="header">
-
     <a-row>
       <a-col :offset="1" :span="3">
         <a-image
-            class="logo"
-            :src="require('../assets/logo.jpg')"
-            :preview="false"
+          class="logo"
+          :src="require('../assets/logo.jpg')"
+          :preview="false"
         />
       </a-col>
       <a-col v-if="!isLogin" :offset="16" :span="2">
         <a-button @click="connectWallet">Sign In</a-button>
       </a-col>
       <a-col v-else :offset="16" :span="2">
-        <IconSvg icon-name="#icon-metamask"/>
+        <IconSvg icon-name="#icon-metamask" />
         <h3>{{ userAddress }}</h3>
       </a-col>
-
     </a-row>
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onBeforeMount, onUnmounted} from "vue";
-import {StringUtil} from "../core/utils/StringUtil";
-import {EventBus} from "../plugins/EventBus";
-import {GameEventWalletConnected} from "../events/GameEventWalletConnected";
-import {GameEventWalletDisconnect} from "../events/GameEventWalletDisconnect";
-import {GameEventWalletChainChanged} from "../events/GameEventWalletChainChanged";
-import {ChainID} from "../const/enum/Chain";
-import {walletData} from "../data/WalletData";
-import {Toast} from "../plugins/Toast";
-import {GameEventWalletAccountChanged} from "../events/GameEventWalletAccountChanged";
-import IconSvg from "@/components/IconSvg.vue";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import { StringUtil } from "../core/utils/StringUtil";
+import { EventBus } from "../plugins/EventBus";
+import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
+import { GameEventWalletChainChanged } from "../events/GameEventWalletChainChanged";
+import { ChainID } from "../const/enum/Chain";
+import { walletData } from "../data/WalletData";
+import { Toast } from "../plugins/Toast";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
+import IconSvg from "../components/IconSvg.vue";
 
 export default defineComponent({
   name: "Header",
 
-  components: {IconSvg},
+  components: { IconSvg },
   setup() {
     const isLogin = ref(walletData.isAuth);
     const userAddress = ref(
-        !StringUtil.isEmpty(walletData.address)
-            ? walletData.shortAddress
-            : "Sign In"
+      !StringUtil.isEmpty(walletData.address)
+        ? walletData.shortAddress
+        : "Sign In"
     );
 
     const connectWallet = async () => {
@@ -67,32 +65,32 @@ export default defineComponent({
     onBeforeMount(() => {
       EventBus.instance.on(GameEventWalletConnected.event, onWalletConnect);
       EventBus.instance.on(
-          GameEventWalletDisconnect.eventAsync,
-          onWalletDisConnect
+        GameEventWalletDisconnect.eventAsync,
+        onWalletDisConnect
       );
       EventBus.instance.on(
-          GameEventWalletChainChanged.eventAsync,
-          onChainChanged
+        GameEventWalletChainChanged.eventAsync,
+        onChainChanged
       );
       EventBus.instance.on(
-          GameEventWalletAccountChanged.eventAsync,
-          onAccountChange
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChange
       );
     });
 
     onUnmounted(() => {
       EventBus.instance.off(GameEventWalletConnected.event, onWalletConnect);
       EventBus.instance.off(
-          GameEventWalletDisconnect.event,
-          onWalletDisConnect
+        GameEventWalletDisconnect.event,
+        onWalletDisConnect
       );
       EventBus.instance.off(
-          GameEventWalletChainChanged.eventAsync,
-          onChainChanged
+        GameEventWalletChainChanged.eventAsync,
+        onChainChanged
       );
       EventBus.instance.off(
-          GameEventWalletAccountChanged.eventAsync,
-          onAccountChange
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChange
       );
     });
 

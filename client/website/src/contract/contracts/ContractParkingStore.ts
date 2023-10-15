@@ -13,24 +13,17 @@ export class ContractParkingStore extends ContractBase {
       "",
       ""
     );
-    const contractWithSigner = contract.createContract();
-    contract.registerEvents(contractWithSigner);
-    return contractWithSigner;
+    return contract.createContract();
   }
 
   public async buyParkings() {
-    const contract = contractData.parkingStoreContract;
-    await contract.mintMax();
+    await this.contract.mintMax();
   }
 
-  public registerEvents(contractIns: any) {
-    if (!contractIns) {
-      return;
-    }
-
-    contractIns.on("ParkingMintMax", (to: string, tokenIds: number[]) => {
+  public registerEvents() {
+    this.contract.on("ParkingMintMax", (to: string, tokenIds: number[]) => {
       console.log("init parking place", to, tokenIds);
-      EventBus.instance.emit(GameEventBuyParkings.eventAsync, to, tokenIds);
+      EventBus.instance.emit(GameEventBuyParkings.event, to, tokenIds);
     });
   }
 }

@@ -6,16 +6,10 @@ export class ContractCarStore extends ContractBase {
   static create(): any {
     const address = contractData.contractAddress.CarStore;
     const contract = new ContractCarStore(ContractCarStoreABI, address, "", "");
-    const contractWithSigner = contract.createContract();
-    contract.registerEvents(contractWithSigner);
-    return contractWithSigner;
+    return contract.createContract();
   }
 
-  public registerEvents(contractIns: any) {
-    if (!contractIns) {
-      return;
-    }
-
+  public registerEvents() {
     // TODO
   }
 }
