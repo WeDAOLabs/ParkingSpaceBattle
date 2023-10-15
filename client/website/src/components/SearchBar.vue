@@ -1,11 +1,10 @@
 <template>
   <div class="search-bar">
     <a-row justify="left" align="middle">
-      <a-col :offset="1" :span="1" class="test01">
+      <a-col :offset="1" :span="1">
         <a-button v-if="showBackButton" @click="funcBack">返回</a-button>
       </a-col>
-
-      <a-col :offset="1" :span="18" class="test02">
+      <a-col :offset="1" :span="18">
         <a-input-search
             size="large"
             enter-button
@@ -47,10 +46,12 @@ export default defineComponent({
         return;
       }
       const inputValue = searchValue.value.trim();
-      if (!REG_ETH_ADDRESS.test(inputValue)) {
-        Toast.warn("It's not an address");
-        return;
-      }
+
+      // TODO:方便测试
+      // if (!REG_ETH_ADDRESS.test(inputValue)) {
+      //   Toast.warn("It's not an address");
+      //   return;
+      // }
 
       if (inputValue === walletData.address) {
         Toast.warn(`It's your address.`);
@@ -83,11 +84,4 @@ export default defineComponent({
   background-color: #f0faff;
 }
 
-/*.test01 {*/
-/*  background-color: red;*/
-/*}*/
-
-/*.test02 {*/
-/*  background-color: greenyellow;*/
-/*}*/
 </style>

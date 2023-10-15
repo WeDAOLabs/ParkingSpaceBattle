@@ -23,7 +23,7 @@ onBeforeMount(() => {
 
   document.documentElement.style.zoom = String(clientZoom);
   // background UI
-  // document.documentElement.style.background = 'linear-gradient(30deg, #9FA5D5, #E8F5C8) no-repeat fixed';
+  document.documentElement.style.background = 'linear-gradient(30deg, #9FA5D5, #E8F5C8) no-repeat fixed';
 
 });
 </script>

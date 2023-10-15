@@ -10,7 +10,6 @@
       </a-row>
     </div>
     <div v-else>
-      <a-divider/>
       <SearchBar/>
       <ParkingList/>
       <a-divider/>
