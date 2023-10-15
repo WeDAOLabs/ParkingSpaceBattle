@@ -93,12 +93,12 @@ export default defineComponent({
 
     onBeforeMount(() => {
       EventBus.instance.on(GameEventWalletConnected.event, onSignIn);
-      EventBus.instance.on(GameEventWalletDisconnect.event, onSignOut);
+      EventBus.instance.on(GameEventWalletDisconnect.eventAsync, onSignOut);
     });
 
     onUnmounted(() => {
       EventBus.instance.off(GameEventWalletConnected.event, onSignIn);
-      EventBus.instance.off(GameEventWalletDisconnect.event, onSignOut);
+      EventBus.instance.off(GameEventWalletDisconnect.eventAsync, onSignOut);
     });
 
     const onSignIn = () => {

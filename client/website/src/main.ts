@@ -7,6 +7,7 @@ import "ant-design-vue/dist/reset.css";
 import { dataModels } from "./data/DataRegister";
 import { message } from "ant-design-vue";
 import { Toast } from "./plugins/Toast";
+import { GameEventManager } from "./events/GameEventManager";
 
 const app = createApp(App);
 app.use(Antd);
@@ -18,6 +19,8 @@ const startUp = async () => {
     await dataModal.init();
   }
 
+  app.config.globalProperties.$gameEventListener =
+    GameEventManager.getInstance();
   app.config.globalProperties.$message = message;
 
   Toast.$app = app;
