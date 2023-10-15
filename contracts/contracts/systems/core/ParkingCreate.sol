@@ -11,7 +11,7 @@ import "../../interface/IERC721Ext.sol";
 import "../../interface/IERC6551Account.sol";
 import "../../interface/IERC6551Registry.sol";
 
-contract CarCreate is
+contract ParkingCreate is
     Initializable,
     PausableUpgradeable,
     AccessControlEnumerableUpgradeable,
@@ -22,9 +22,9 @@ contract CarCreate is
     bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
-    event CarMint(address indexed to, uint256 indexed tokenId, address account);
+    event ParkingMint(address indexed to, uint256 indexed tokenId, address account);
 
-    IERC721Ext _carERC721;
+    IERC721Ext _parkingERC721;
     IERC6551Account _erc6551Account;
     IERC6551Registry _erc6551Registry;
 
@@ -39,11 +39,11 @@ contract CarCreate is
     }
 
     function initialize(
-        address carERC721_,
+        address parkingERC721_,
         address erc6551Registry_,
         address payable erc6551Account_
     ) public initializer {
-        _carERC721 = IERC721Ext(carERC721_);
+        _parkingERC721 = IERC721Ext(parkingERC721_);
         _erc6551Registry = IERC6551Registry(
             erc6551Registry_
         );
@@ -70,7 +70,7 @@ contract CarCreate is
     }
 
     function _mintCar(address _address, uint256 _tokenId) internal {
-        _carERC721.safeMint(_address, _tokenId);
+        _parkingERC721.safeMint(_address, _tokenId);
     }
 
     function mint() public whenNotPaused nonReentrant returns (uint256) {
@@ -83,13 +83,13 @@ contract CarCreate is
         address account = _erc6551Registry.createAccount(
             address(_erc6551Account),
             block.chainid,
-            address(_carERC721),
+            address(_parkingERC721),
             _tokenId,
             _tokenId,
             new bytes(0)
         );
 
-        emit CarMint(_to, _tokenId, account);
+        emit ParkingMint(_to, _tokenId, account);
         
         return _tokenId;
     }
