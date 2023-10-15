@@ -9,6 +9,7 @@
 ## Overview
 
 - 项目名称: LotLoot
+- 试玩地址: [https://lotloot.osairo.xyz](https://lotloot.osairo.xyz)
 - 所选赛道：Layer2 Application
 - 项目图片
   - TODO 游戏截图
