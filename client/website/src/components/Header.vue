@@ -80,7 +80,10 @@ export default defineComponent({
     };
 
     onBeforeMount(() => {
-      EventBus.instance.on(GameEventWalletConnected.event, onWalletConnect);
+      EventBus.instance.on(
+        GameEventWalletConnected.eventAsync,
+        onWalletConnect
+      );
       EventBus.instance.on(
         GameEventWalletDisconnect.eventAsync,
         onWalletDisConnect
@@ -96,7 +99,10 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
-      EventBus.instance.off(GameEventWalletConnected.event, onWalletConnect);
+      EventBus.instance.off(
+        GameEventWalletConnected.eventAsync,
+        onWalletConnect
+      );
       EventBus.instance.off(
         GameEventWalletDisconnect.event,
         onWalletDisConnect

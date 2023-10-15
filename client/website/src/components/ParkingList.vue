@@ -216,6 +216,7 @@ import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
 import { EventBus } from "../plugins/EventBus";
 import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
 import { GO_HOME } from "../const/Constants";
+import { homeData } from "../data/HomeData";
 
 export default defineComponent({
   name: "ParkingList",
@@ -230,10 +231,8 @@ export default defineComponent({
     });
 
     const onPageRefresh = (address: any) => {
-      if (address === GO_HOME) {
-        isUserHome.value = true;
-      } else {
-        isUserHome.value = false;
+      isUserHome.value = address === GO_HOME;
+      if (!homeData.isInHome) {
       }
     };
 

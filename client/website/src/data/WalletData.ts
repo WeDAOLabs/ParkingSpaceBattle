@@ -191,7 +191,7 @@ export class WalletData extends Singleton {
 
     this.saveData();
 
-    EventBus.instance.emit(GameEventWalletConnected.event, accounts);
+    EventBus.instance.emit(GameEventWalletConnected.event, accounts[0]);
   }
 
   public async disconnect() {

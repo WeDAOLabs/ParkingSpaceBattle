@@ -1,19 +1,19 @@
 <template>
   <div class="index">
-    <Header class="margin-top"/>
+    <Header class="margin-top" />
     <div v-if="!isLogin">
-      <a-divider/>
+      <a-divider />
       <a-row>
         <a-col :offset="5" :span="10">
-          <WelcomePage/>
+          <WelcomePage />
         </a-col>
       </a-row>
     </div>
     <div v-else>
-      <SearchBar/>
-      <ParkingList/>
-      <a-divider/>
-      <CarList/>
+      <SearchBar />
+      <ParkingList />
+      <a-divider />
+      <CarList />
     </div>
   </div>
 </template>
@@ -32,59 +32,55 @@ import SearchBar from "./SearchBar.vue";
 import CarList from "./CarList.vue";
 import WelcomePage from "./WelcomePage.vue";
 
-import {walletData} from "../data/WalletData";
-import {playerData} from "../data/PlayerData";
-import {EventBus} from "../plugins/EventBus";
-import {GameEventWalletDisconnect} from "../events/GameEventWalletDisconnect";
-import {GameEventWalletConnected} from "../events/GameEventWalletConnected";
-import {GameEventWalletAccountChanged} from "../events/GameEventWalletAccountChanged";
-import {Loading} from "../plugins/Loading";
+import { walletData } from "../data/WalletData";
+import { EventBus } from "../plugins/EventBus";
+import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
+import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 
 export default defineComponent({
   name: "Index",
 
-  components: {WelcomePage, Header, ParkingList, CarList, SearchBar},
+  components: { WelcomePage, Header, ParkingList, CarList, SearchBar },
   setup() {
     const isLogin = ref(walletData.isAuth);
 
     onBeforeMount(() => {
-      EventBus.instance.on(GameEventWalletConnected.event, onSignIn);
+      EventBus.instance.on(GameEventWalletConnected.eventAsync, onSignIn);
       EventBus.instance.on(GameEventWalletDisconnect.eventAsync, onSignOut);
       EventBus.instance.on(
-          GameEventWalletAccountChanged.eventAsync,
-          onAccountChanged
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChanged
       );
     });
 
     onMounted(() => {
       if (isLogin.value) {
-        EventBus.instance.emit(GameEventWalletConnected.event);
+        EventBus.instance.emit(
+          GameEventWalletConnected.event,
+          walletData.address
+        );
       }
     });
 
     onUnmounted(() => {
-      EventBus.instance.off(GameEventWalletConnected.event, onSignIn);
+      EventBus.instance.off(GameEventWalletConnected.eventAsync, onSignIn);
       EventBus.instance.off(GameEventWalletDisconnect.eventAsync, onSignOut);
       EventBus.instance.off(
-          GameEventWalletAccountChanged.eventAsync,
-          onAccountChanged
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChanged
       );
     });
 
     const onSignIn = async () => {
       isLogin.value = true;
-
-      Loading.open();
-      await playerData.getPlayerData(walletData.address, true);
-      Loading.close();
     };
 
     const onSignOut = () => {
       isLogin.value = false;
     };
 
-    const onAccountChanged = () => {
-    };
+    const onAccountChanged = () => {};
 
     return {
       isLogin,

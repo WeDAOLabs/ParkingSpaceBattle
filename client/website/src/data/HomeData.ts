@@ -14,6 +14,10 @@ export class HomeData extends Singleton {
       : walletData.address;
   }
 
+  public get isInHome(): boolean {
+    return this.currentPlyer === walletData.address;
+  }
+
   async init() {
     EventBus.instance.on(GameEventGoFriendHome.eventAsync, this.onChangeScene);
   }
