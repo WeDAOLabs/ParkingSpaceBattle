@@ -11,16 +11,24 @@ export class ContractParkingERC721 extends ContractBase {
       "",
       ""
     );
-    const contractWithSigner = contract.createContract();
-    contract.registerEvents(contractWithSigner);
-    return contractWithSigner;
+    return contract.createContract();
   }
 
-  public registerEvents(contractIns: any, currentGameId?: any) {
-    if (!contractIns) {
-      return;
+  async getPlayerParkings(address: string): Promise<any[]> {
+    const balance = await this.contract.balanceOf(address);
+    if (balance && balance.toNumber() < 0) {
+      return [];
     }
 
+    const tokenIds = [];
+    for (let i = 0; i < balance.toNumber(); i++) {
+      const tokenId = await this.contract.tokenOfOwnerByIndex(address, i);
+      tokenIds.push(tokenId.toNumber());
+    }
+    return tokenIds;
+  }
+
+  public registerEvents() {
     // TODO
   }
 }

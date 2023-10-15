@@ -24,12 +24,12 @@
     "contractName": "StandardERC6551Account",
     "address": "0x6cf706A92a234652f36995e5004c4Cb72483E529"
   },
-  "ParkingStore": {
-    "contractName": "ParkingStore",
-    "address": "0x5BdaD15499d8f1566938EbB7C7b28352638b8326"
-  },
   "CarStore": {
     "contractName": "CarStore",
     "address": "0x25ea0Cd74A37b5Ff129BdE58EFff87c00338Fe20"
+  },
+  "ParkingStore": {
+    "contractName": "ParkingStore",
+    "address": "0xdf93FbeDc34fdF55643419801F488d8971A0FFbf"
   }
 }

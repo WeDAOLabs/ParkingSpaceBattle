@@ -1,6 +1,8 @@
 import { ContractBase } from "./ContractBase";
 import ContractParkingStoreABI from "../abi/contracts/systems/core/ParkingStore.sol/ParkingStore.json";
 import { contractData } from "../../data/ContractData";
+import { EventBus } from "../../plugins/EventBus";
+import { GameEventBuyParkings } from "../../events/GameEventBuyParkings";
 
 export class ContractParkingStore extends ContractBase {
   static create(): any {
@@ -11,16 +13,17 @@ export class ContractParkingStore extends ContractBase {
       "",
       ""
     );
-    const contractWithSigner = contract.createContract();
-    contract.registerEvents(contractWithSigner);
-    return contractWithSigner;
+    return contract.createContract();
   }
 
-  public registerEvents(contractIns: any, currentGameId?: any) {
-    if (!contractIns) {
-      return;
-    }
+  public async buyParkings() {
+    await this.contract.mintMax();
+  }
 
-    // TODO
+  public registerEvents() {
+    this.contract.on("ParkingMintMax", (to: string, tokenIds: number[]) => {
+      console.log("init parking place", to, tokenIds);
+      EventBus.instance.emit(GameEventBuyParkings.event, to, tokenIds);
+    });
   }
 }

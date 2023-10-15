@@ -12,9 +12,26 @@
       <a-col v-if="!isLogin" :offset="16" :span="2">
         <a-button @click="connectWallet">Sign In</a-button>
       </a-col>
-      <a-col v-else :offset="16" :span="2">
-        <IconSvg icon-name="#icon-metamask"/>
-        <h3>{{ userAddress }}</h3>
+      <a-col v-else :offset="14" :span="6">
+        <a-row align="middle">
+          <a-col :offset="6" :span="3">
+            <IconSvg icon-name="#icon-metamask"/>
+          </a-col>
+          <a-col :span="5">
+            {{ userAddress }}
+          </a-col>
+          <a-col :offset="1" :span="3">
+            <a-image
+                width="70%"
+                height="70%"
+                :src="require('../assets/erc20_llt.jpg')"
+                :preview="false"
+            />
+          </a-col>
+          <a-col :span="4">
+            0.001 LLT
+          </a-col>
+        </a-row>
       </a-col>
 
     </a-row>
@@ -32,7 +49,7 @@ import {ChainID} from "../const/enum/Chain";
 import {walletData} from "../data/WalletData";
 import {Toast} from "../plugins/Toast";
 import {GameEventWalletAccountChanged} from "../events/GameEventWalletAccountChanged";
-import IconSvg from "@/components/IconSvg.vue";
+import IconSvg from "../components/IconSvg.vue";
 
 export default defineComponent({
   name: "Header",
@@ -141,8 +158,19 @@ export default defineComponent({
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* 为页眉添加阴影效果 */
 }
 
+.logo-size {
+  /*background-color: #1890ff;*/
+  /*width: 50%;*/
+  /*height: 50%;*/
+}
+
 .logo {
   width: 50%;
   height: 50%;
 }
+
+.test01 {
+  background-color: red;
+}
+
 </style>

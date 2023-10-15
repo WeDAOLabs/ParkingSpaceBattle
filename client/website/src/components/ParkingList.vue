@@ -35,7 +35,10 @@
     </a-modal>
 
     <div class="user-home" v-if="isUserHome">
-      <a-row justify="space-around">
+      <A-row v-if="false" justify="space-around">
+        <a-button>购买</a-button>
+      </A-row>
+      <a-row v-else justify="space-around">
         <a-col
             :span="4"
             v-for="(item, index) in userParkingStateList"
@@ -55,36 +58,81 @@
               class="parking-1"
               v-if="item === 1"
           >
-            <h2>空车位</h2>
           </a-row>
-          <a-row
-              justify="center"
-              align="middle"
-              class="parking-2"
-              v-if="item === 2"
-          >
+
+
+          <a-row justify="center" align="middle" class="parking-2" v-if="item === 2">
+
             <a-col :span="24">
-              <a-row justify="center" align="middle">
-                <a-image
-                    :src="require('../assets/car.jpg')"
-                    :preview="false"
-                />
-              </a-row>
+              <a-image
+                  :src="require('../assets/car.jpg')"
+                  :preview="false"
+              />
             </a-col>
-            <a-col :span="18" class="parking-info">
-              <a-row>
-                <a-col :span="24">
-                  <h3>当前车辆ID: xxx</h3>
-                </a-col>
-                <a-col :span="24">
-                  <a-button @click="funcSticker(index)">贴条</a-button>
-                </a-col>
-                <a-col :span="24">
-                  <p>预计收益: 123 LLT</p>
-                </a-col>
-              </a-row>
+
+            <a-col :span="20">
+              <div class="car-info">
+                <a-row justify="left" align="middle">
+                  <a-col :offset="4" :span="5">
+                    <a-image
+                        :src="require('../assets/id.png')"
+                        :preview="false"
+                    />
+                  </a-col>
+                  <a-col :offset="1" :span="5">
+                    <span class="font-color">xxx</span>
+                  </a-col>
+                </a-row>
+                <a-row justify="left" align="middle">
+                  <a-col :offset="4" :span="5">
+                    <a-image
+                        :src="require('../assets/erc20_llt_mini.png')"
+                        :preview="false"
+                    />
+                  </a-col>
+                  <a-col :offset="1" :span="5">
+                    <span class="font-color">123.001</span>
+                  </a-col>
+                </a-row>
+              </div>
+            </a-col>
+
+            <!--            <a-col :offset="7" :span="3">-->
+            <!--              <a-image-->
+            <!--                  :src="require('../assets/id.png')"-->
+            <!--                  :preview="false"-->
+            <!--              />-->
+            <!--            </a-col>-->
+            <!--            <a-col :span="7">-->
+            <!--              <span class="font-color">xxx</span>-->
+            <!--            </a-col>-->
+            <!--            <a-col :span="7">-->
+            <!--            </a-col>-->
+            <!--            <a-col :offset="7" :span="3">-->
+            <!--              <a-image-->
+            <!--                  :src="require('../assets/erc20_llt_mini.png')"-->
+            <!--                  :preview="false"-->
+            <!--              />-->
+            <!--            </a-col>-->
+            <!--            <a-col :span="7">-->
+            <!--              <span class="font-color">123.001</span>-->
+            <!--            </a-col>-->
+            <!--            <a-col :span="7">-->
+            <!--            </a-col>-->
+
+            <a-col :span="24">
+              <a-image
+                  width="50%"
+                  height="50%"
+                  class="pointer"
+                  @click="funcSticker(index)"
+                  :src="require('../assets/sticker_button02.png')"
+                  :preview="false"
+              />
             </a-col>
           </a-row>
+
+
         </a-col>
       </a-row>
     </div>
@@ -96,9 +144,6 @@
             <h2>未铸造</h2>
           </a-row>
           <a-row justify="center" align="middle" class="parking-1" v-if="item === 1">
-            <a-col :span="24">
-              <h2>空车位</h2>
-            </a-col>
             <a-col :span="24">
               <a-button @click="funcRobParking(index)">抢车位</a-button>
             </a-col>
@@ -142,10 +187,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
-import { EventBus } from "../plugins/EventBus";
-import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
-import { GO_HOME } from "../const/Constants";
+import {defineComponent, ref, onBeforeMount, onUnmounted} from "vue";
+import {EventBus} from "../plugins/EventBus";
+import {GameEventGoFriendHome} from "../events/GameEventGoFriendHome";
+import {GO_HOME} from "../const/Constants";
 
 export default defineComponent({
   name: "ParkingList",
@@ -174,7 +219,7 @@ export default defineComponent({
     const showChooseCarModel = ref(false);
     const showLeaveModel = ref(false);
 
-    const userParkingStateList = ref([1, 2, 1, 3, 0]); // 0表示未mint 1表示车位空 2表示他人占用 3表示自己占用(3仅出现在朋友的车库)
+    const userParkingStateList = ref([1, 2, 1, 1, 2]); // 0表示未mint 1表示车位空 2表示他人占用 3表示自己占用(3仅出现在朋友的车库)
 
     const funcFreeMintParking = (index: number) => {
       showFreeMintParkingModel.value = true;
@@ -242,6 +287,14 @@ export default defineComponent({
 
 }
 
+.pointer {
+  cursor: pointer; /* 将光标形状设置为手型 */
+}
+
+.pointer:hover {
+  cursor: pointer; /* 将光标形状设置为手型 */
+}
+
 .user-home {
   border: 1px solid #8ce6b0;
   border-radius: 0.5rem;
@@ -261,7 +314,6 @@ export default defineComponent({
 }
 
 .parking-info-2 {
-  height: auto;
   border: 1px solid #ffd77a;
   border-radius: 0.5rem;
   box-sizing: content-box;
@@ -308,10 +360,27 @@ export default defineComponent({
   height: 290px;
   background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
   background-position: center; /* 图片在div中居中显示 */
-
 }
 
 .choose-car-margin {
   margin: 0.5rem;
+}
+
+.font-color {
+  /*background-color: #343434;*/
+  /*color: #c9c9c9;*/
+  font-weight: bold;
+}
+
+.car-info {
+  border: 1px solid #ffd77a;
+  border-radius: 0.5rem;
+  box-sizing: content-box;
+  background-color: #fff9e6;
+  text-align: left;
+}
+
+.test02 {
+  background-color: greenyellow;
 }
 </style>

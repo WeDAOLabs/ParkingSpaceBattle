@@ -1,3 +1,4 @@
+import { walletData } from "@/data/WalletData";
 import { ethers } from "ethers";
 
 const { ethereum } = window as any;
@@ -8,6 +9,12 @@ export abstract class ContractBase {
   private _contractAddress: string;
   private _contractJsonRpcUrl: string;
   private _contractSignerPrivateKey: string;
+
+  private _contractIns: any;
+
+  protected get contract(): any {
+    return this._contractIns;
+  }
 
   public get contractAddress(): string {
     return this._contractAddress;
@@ -69,12 +76,19 @@ export abstract class ContractBase {
       contractAddress || this.contractAddress,
       this.contractABI
     );
-    const signer = this.createSigner(
-      this.createProvider(this.contractJsonRpcUrl),
-      privateKey || this.contractSignerPrivateKey
-    );
-    return contract.connect(signer);
+
+    // const signer = this.createSigner(
+    //   this.createProvider(this.contractJsonRpcUrl),
+    //   privateKey || this.contractSignerPrivateKey
+    // );
+    // return contract.connect(signer);
+
+    const signer = walletData.provider.getSigner();
+
+    this._contractIns = contract.connect(signer);
+    this.registerEvents();
+    return this;
   }
 
-  public registerEvents(contractIns: any) {}
+  public registerEvents() {}
 }

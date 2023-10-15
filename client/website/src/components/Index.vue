@@ -21,7 +21,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import {
+  defineComponent,
+  ref,
+  onBeforeMount,
+  onUnmounted,
+  onMounted,
+} from "vue";
 import Header from "./Header.vue";
 import ParkingList from "./ParkingList.vue";
 import SearchBar from "./SearchBar.vue";
@@ -29,11 +35,12 @@ import CarList from "./CarList.vue";
 import WelcomePage from "./WelcomePage.vue";
 
 import { walletData } from "../data/WalletData";
+import { playerData } from "../data/PlayerData";
 import { EventBus } from "../plugins/EventBus";
-import { GameEventSample } from "../events/GameEventSample";
 import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
+import { Loading } from "../plugins/Loading";
 
 export default defineComponent({
   name: "Index",
@@ -51,6 +58,12 @@ export default defineComponent({
       );
     });
 
+    onMounted(() => {
+      if (isLogin.value) {
+        EventBus.instance.emit(GameEventWalletConnected.event);
+      }
+    });
+
     onUnmounted(() => {
       EventBus.instance.off(GameEventWalletConnected.event, onSignIn);
       EventBus.instance.off(GameEventWalletDisconnect.eventAsync, onSignOut);
@@ -60,8 +73,12 @@ export default defineComponent({
       );
     });
 
-    const onSignIn = () => {
+    const onSignIn = async () => {
       isLogin.value = true;
+
+      Loading.open();
+      await playerData.getPlayerData(walletData.address, true);
+      Loading.close();
     };
 
     const onSignOut = () => {
