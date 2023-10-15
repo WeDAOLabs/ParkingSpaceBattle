@@ -38,12 +38,11 @@ describe("CarStore", function () {
     expect(carNFTContract).to.not.null;
     expect(carStoreContract).to.not.null;
 
-    expect(carNFTContract).to.be.instanceOf(Contract);
     expect(await carNFTContract.name()).to.equal("LotLootCar");
     expect(await carNFTContract.symbol()).to.equal("LLC");
   });
 
-  it("mint car success", async () => {
+  it("mint car", async () => {
     const [owner, addr1, addr2, addr3] = await ethers.getSigners();
     // no auth
     await expect(carStoreContract.connect(addr1).mint()).to.be.reverted;
@@ -56,9 +55,36 @@ describe("CarStore", function () {
       carStoreContract,
       "CarMint"
     );
+    expect(await carNFTContract.balanceOf(addr1.address)).to.equal(1);
+    const tokenId = await carNFTContract.tokenOfOwnerByIndex(addr1.address, 0);
+    expect(tokenId).not.null;
+    expect(tokenId.toNumber()).to.equal(1000);
 
-    // next
-    const tokenId = await await carStoreContract.connect(addr1).mint();
-    console.log("tokenId", tokenId);
+    await carStoreContract.connect(addr2).mint();
+    expect(await carNFTContract.balanceOf(addr2.address)).to.equal(1);
+    const tokenId2 = await carNFTContract.tokenOfOwnerByIndex(addr2.address, 0);
+    expect(tokenId2).not.null;
+    expect(tokenId2.toNumber()).to.equal(1001);
+
+    //6551 account
+    const accountAddress = await erc6551RegistryContract.account(
+      erc6551AccountContract.address,
+      1337,
+      carNFTContract.address,
+      tokenId.toNumber(),
+      tokenId.toNumber()
+    );
+
+    const accountContract1 = await ethers.getContractAt(
+      "StandardERC6551Account",
+      accountAddress
+    );
+    expect(accountContract1).not.null;
+
+    await accountContract1.token().then((token) => {
+      expect(token.chainId).to.equal(1337);
+      expect(token.tokenContract).to.equal(carNFTContract.address);
+      expect(token.tokenId).to.equal(1000);
+    });
   });
 });
