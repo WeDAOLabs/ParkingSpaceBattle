@@ -9,6 +9,28 @@ export class ContractLotLoot extends ContractBase {
     return contract.createContract();
   }
 
+  async park(carTokenId: number, parkingTokenId: number) {
+    await this.contract.parkCar(carTokenId, parkingTokenId);
+  }
+
+  async unPark(carTokenId: number) {
+    await this.contract.unParkCar(carTokenId);
+  }
+
+  async fineCar(parkingTokenId: number) {
+    await this.contract.fineCar(parkingTokenId);
+  }
+
+  async getCarParking(carTokenId: number): Promise<number> {
+    const parkingTokenId = await this.contract.viewCarOnPark(carTokenId);
+    return parkingTokenId;
+  }
+
+  async getParkingCar(parkingTokenId: number): Promise<number> {
+    const carTokenId = await this.contract.viewParkOnCar(parkingTokenId);
+    return carTokenId;
+  }
+
   public registerEvents() {
     // TODO
   }
