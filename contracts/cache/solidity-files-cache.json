@@ -39,8 +39,8 @@
       ]
     },
     "/Users/lijiang/Documents/work/hackathon/ETH-HangZhou/ParkingSpaceBattle/contracts/contracts/systems/core/ParkingStore.sol": {
-      "lastModificationDate": 1697349996315,
-      "contentHash": "03273b66f8a9ca301c7753b967f5d850",
+      "lastModificationDate": 1697360810874,
+      "contentHash": "e6ef22fea26674b2c3b59e6a9dbb48d1",
       "sourceName": "contracts/systems/core/ParkingStore.sol",
       "solcConfig": {
         "version": "0.8.20",

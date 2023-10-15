@@ -115,4 +115,17 @@ describe("ParkingStore", function () {
       "Max NFT limit reached"
     );
   });
+
+  it("mint max parking", async () => {
+    const [owner, addr1, addr2, addr3] = await ethers.getSigners();
+    parkingNFTContract
+      .connect(owner)
+      .grantRole(ethers.utils.id("MINTER_ROLE"), parkingStoreContract.address);
+
+    expect(await parkingStoreContract.connect(addr1).mintMax()).to.emit(
+      parkingStoreContract,
+      "ParkingMintMax"
+    );
+    expect(await parkingNFTContract.balanceOf(addr1.address)).to.equal(5);
+  });
 });

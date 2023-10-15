@@ -23,6 +23,7 @@ contract ParkingStore is
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
     event ParkingMint(address indexed to, uint256 indexed tokenId, address account);
+    event ParkingMintMax(address indexed to, uint256[] tokenIds);
 
     IERC721Ext _parkingERC721;
     IERC6551Account _erc6551Account;
@@ -78,17 +79,14 @@ contract ParkingStore is
     function _mintCar(address _address, uint256 _tokenId) internal {
         _parkingERC721.safeMint(_address, _tokenId);
     }
-
-    function mint() public whenNotPaused nonReentrant returns (uint256) {
-        require(parkingNFTCount[msg.sender] <= maxNFTPerAddress, "Max NFT limit reached");
-        
+    
+    function _mint(address _to) private returns (uint256) {
         uint256 _tokenId = currentTokenId();
         _tokenIdCounter.increment();
-        address _to = msg.sender;
 
         _mintCar(_to, _tokenId);
 
-        parkingNFTCount[msg.sender]++;
+        parkingNFTCount[_to]++;
 
         address account = _erc6551Registry.createAccount(
             address(_erc6551Account),
@@ -102,5 +100,29 @@ contract ParkingStore is
         emit ParkingMint(_to, _tokenId, account);
         
         return _tokenId;
+    }
+
+    function mint() public whenNotPaused nonReentrant returns (uint256) {
+        require(parkingNFTCount[msg.sender] <= maxNFTPerAddress, "Max NFT limit reached");
+
+        return _mint(msg.sender);
+    }
+
+    function mintMax() public whenNotPaused nonReentrant returns (uint256[] memory) {
+        require(parkingNFTCount[msg.sender] <= maxNFTPerAddress, "Max NFT limit reached");
+
+        address _to = msg.sender;
+
+        uint leftCount = maxNFTPerAddress - parkingNFTCount[_to];
+        uint256[] memory tokenIds = new uint256[](leftCount); 
+         
+        for(uint i=0; i<leftCount; i++) {
+            uint256 tokenId = _mint(_to);
+            tokenIds[i] = tokenId;
+        }
+
+        emit ParkingMintMax(_to, tokenIds);
+
+        return tokenIds;
     }
 }
