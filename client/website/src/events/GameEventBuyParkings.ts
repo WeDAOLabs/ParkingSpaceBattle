@@ -1,4 +1,6 @@
+import { playerData } from "../data/PlayerData";
 import { GameEventBase } from "./GameEventBase";
+import { walletData } from "../data/WalletData";
 
 export class GameEventBuyParkings extends GameEventBase {
   public static readonly event: string = "game.logic.GameEventBuyParkings";
@@ -8,6 +10,6 @@ export class GameEventBuyParkings extends GameEventBase {
   }
 
   public async exec(to: string, tokenIds: number[]) {
-    console.log("buy parking place complete", to, tokenIds);
+    await playerData.getPlayerData(to, true);
   }
 }

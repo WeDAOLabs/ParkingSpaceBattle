@@ -3,6 +3,7 @@ import ContractLotLootABI from "../abi/contracts/systems/core/LotLoot.sol/LotLoo
 import { contractData } from "../../data/ContractData";
 import { EventBus } from "../../plugins/EventBus";
 import { GameEventParkCar } from "@/events/GameEventParkCar";
+import { ethers } from "ethers";
 
 export class ContractLotLoot extends ContractBase {
   static create(): any {
@@ -40,7 +41,7 @@ export class ContractLotLoot extends ContractBase {
         console.log("ParkCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
           GameEventParkCar.event,
-          who,
+          ethers.utils.getAddress(who),
           carTokenId,
           parkingTokenId
         );
@@ -53,7 +54,7 @@ export class ContractLotLoot extends ContractBase {
         console.log("UnParkCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
           GameEventParkCar.event,
-          who,
+          ethers.utils.getAddress(who),
           carTokenId,
           parkingTokenId
         );
@@ -66,7 +67,7 @@ export class ContractLotLoot extends ContractBase {
         console.log("FineCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
           GameEventParkCar.event,
-          who,
+          ethers.utils.getAddress(who),
           carTokenId,
           parkingTokenId
         );

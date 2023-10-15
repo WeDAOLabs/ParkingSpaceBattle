@@ -3,6 +3,7 @@ import { Singleton } from "../core/game/Singleton";
 import { contractData } from "./ContractData";
 import { registerDataModel } from "./DataRegister";
 import { PlayerDTO } from "./dto/PlayerDTO";
+import { ethers } from "ethers";
 
 export class PlayerData extends Singleton {
   private _playerMap: Map<string, PlayerDTO | null> = new Map();
@@ -27,8 +28,9 @@ export class PlayerData extends Singleton {
     refresh = false
   ): Promise<PlayerDTO | null> {
     let playerDTO: PlayerDTO | null = null;
+    const addr = ethers.utils.getAddress(address);
     if (!refresh) {
-      playerDTO = this._playerMap.get(address) ?? null;
+      playerDTO = this._playerMap.get(addr) ?? null;
     }
     if (playerDTO) {
       return playerDTO;
@@ -47,7 +49,10 @@ export class PlayerData extends Singleton {
       carTokenIds: cars,
     });
 
-    this._playerMap.set(address, playerDTO);
+    if (this._playerMap.has(addr)) {
+      this._playerMap.delete(addr);
+    }
+    this._playerMap.set(addr, playerDTO);
 
     return playerDTO;
   }

@@ -48,8 +48,10 @@
     </a-modal>
 
     <div class="user-home" v-if="isUserHome">
-      <a-row v-if="isMinted" justify="space-around">
-        <a-button>Buying Parking Place</a-button>
+      <a-row v-if="!isMinted" justify="space-around">
+        <a-button size="large" class="buy-parking" @click="buyParkingPlace"
+          >Buying Parking Place</a-button
+        >
       </a-row>
       <a-row v-else justify="space-around">
         <a-col
@@ -221,6 +223,10 @@ import { playerData } from "../data/PlayerData";
 import { walletData } from "../data/WalletData";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { Loading } from "../plugins/Loading";
+import { contractData } from "../data/ContractData";
+import { Toast } from "../plugins/Toast";
+import { GameEventBuyParkings } from "../events/GameEventBuyParkings";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 
 export default defineComponent({
   name: "ParkingList",
@@ -229,11 +235,21 @@ export default defineComponent({
     onBeforeMount(() => {
       EventBus.instance.on(GameEventGoFriendHome.eventAsync, onPageRefresh);
       EventBus.instance.on(GameEventWalletConnected.eventAsync, onSignIn);
+      EventBus.instance.on(GameEventBuyParkings.eventAsync, onParkingBought);
+      EventBus.instance.on(
+        GameEventWalletAccountChanged.eventAsync,
+        refreshHome
+      );
     });
 
     onUnmounted(() => {
       EventBus.instance.off(GameEventGoFriendHome.eventAsync, onPageRefresh);
       EventBus.instance.off(GameEventWalletConnected.eventAsync, onSignIn);
+      EventBus.instance.off(GameEventBuyParkings.eventAsync, onParkingBought);
+      EventBus.instance.off(
+        GameEventWalletAccountChanged.eventAsync,
+        refreshHome
+      );
     });
 
     const onPageRefresh = async (address: any) => {
@@ -313,6 +329,22 @@ export default defineComponent({
       isMinted.value = player && player.hasParkings ? true : false;
     };
 
+    const buyParkingPlace = async () => {
+      Loading.open();
+      try {
+        await contractData.parkingStoreContract.buyParkings();
+      } catch (e) {
+        Loading.close();
+        Toast.error("Buy parking place failed.");
+        console.error(e);
+      }
+    };
+
+    const onParkingBought = async () => {
+      Loading.close();
+      await refreshHome();
+    };
+
     return {
       userParkingStateIndex,
       showFreeMintParkingModel,
@@ -330,6 +362,7 @@ export default defineComponent({
       funcAffirmRobParking,
       funcAffirmLeave,
       funcAffirmFreeMintParking,
+      buyParkingPlace,
     };
   },
 });

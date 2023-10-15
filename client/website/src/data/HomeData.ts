@@ -4,6 +4,7 @@ import { registerDataModel } from "./DataRegister";
 import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
 import { GO_HOME } from "../const/Constants";
 import { walletData } from "./WalletData";
+import { ethers } from "ethers";
 
 export class HomeData extends Singleton {
   private _currentUserAddress: string | null = null;
@@ -15,7 +16,7 @@ export class HomeData extends Singleton {
   }
 
   public get isInHome(): boolean {
-    return this.currentPlyer === walletData.address;
+    return this.currentPlyer === ethers.utils.getAddress(walletData.address);
   }
 
   async init() {
@@ -26,7 +27,7 @@ export class HomeData extends Singleton {
     if (address === GO_HOME) {
       this._currentUserAddress = null;
     } else {
-      this._currentUserAddress = address;
+      this._currentUserAddress = ethers.utils.getAddress(address);
     }
   }
 }

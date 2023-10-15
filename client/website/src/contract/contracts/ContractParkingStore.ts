@@ -3,6 +3,7 @@ import ContractParkingStoreABI from "../abi/contracts/systems/core/ParkingStore.
 import { contractData } from "../../data/ContractData";
 import { EventBus } from "../../plugins/EventBus";
 import { GameEventBuyParkings } from "../../events/GameEventBuyParkings";
+import { ethers } from "ethers";
 
 export class ContractParkingStore extends ContractBase {
   static create(): any {
@@ -22,8 +23,15 @@ export class ContractParkingStore extends ContractBase {
 
   public registerEvents() {
     this.contract.on("ParkingMintMax", (to: string, tokenIds: number[]) => {
-      console.log("init parking place", to, tokenIds);
-      EventBus.instance.emit(GameEventBuyParkings.event, to, tokenIds);
+      const tokens: number[] = [];
+      tokenIds.forEach((id: any) => {
+        tokens.push(parseInt(`${id.toNumber()}`));
+      });
+      EventBus.instance.emit(
+        GameEventBuyParkings.event,
+        ethers.utils.getAddress(to),
+        tokens
+      );
     });
   }
 }
