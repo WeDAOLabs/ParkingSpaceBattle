@@ -1,8 +1,6 @@
 <template>
   <div class="parkingList">
 
-    <div class="background-div"></div>
-
     <a-modal v-model:open="showFreeMintParkingModel" title="Mint Parking affirm" @ok="funcAffirmFreeMintParking">
       <p>Mint Parking</p>
       <p>Some contents...</p>
@@ -35,9 +33,9 @@
     </a-modal>
 
     <div class="user-home" v-if="isUserHome">
-      <A-row v-if="false" justify="space-around">
+      <a-row v-if="isMinted" justify="space-around">
         <a-button>购买</a-button>
-      </A-row>
+      </a-row>
       <a-row v-else justify="space-around">
         <a-col
             :span="4"
@@ -96,29 +94,6 @@
                 </a-row>
               </div>
             </a-col>
-
-            <!--            <a-col :offset="7" :span="3">-->
-            <!--              <a-image-->
-            <!--                  :src="require('../assets/id.png')"-->
-            <!--                  :preview="false"-->
-            <!--              />-->
-            <!--            </a-col>-->
-            <!--            <a-col :span="7">-->
-            <!--              <span class="font-color">xxx</span>-->
-            <!--            </a-col>-->
-            <!--            <a-col :span="7">-->
-            <!--            </a-col>-->
-            <!--            <a-col :offset="7" :span="3">-->
-            <!--              <a-image-->
-            <!--                  :src="require('../assets/erc20_llt_mini.png')"-->
-            <!--                  :preview="false"-->
-            <!--              />-->
-            <!--            </a-col>-->
-            <!--            <a-col :span="7">-->
-            <!--              <span class="font-color">123.001</span>-->
-            <!--            </a-col>-->
-            <!--            <a-col :span="7">-->
-            <!--            </a-col>-->
 
             <a-col :span="24">
               <a-image
@@ -212,6 +187,7 @@ export default defineComponent({
       }
     };
 
+    const isMinted = ref(true);
     const isUserHome = ref(true);
     const userParkingStateIndex = ref(0);
     const showFreeMintParkingModel = ref(false);
@@ -269,6 +245,7 @@ export default defineComponent({
       showLeaveModel,
       userParkingStateList,
       isUserHome,
+      isMinted,
       funcFreeMintParking,
       funcSticker,
       funcLeave,
@@ -298,7 +275,9 @@ export default defineComponent({
 .user-home {
   border: 1px solid #8ce6b0;
   border-radius: 0.5rem;
-  margin: 1rem;
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   padding: 1rem;
   box-sizing: content-box;
   background-color: #edfff3;
