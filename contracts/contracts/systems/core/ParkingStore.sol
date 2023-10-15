@@ -32,11 +32,12 @@ contract ParkingStore is
     CountersUpgradeable.Counter private _tokenIdCounter;
 
     mapping(address => uint256) public parkingNFTCount;
-    uint256 public maxNFTPerAddress = 5; 
 
     //TODO initial token id
-    uint256 internal _initialTokenId = 1000;
+    uint256 public maxNFTPerAddress; 
+    uint256 internal _initialTokenId;
 
+    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
@@ -51,6 +52,8 @@ contract ParkingStore is
             erc6551Registry_
         );
         _erc6551Account = IERC6551Account(erc6551Account_);
+        _initialTokenId = 1000;
+        maxNFTPerAddress = 5;
 
         __Pausable_init();
         __AccessControlEnumerable_init();
@@ -77,7 +80,7 @@ contract ParkingStore is
     }
 
     function mint() public whenNotPaused nonReentrant returns (uint256) {
-        require(parkingNFTCount[msg.sender] < maxNFTPerAddress, "Max NFT limit reached");
+        require(parkingNFTCount[msg.sender] <= maxNFTPerAddress, "Max NFT limit reached");
         
         uint256 _tokenId = currentTokenId();
         _tokenIdCounter.increment();
