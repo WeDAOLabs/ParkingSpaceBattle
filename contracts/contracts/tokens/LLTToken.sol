@@ -24,7 +24,7 @@ contract LLTToken is
     }
 
     function initialize() public initializer {
-        __ERC20_init("LotLoot", "LLT");
+        __ERC20_init("LotLootToken", "LLT");
         __ERC20Pausable_init();
         __AccessControl_init();
         __UUPSUpgradeable_init();
