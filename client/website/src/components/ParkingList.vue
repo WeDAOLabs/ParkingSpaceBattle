@@ -255,7 +255,7 @@ export default defineComponent({
     const onPageRefresh = async (address: any) => {
       Loading.open();
       isUserHome.value = address === GO_HOME;
-      if (!homeData.isInHome) {
+      if (!isUserHome.value) {
         await refreshFriendHome();
       } else {
         await refreshHome();
@@ -322,11 +322,22 @@ export default defineComponent({
     const refreshFriendHome = async () => {
       const player = await playerData.getPlayerData(homeData.currentPlyer);
       isMinted.value = player && player.hasParkings ? true : false;
+
+      if (player)
+        userParkingStateList.value = player.parkings.map(
+          (parking) => parking.status
+        );
     };
 
     const refreshHome = async () => {
       const player = await playerData.getPlayerData(walletData.address);
       isMinted.value = player && player.hasParkings ? true : false;
+
+      if (player) {
+        userParkingStateList.value = player.parkings.map(
+          (parking) => parking.status
+        );
+      }
     };
 
     const buyParkingPlace = async () => {

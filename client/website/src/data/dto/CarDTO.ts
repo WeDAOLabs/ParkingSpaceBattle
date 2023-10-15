@@ -1,0 +1,46 @@
+import { ethers } from "ethers";
+import { contractData } from "../ContractData";
+import { BaseDTO } from "./BaseDTO";
+import { CarStatus } from "../../const/enum/CarStatus";
+
+export class CarDTO extends BaseDTO {
+  tokenId: number = 0;
+  parkingTokenId: number = 0;
+
+  owner: string = "";
+  parkingOwner: string = "";
+
+  public get isParking(): boolean {
+    return this.parkingTokenId > 0;
+  }
+
+  public get status(): CarStatus {
+    if (this.isParking) {
+      return CarStatus.PARKED;
+    }
+    return CarStatus.EMPTY;
+  }
+
+  public static async create(tokenId: number, parkingTokenId = 0) {
+    const carDTO = this.fillWith({
+      tokenId: tokenId,
+      parkingTokenId: parkingTokenId,
+    });
+
+    if (!parkingTokenId) {
+      const parking = await contractData.lotLootContract.getCarParking(tokenId);
+      carDTO.parkingTokenId = parking;
+    }
+
+    const owner = await contractData.carERC721Contract.ownerOf(tokenId);
+    carDTO.owner = ethers.utils.getAddress(owner);
+    if (carDTO.parkingTokenId > 0) {
+      const parkingOwner = await contractData.parkingERC721Contract.ownerOf(
+        carDTO.parkingTokenId
+      );
+      carDTO.parkingOwner = ethers.utils.getAddress(parkingOwner);
+    }
+
+    return carDTO;
+  }
+}

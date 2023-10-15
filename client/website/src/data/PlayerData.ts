@@ -4,6 +4,8 @@ import { contractData } from "./ContractData";
 import { registerDataModel } from "./DataRegister";
 import { PlayerDTO } from "./dto/PlayerDTO";
 import { ethers } from "ethers";
+import { ParkingDTO } from "./dto/ParkingDTO";
+import { CarDTO } from "./dto/CarDTO";
 
 export class PlayerData extends Singleton {
   private _playerMap: Map<string, PlayerDTO | null> = new Map();
@@ -41,12 +43,23 @@ export class PlayerData extends Singleton {
     );
     // 车辆
     const cars = await contractData.carERC721Contract.getPlayerCars(address);
+
+    const parkingDTOs = [];
+    for (let i = 0; i < parkings.length; i++) {
+      parkingDTOs.push(await ParkingDTO.create(parkings[i]));
+    }
+
+    const carDTOs = [];
+    for (let i = 0; i < cars.length; i++) {
+      carDTOs.push(await CarDTO.create(cars[i]));
+    }
+
     // 收益
 
     playerDTO = PlayerDTO.fillWith({
       address: address,
-      parkingTokenIds: parkings,
-      carTokenIds: cars,
+      parkings: parkingDTOs,
+      cars: carDTOs,
     });
 
     if (this._playerMap.has(addr)) {

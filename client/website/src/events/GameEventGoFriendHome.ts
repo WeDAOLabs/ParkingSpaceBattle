@@ -1,5 +1,7 @@
-import { playerData } from "@/data/PlayerData";
+import { playerData } from "../data/PlayerData";
 import { GameEventBase } from "./GameEventBase";
+import { Loading } from "../plugins/Loading";
+import { GO_HOME } from "../const/Constants";
 
 export class GameEventGoFriendHome extends GameEventBase {
   public static readonly event: string = "game.logic.GameEventGoFriendHome";
@@ -9,6 +11,12 @@ export class GameEventGoFriendHome extends GameEventBase {
   }
 
   public async exec(address: string) {
-    await playerData.getPlayerData(address, true);
+    if (address !== GO_HOME) {
+      Loading.open();
+      await playerData.getPlayerData(address, true);
+      Loading.close();
+    }
+
+    return Promise.resolve();
   }
 }
