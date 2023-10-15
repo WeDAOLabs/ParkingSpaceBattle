@@ -25,7 +25,6 @@ import { EventBus } from "../plugins/EventBus";
 import { walletData } from "../data/WalletData";
 import { GO_HOME, REG_ETH_ADDRESS } from "../const/Constants";
 import { Toast } from "../plugins/Toast";
-import { playerData } from "../data/PlayerData";
 
 export default defineComponent({
   name: "SearchBar",
@@ -60,13 +59,7 @@ export default defineComponent({
 
       showBackButton.value = true;
 
-      const playerDTO = await playerData.getPlayerData(inputValue, true);
-
-      EventBus.instance.emit(
-        GameEventGoFriendHome.event,
-        inputValue,
-        playerDTO
-      );
+      EventBus.instance.emit(GameEventGoFriendHome.event, inputValue);
     };
 
     return {

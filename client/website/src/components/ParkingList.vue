@@ -1,19 +1,30 @@
 <template>
   <div class="parkingList">
-
-    <a-modal v-model:open="showFreeMintParkingModel" title="Mint Parking affirm" @ok="funcAffirmFreeMintParking">
+    <a-modal
+      v-model:open="showFreeMintParkingModel"
+      title="Mint Parking affirm"
+      @ok="funcAffirmFreeMintParking"
+    >
       <p>Mint Parking</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
-    <a-modal v-model:open="showStickerModel" title="Sticker affirm" @ok="funcAffirmSticker">
+    <a-modal
+      v-model:open="showStickerModel"
+      title="Sticker affirm"
+      @ok="funcAffirmSticker"
+    >
       <p>贴条...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
-    <a-modal v-model:open="showChooseCarModel" title="Choose car" @ok="funcAffirmRobParking">
+    <a-modal
+      v-model:open="showChooseCarModel"
+      title="Choose car"
+      @ok="funcAffirmRobParking"
+    >
       <p>Choose Car...</p>
       <a-col :span="24" class="choose-car-margin">
         <a-button type="primary">Car1</a-button>
@@ -26,7 +37,11 @@
       </a-col>
     </a-modal>
 
-    <a-modal v-model:open="showLeaveModel " title="Leave affirm" @ok="funcAffirmLeave">
+    <a-modal
+      v-model:open="showLeaveModel"
+      title="Leave affirm"
+      @ok="funcAffirmLeave"
+    >
       <p>Leave affirm...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
@@ -37,24 +52,34 @@
         <a-button>购买</a-button>
       </a-row>
       <a-row v-else justify="space-around">
-        <a-col :span="4" v-for="(item, index) in userParkingStateList" :key="index">
-          <a-row justify="center" align="middle" class="parking-1" v-if="item === 1">
+        <a-col
+          :span="4"
+          v-for="(item, index) in userParkingStateList"
+          :key="index"
+        >
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-1"
+            v-if="item === 1"
+          >
           </a-row>
-          <a-row justify="center" align="middle" class="parking-2" v-if="item === 2">
-
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-2"
+            v-if="item === 2"
+          >
             <a-col :span="24">
-              <a-image
-                  :src="require('../assets/car.jpg')"
-                  :preview="false"
-              />
+              <a-image :src="require('../assets/car.jpg')" :preview="false" />
             </a-col>
             <a-col :span="20">
               <div class="car-info">
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -64,8 +89,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/erc20_llt_mini.png')"
-                        :preview="false"
+                      :src="require('../assets/erc20_llt_mini.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -76,12 +101,12 @@
             </a-col>
             <a-col :span="24">
               <a-image
-                  width="50%"
-                  height="50%"
-                  class="pointer"
-                  @click="funcSticker(index)"
-                  :src="require('../assets/sticker_button02.png')"
-                  :preview="false"
+                width="50%"
+                height="50%"
+                class="pointer"
+                @click="funcSticker(index)"
+                :src="require('../assets/sticker_button02.png')"
+                :preview="false"
               />
             </a-col>
           </a-row>
@@ -91,19 +116,36 @@
 
     <div class="friend-Home" v-else>
       <a-row justify="space-around">
-        <a-col :span="4" v-for="(item, index) in userParkingStateList" :key="index">
-          <a-row justify="center" align="middle" class="parking-1" v-if="item === 1">
+        <a-col
+          :span="4"
+          v-for="(item, index) in userParkingStateList"
+          :key="index"
+        >
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-1"
+            v-if="item === 1"
+          >
             <a-col :span="24">
-              <a-button size="large" type="primary" danger @click="funcRobParking(index)">抢车位</a-button>
+              <a-button
+                size="large"
+                type="primary"
+                danger
+                @click="funcRobParking(index)"
+                >抢车位</a-button
+              >
             </a-col>
           </a-row>
-          <a-row justify="center" align="middle" class="parking-2" v-if="item === 2">
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-2"
+            v-if="item === 2"
+          >
             <a-col :span="24">
               <a-row justify="center" align="middle">
-                <a-image
-                    :src="require('../assets/car.jpg')"
-                    :preview="false"
-                />
+                <a-image :src="require('../assets/car.jpg')" :preview="false" />
               </a-row>
             </a-col>
             <a-col :span="20">
@@ -111,8 +153,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -122,13 +164,15 @@
               </div>
             </a-col>
           </a-row>
-          <a-row justify="center" align="middle" class="parking-3" v-if="item === 3">
+          <a-row
+            justify="center"
+            align="middle"
+            class="parking-3"
+            v-if="item === 3"
+          >
             <a-col :span="24">
               <a-row justify="center" align="middle">
-                <a-image
-                    :src="require('../assets/car.jpg')"
-                    :preview="false"
-                />
+                <a-image :src="require('../assets/car.jpg')" :preview="false" />
               </a-row>
             </a-col>
             <a-col :span="20">
@@ -136,8 +180,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -147,8 +191,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/erc20_llt_mini.png')"
-                        :preview="false"
+                      :src="require('../assets/erc20_llt_mini.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -164,26 +208,25 @@
         </a-col>
       </a-row>
     </div>
-
   </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onBeforeMount, onUnmounted} from "vue";
-import {EventBus} from "../plugins/EventBus";
-import {GameEventGoFriendHome} from "../events/GameEventGoFriendHome";
-import {GO_HOME} from "../const/Constants";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import { EventBus } from "../plugins/EventBus";
+import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
+import { GO_HOME } from "../const/Constants";
 
 export default defineComponent({
   name: "ParkingList",
 
   setup() {
     onBeforeMount(() => {
-      EventBus.instance.on(GameEventGoFriendHome.event, onPageRefresh);
+      EventBus.instance.on(GameEventGoFriendHome.eventAsync, onPageRefresh);
     });
 
     onUnmounted(() => {
-      EventBus.instance.off(GameEventGoFriendHome.event, onPageRefresh);
+      EventBus.instance.off(GameEventGoFriendHome.eventAsync, onPageRefresh);
     });
 
     const onPageRefresh = (address: any) => {
@@ -266,9 +309,7 @@ export default defineComponent({
 });
 </script>
 <style scoped>
-
 .parkingList {
-
 }
 
 .pointer {
@@ -308,7 +349,7 @@ export default defineComponent({
   background-color: #f0faff;
   width: 220px;
   height: 290px;
-  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-image: url("../assets/parking.jpg"); /* 替换 'your-image.jpg' 为你的图片文件名 */
   background-position: center; /* 图片在div中居中显示 */
 }
 
@@ -319,7 +360,7 @@ export default defineComponent({
   background-color: #fff9e6;
   width: 220px;
   height: 290px;
-  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-image: url("../assets/parking.jpg"); /* 替换 'your-image.jpg' 为你的图片文件名 */
   background-position: center; /* 图片在div中居中显示 */
 }
 
@@ -330,7 +371,7 @@ export default defineComponent({
   background-color: #ffe5e4;
   width: 220px;
   height: 290px;
-  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-image: url("../assets/parking.jpg"); /* 替换 'your-image.jpg' 为你的图片文件名 */
   background-position: center; /* 图片在div中居中显示 */
 }
 

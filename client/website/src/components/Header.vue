@@ -46,6 +46,7 @@ import { walletData } from "../data/WalletData";
 import { Toast } from "../plugins/Toast";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 import IconSvg from "../components/IconSvg.vue";
+import { contractData } from "../data/ContractData";
 
 export default defineComponent({
   name: "Header",
@@ -134,7 +135,9 @@ export default defineComponent({
       }
     };
 
-    const refreshLLT = async () => {};
+    const refreshLLT = async () => {
+      const token = contractData.lltTokenContract.balanceOf();
+    };
 
     return {
       isLogin,

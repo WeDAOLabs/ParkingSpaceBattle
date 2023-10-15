@@ -1,3 +1,4 @@
+import { playerData } from "@/data/PlayerData";
 import { GameEventBase } from "./GameEventBase";
 
 export class GameEventGoFriendHome extends GameEventBase {
@@ -5,5 +6,9 @@ export class GameEventGoFriendHome extends GameEventBase {
 
   public get subject(): string {
     return GameEventGoFriendHome.event;
+  }
+
+  public async exec(address: string) {
+    await playerData.getPlayerData(address, true);
   }
 }
