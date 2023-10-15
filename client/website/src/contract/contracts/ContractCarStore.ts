@@ -1,11 +1,11 @@
 import { ContractBase } from "./ContractBase";
-import ContractSampleABI from "../abi/contracts/tokens/Sample.sol/Sample.json";
+import ContractCarStoreABI from "../abi/contracts/systems/core/CarStore.sol/CarStore.json";
 import { contractData } from "../../data/ContractData";
 
-export class ContractSample extends ContractBase {
+export class ContractCarStore extends ContractBase {
   static create(): any {
-    const address = contractData.contractAddress.Sample;
-    const contract = new ContractSample(ContractSampleABI, address, "", "");
+    const address = contractData.contractAddress.CarStore;
+    const contract = new ContractCarStore(ContractCarStoreABI, address, "", "");
     const contractWithSigner = contract.createContract();
     contract.registerEvents(contractWithSigner);
     return contractWithSigner;
