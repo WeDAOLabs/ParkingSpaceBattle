@@ -64,6 +64,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+
+
+
 .car-0 {
   border: 1px solid #8ce6b0;
   border-radius: 0.5rem;
