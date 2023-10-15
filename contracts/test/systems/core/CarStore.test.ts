@@ -58,5 +58,7 @@ describe("CarStore", function () {
     );
 
     // next
+    const tokenId = await await carStoreContract.connect(addr1).mint();
+    console.log("tokenId", tokenId);
   });
 });
