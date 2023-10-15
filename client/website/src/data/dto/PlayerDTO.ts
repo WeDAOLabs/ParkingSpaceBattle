@@ -1,6 +1,7 @@
 import { BaseDTO } from "./BaseDTO";
 
 export class PlayerDTO extends BaseDTO {
+  address: string = "";
   cardTokenIds: number[] = [];
   parkingTokenIds: number[] = [];
 

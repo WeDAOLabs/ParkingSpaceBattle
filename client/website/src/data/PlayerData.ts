@@ -42,6 +42,7 @@ export class PlayerData extends Singleton {
     // 收益
 
     playerDTO = PlayerDTO.fillWith({
+      address: address,
       parkingTokenIds: parkings,
       carTokenIds: cars,
     });

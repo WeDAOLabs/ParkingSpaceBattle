@@ -49,7 +49,7 @@
 
     <div class="user-home" v-if="isUserHome">
       <a-row v-if="isMinted" justify="space-around">
-        <a-button>购买</a-button>
+        <a-button>Buying Parking Place</a-button>
       </a-row>
       <a-row v-else justify="space-around">
         <a-col
