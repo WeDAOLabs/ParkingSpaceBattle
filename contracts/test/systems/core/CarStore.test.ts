@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { Contract } from "ethers";
-import { ethers } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 
 describe("CarStore", function () {
   let erc6551RegistryContract: Contract;
@@ -20,7 +20,8 @@ describe("CarStore", function () {
     erc6551AccountContract = await StandardERC6551Account.deploy();
 
     const CarERC721Contract = await ethers.getContractFactory("CarERC721");
-    carNFTContract = await CarERC721Contract.deploy();
+    carNFTContract = await upgrades.deployProxy(CarERC721Contract);
+    await carNFTContract.deployed();
 
     const CarStoreContract = await ethers.getContractFactory("CarStore");
     carStoreContract = await upgrades.deployProxy(CarStoreContract, [
