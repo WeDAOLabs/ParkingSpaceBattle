@@ -31,6 +31,9 @@ contract ParkingCreate is
     using CountersUpgradeable for CountersUpgradeable.Counter;
     CountersUpgradeable.Counter private _tokenIdCounter;
 
+    mapping(address => uint256) public parkingNFTCount;
+    uint256 public maxNFTPerAddress = 5; 
+
     //TODO initial token id
     uint256 internal _initialTokenId = 1000;
 
@@ -74,11 +77,15 @@ contract ParkingCreate is
     }
 
     function mint() public whenNotPaused nonReentrant returns (uint256) {
+        require(parkingNFTCount[msg.sender] < maxNFTPerAddress, "Max NFT limit reached");
+        
         uint256 _tokenId = currentTokenId();
         _tokenIdCounter.increment();
         address _to = msg.sender;
 
         _mintCar(_to, _tokenId);
+
+        parkingNFTCount[msg.sender]++;
 
         address account = _erc6551Registry.createAccount(
             address(_erc6551Account),
