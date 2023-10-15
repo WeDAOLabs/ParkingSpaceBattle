@@ -301,7 +301,7 @@ export default defineComponent({
 
       const tokenId = player.parkings[index].tokenId;
       const carIndex = myData.cars.findIndex((car) => car.isEmpty);
-      if (carIndex > 0) {
+      if (carIndex >= 0) {
         Loading.open();
         try {
           await contractData.lotLootContract.park(
