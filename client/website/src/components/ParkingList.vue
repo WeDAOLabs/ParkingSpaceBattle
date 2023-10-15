@@ -322,6 +322,11 @@ export default defineComponent({
     const refreshFriendHome = async () => {
       const player = await playerData.getPlayerData(homeData.currentPlyer);
       isMinted.value = player && player.hasParkings ? true : false;
+
+      if (player)
+        userParkingStateList.value = player.parkings.map(
+          (parking) => parking.status
+        );
     };
 
     const refreshHome = async () => {
@@ -329,9 +334,9 @@ export default defineComponent({
       isMinted.value = player && player.hasParkings ? true : false;
 
       if (player) {
-        const status: any[] = [];
-        player.parkings.forEach((parking) => status.push(parking.status));
-        // userParkingStateList.value = status;
+        userParkingStateList.value = player.parkings.map(
+          (parking) => parking.status
+        );
       }
     };
 
