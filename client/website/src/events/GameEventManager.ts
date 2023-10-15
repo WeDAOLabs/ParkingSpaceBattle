@@ -26,8 +26,18 @@ export class GameEventManager extends Singleton {
   }
 
   public addListener(listener: any) {
-    EventBus.instance.on(listener.subject, async () => {
-      await listener.execAsync();
-    });
+    EventBus.instance.on(
+      listener.subject,
+      async (
+        args1: any,
+        args2: any,
+        args3: any,
+        args4: any,
+        args5: any,
+        args6: any
+      ) => {
+        await listener.execAsync(args1, args2, args3, args4, args5, args6);
+      }
+    );
   }
 }

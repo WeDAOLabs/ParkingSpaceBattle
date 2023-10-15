@@ -1,6 +1,7 @@
 import { ContractBase } from "./ContractBase";
 import ContractLLTTokenABI from "../abi/contracts/tokens/LLTToken.sol/LLTToken.json";
 import { contractData } from "../../data/ContractData";
+import { BigNumber, ethers } from "ethers";
 
 export class ContractLLTToken extends ContractBase {
   static create(): any {
@@ -9,8 +10,13 @@ export class ContractLLTToken extends ContractBase {
     return contract.createContract();
   }
 
-  async balanceOf(address: string): Promise<number> {
-    const balance = await this.contract.balanceOf(address);
+  async balanceOf(address: string): Promise<string> {
+    const balanceBigNumber = await this.contract.balanceOf(address);
+    if (balanceBigNumber.isZero()) {
+      return "0";
+    }
+
+    const balance = ethers.utils.formatEther(balanceBigNumber);
     return balance;
   }
 

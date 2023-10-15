@@ -27,7 +27,7 @@
               :preview="false"
             />
           </a-col>
-          <a-col :span="4"> 0.001 LLT </a-col>
+          <a-col :span="4"> {{ balanceOfLLT }} LLT </a-col>
         </a-row>
       </a-col>
     </a-row>
@@ -54,6 +54,7 @@ export default defineComponent({
   components: { IconSvg },
   setup() {
     const isLogin = ref(walletData.isAuth);
+    const balanceOfLLT = ref("0");
     const userAddress = ref(
       !StringUtil.isEmpty(walletData.address)
         ? walletData.shortAddress
@@ -136,13 +137,17 @@ export default defineComponent({
     };
 
     const refreshLLT = async () => {
-      const token = contractData.lltTokenContract.balanceOf();
+      const token = await contractData.lltTokenContract.balanceOf(
+        walletData.address
+      );
+      balanceOfLLT.value = token;
     };
 
     return {
       isLogin,
       userAddress,
       connectWallet,
+      balanceOfLLT,
     };
   },
 });
