@@ -1,62 +1,84 @@
-// SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract LOOTLOTPARK is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
-    address NFTMinter;
-    uint256 private _nextTokenId;
-    event Minted(address indexed to, uint256 tokenId);
+contract ParkERC721 is
+    Initializable,
+    ERC721EnumerableUpgradeable,
+    PausableUpgradeable,
+    AccessControlEnumerableUpgradeable,
+    UUPSUpgradeable
+{
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+    bytes32 public constant UPGRADER_ROLE = keccak256("UPGRADER_ROLE");
 
-    constructor(address initialOwner)
-        ERC721("LOOTLOTPARK", "LLP")
-        Ownable(initialOwner)
-    {}
-    
+    /// @custom:oz-upgrades-unsafe-allow constructor
+    constructor() {
+        _disableInitializers();
+    }
+
+    function initialize() public initializer {
+        __ERC721_init("LOTLOOTPARK", "LLC");
+        __ERC721Enumerable_init();
+        __Pausable_init();
+        __AccessControlEnumerable_init();
+        __UUPSUpgradeable_init();
+
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PAUSER_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
+        _grantRole(UPGRADER_ROLE, msg.sender);
+    }
 
     function _baseURI() internal pure override returns (string memory) {
         return "https://lotloot.osairo.xyz/lotloot_parking_meta.json?tokenid=";
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
-        uint256 tokenId = _nextTokenId++;
+    function pause() public onlyRole(PAUSER_ROLE) {
+        _pause();
+    }
+
+    function unpause() public onlyRole(PAUSER_ROLE) {
+        _unpause();
+    }
+
+    function safeMint(
+        address to,
+        uint256 tokenId
+    ) public onlyRole(MINTER_ROLE) whenNotPaused {
         _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
-        emit Minted(to, tokenId);
     }
-     function setNFTMinter(address _NFTMinter) public onlyOwner {
-        NFTMinter = _NFTMinter;
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override(ERC721EnumerableUpgradeable) whenNotPaused {
+        super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
-    function getNFTMinter() public view returns (address) {
-        return NFTMinter;
-    }
-    // the gammer mint
-    function NFTMinterMint(address to, string memory uri) public{
-        require(msg.sender == NFTMinter, "Only NFTMinter can mint");
-        uint256 tokenId = _nextTokenId++;
-        _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
-        emit Minted(to, tokenId);
-    }
+
+    function _authorizeUpgrade(
+        address newImplementation
+    ) internal override onlyRole(UPGRADER_ROLE) {}
 
     // The following functions are overrides required by Solidity.
 
-    function tokenURI(uint256 tokenId)
+    function supportsInterface(
+        bytes4 interfaceId
+    )
         public
         view
-        override(ERC721, ERC721URIStorage)
-        returns (string memory)
-    {
-        return super.tokenURI(tokenId);
-    }
-
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, ERC721URIStorage)
+        override(
+            ERC721EnumerableUpgradeable,
+            AccessControlEnumerableUpgradeable
+        )
         returns (bool)
     {
         return super.supportsInterface(interfaceId);
