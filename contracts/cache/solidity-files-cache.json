@@ -1131,8 +1131,8 @@
       ]
     },
     "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\tokens\\ERC721Car.sol": {
-      "lastModificationDate": 1697268204853,
-      "contentHash": "9a645d6814e61510b1526bf7f7b908ae",
+      "lastModificationDate": 1697349068921,
+      "contentHash": "4b7e89adace52851448d9374b47a26b6",
       "sourceName": "contracts/tokens/ERC721Car.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -2393,8 +2393,8 @@
       ]
     },
     "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\tokens\\LLTToken.sol": {
-      "lastModificationDate": 1697272183505,
-      "contentHash": "0383382fc7fc780a9cfe6a3248573f4d",
+      "lastModificationDate": 1697349294280,
+      "contentHash": "bc011eefbb16f59127924f1267c7176f",
       "sourceName": "contracts/tokens/LLTToken.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -2436,8 +2436,8 @@
       ]
     },
     "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\tokens\\CarERC721.sol": {
-      "lastModificationDate": 1697272029439,
-      "contentHash": "e5fcd667a995ed77e65b245fe0934ee4",
+      "lastModificationDate": 1697349566599,
+      "contentHash": "5c1926d99a80ecf764123bd65a04bdca",
       "sourceName": "contracts/tokens/CarERC721.sol",
       "solcConfig": {
         "version": "0.8.20",
@@ -2478,10 +2478,170 @@
         "CarERC721"
       ]
     },
-    "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\tokens\\ParkERC721.sol": {
-      "lastModificationDate": 1697272095331,
-      "contentHash": "a2bf9943d4c592384a2cb7d3e52b9b4c",
-      "sourceName": "contracts/tokens/ParkERC721.sol",
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\systems\\core\\ParkingStore.sol": {
+      "lastModificationDate": 1697349068919,
+      "contentHash": "5948e48d1b65802b034a463c7a322f61",
+      "sourceName": "contracts/systems/core/ParkingStore.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
+        "../../interface/IERC721Ext.sol",
+        "../../interface/IERC6551Account.sol",
+        "../../interface/IERC6551Registry.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ParkingStore"
+      ]
+    },
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\interface\\IERC721Ext.sol": {
+      "lastModificationDate": 1697349068918,
+      "contentHash": "ee63e6298c795d6defcd8e0557577649",
+      "sourceName": "contracts/interface/IERC721Ext.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "IERC721Ext"
+      ]
+    },
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\utils\\CountersUpgradeable.sol": {
+      "lastModificationDate": 1697266984424,
+      "contentHash": "2e908c762a799baea365e68a50500e2c",
+      "sourceName": "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "CountersUpgradeable"
+      ]
+    },
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\node_modules\\@openzeppelin\\contracts-upgradeable\\security\\ReentrancyGuardUpgradeable.sol": {
+      "lastModificationDate": 1697266987490,
+      "contentHash": "efeffcf5034292d7ea635de588c95995",
+      "sourceName": "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ReentrancyGuardUpgradeable"
+      ]
+    },
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\tokens\\ParkingERC721.sol": {
+      "lastModificationDate": 1697349068922,
+      "contentHash": "81d1dcc26b4bb69e8fb3aeb40f90cde4",
+      "sourceName": "contracts/tokens/ParkingERC721.sol",
       "solcConfig": {
         "version": "0.8.20",
         "settings": {
@@ -2518,7 +2678,97 @@
         "^0.8.20"
       ],
       "artifacts": [
-        "ParkERC721"
+        "ParkingERC721"
+      ]
+    },
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\systems\\core\\LotLoot.sol": {
+      "lastModificationDate": 1697351017470,
+      "contentHash": "cb01d225b51e9eccba4ed123dc5ddc6b",
+      "sourceName": "contracts/systems/core/LotLoot.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "../../tokens/CarERC721.sol",
+        "../../tokens/ParkingERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "LotLoot"
+      ]
+    },
+    "D:\\git clone\\ParkingSpaceBattle\\contracts\\contracts\\systems\\core\\CarStore.sol": {
+      "lastModificationDate": 1697349674626,
+      "contentHash": "a37dc34c076b96470c8670334b2e0412",
+      "sourceName": "contracts/systems/core/CarStore.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/AccessControlEnumerableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/utils/CountersUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol",
+        "../../interface/IERC721Ext.sol",
+        "../../interface/IERC6551Account.sol",
+        "../../interface/IERC6551Registry.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "CarStore"
       ]
     }
   }

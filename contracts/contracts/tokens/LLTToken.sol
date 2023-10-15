@@ -24,7 +24,7 @@ contract LLTToken is
     }
 
     function initialize() public initializer {
-        __ERC20_init("LotLoot", "LLT");
+        __ERC20_init("LotLootToken", "LLT");
         __ERC20Pausable_init();
         __AccessControl_init();
         __UUPSUpgradeable_init();
@@ -33,14 +33,6 @@ contract LLTToken is
         _grantRole(PAUSER_ROLE, msg.sender);
         _grantRole(MINTER_ROLE, msg.sender);
         _grantRole(UPGRADER_ROLE, msg.sender);
-    }
-
-    function addMinterRole(address _address) public onlyRole(UPGRADER_ROLE) {
-        _grantRole(MINTER_ROLE, _address);
-    }
-
-    function revokeMinterRole(address _address) public onlyRole(UPGRADER_ROLE) {
-        _revokeRole(MINTER_ROLE, _address);
     }
 
     function pause() public onlyRole(PAUSER_ROLE) {

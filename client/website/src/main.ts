@@ -5,13 +5,27 @@ import Antd from "ant-design-vue";
 import { ethers } from "ethers";
 import "ant-design-vue/dist/reset.css";
 import { dataModels } from "./data/DataRegister";
+import { message } from "ant-design-vue";
+import { Toast } from "./plugins/Toast";
+import { GameEventManager } from "./events/GameEventManager";
 
 const app = createApp(App);
-
 app.use(Antd);
-
-dataModels.forEach((dataModal) => dataModal.init());
-
 app.config.globalProperties.$ethers = ethers;
 
-app.mount("#app");
+const startUp = async () => {
+  for (let i = 0; i < dataModels.length; i++) {
+    let dataModal = dataModels[i];
+    await dataModal.init();
+  }
+
+  app.config.globalProperties.$gameEventListener =
+    GameEventManager.getInstance();
+  app.config.globalProperties.$message = message;
+
+  Toast.$app = app;
+
+  app.mount("#app");
+};
+
+startUp();

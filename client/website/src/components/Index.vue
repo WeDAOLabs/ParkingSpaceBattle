@@ -1,7 +1,6 @@
 <template>
   <div class="index">
     <Header class="margin-top" />
-
     <div v-if="!isLogin">
       <a-divider />
       <a-row>
@@ -27,6 +26,9 @@ import CarList from "./CarList.vue";
 import { walletData } from "../data/WalletData";
 import { EventBus } from "../plugins/EventBus";
 import { GameEventSample } from "../events/GameEventSample";
+import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
+import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 
 export default defineComponent({
   name: "Index",
@@ -35,7 +37,7 @@ export default defineComponent({
   setup() {
     const isLogin = ref(walletData.isAuth);
 
-    const showSkin = ref(false);
+    // const showSkin = ref(false);
 
     // async function someAsyncOperation() {
     //   return new Promise((resolve, reject) => {
@@ -91,16 +93,32 @@ export default defineComponent({
     // };
 
     onBeforeMount(() => {
-      EventBus.instance.on(GameEventSample.event, onSignIn);
+      EventBus.instance.on(GameEventWalletConnected.event, onSignIn);
+      EventBus.instance.on(GameEventWalletDisconnect.eventAsync, onSignOut);
+      EventBus.instance.on(
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChanged
+      );
     });
 
-    onUnmounted(()=>{
-      EventBus.instance.off(GameEventSample.event, onSignIn);
+    onUnmounted(() => {
+      EventBus.instance.off(GameEventWalletConnected.event, onSignIn);
+      EventBus.instance.off(GameEventWalletDisconnect.eventAsync, onSignOut);
+      EventBus.instance.off(
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChanged
+      );
     });
 
-    const onSignIn = ()=>{
+    const onSignIn = () => {
       isLogin.value = true;
     };
+
+    const onSignOut = () => {
+      isLogin.value = false;
+    };
+
+    const onAccountChanged = () => {};
 
     return {
       isLogin,
@@ -109,8 +127,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.top-bar {
-  margin-top: -40px;
-}
-</style>
+<style scoped></style>

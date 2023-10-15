@@ -12,7 +12,7 @@ describe('test Token', function () {
   });
   it('Lotloot test', async () => {
     expect(contract).to.be.instanceOf(Contract);
-    expect(await contract.name()).to.equal('LotLoot');
+    expect(await contract.name()).to.equal('LotLootToken');
     expect(await contract.symbol()).to.equal('LLT');
   });
 
@@ -27,11 +27,11 @@ describe('test Token', function () {
       contract.connect(add1).mint(add1.address, 100)
     ).to.be.revertedWith(revertedWith);
 
-    await contract.addMinterRole(add1.address);
+    await contract.grantRole(ethers.utils.id('MINTER_ROLE'), add1.address);
     await contract.mint(add1.address, 100);
     expect(await contract.balanceOf(add1.address)).to.equal(100);
 
-    await contract.revokeMinterRole(add1.address);
+    await contract.revokeRole(ethers.utils.id('MINTER_ROLE'), add1.address);
     await expect(
       contract.connect(add1).mint(add1.address, 100)
     ).to.be.revertedWith(revertedWith);

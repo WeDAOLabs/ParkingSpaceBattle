@@ -1,4 +1,4 @@
-//SPDX-License-Identifier: Unlicense
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
@@ -24,7 +24,7 @@ contract CarERC721 is
     }
 
     function initialize() public initializer {
-        __ERC721_init("LOTLOOTCAR", "LLC");
+        __ERC721_init("LotLootCar", "LLC");
         __ERC721Enumerable_init();
         __Pausable_init();
         __AccessControlEnumerable_init();
