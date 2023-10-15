@@ -327,6 +327,12 @@ export default defineComponent({
     const refreshHome = async () => {
       const player = await playerData.getPlayerData(walletData.address);
       isMinted.value = player && player.hasParkings ? true : false;
+
+      if (player) {
+        const status: any[] = [];
+        player.parkings.forEach((parking) => status.push(parking.status));
+        // userParkingStateList.value = status;
+      }
     };
 
     const buyParkingPlace = async () => {
