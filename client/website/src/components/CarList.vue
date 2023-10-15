@@ -87,12 +87,17 @@ export default defineComponent({
         const status = player.hasCars
           ? player.cars.map((car) => car.status)
           : [];
-        status.push(CarStatus.UN_MINT);
+        if (homeData.isInHome) {
+          status.push(CarStatus.UN_MINT);
+        }
+        //@ts-ignore
         userCarStateList.value = status;
+      } else {
+        userCarStateList.value = [];
       }
     };
 
-    const userCarStateList = ref([2, 1, 1, 1]); // 0表示未mint 1表示空闲 2表示停放
+    const userCarStateList = ref([]);
 
     const funcFreeMintCar = async () => {
       Loading.open();
