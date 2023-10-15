@@ -7,7 +7,7 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract ParkERC721 is
+contract ParkingERC721 is
     Initializable,
     ERC721EnumerableUpgradeable,
     PausableUpgradeable,
@@ -24,7 +24,7 @@ contract ParkERC721 is
     }
 
     function initialize() public initializer {
-        __ERC721_init("LOTLOOTPARK", "LLC");
+        __ERC721_init("LotLootParking", "LLP");
         __ERC721Enumerable_init();
         __Pausable_init();
         __AccessControlEnumerable_init();

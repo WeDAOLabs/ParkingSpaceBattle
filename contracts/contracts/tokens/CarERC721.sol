@@ -24,7 +24,7 @@ contract CarERC721 is
     }
 
     function initialize() public initializer {
-        __ERC721_init("LOTLOOTCAR", "LLC");
+        __ERC721_init("LotLootCar", "LLC");
         __ERC721Enumerable_init();
         __Pausable_init();
         __AccessControlEnumerable_init();
