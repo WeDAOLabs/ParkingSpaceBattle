@@ -1,30 +1,21 @@
 <template>
   <div class="parkingList">
-    <a-modal
-      v-model:open="showFreeMintParkingModel"
-      title="Mint Parking affirm"
-      @ok="funcAffirmFreeMintParking"
-    >
+
+    <div class="background-div"></div>
+
+    <a-modal v-model:open="showFreeMintParkingModel" title="Mint Parking affirm" @ok="funcAffirmFreeMintParking">
       <p>Mint Parking</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
-    <a-modal
-      v-model:open="showStickerModel"
-      title="Sticker affirm"
-      @ok="funcAffirmSticker"
-    >
+    <a-modal v-model:open="showStickerModel" title="Sticker affirm" @ok="funcAffirmSticker">
       <p>贴条...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
     </a-modal>
 
-    <a-modal
-      v-model:open="showChooseCarModel"
-      title="Choose car"
-      @ok="funcAffirmRobParking"
-    >
+    <a-modal v-model:open="showChooseCarModel" title="Choose car" @ok="funcAffirmRobParking">
       <p>Choose Car...</p>
       <a-col :span="24" class="choose-car-margin">
         <a-button type="primary">Car1</a-button>
@@ -37,11 +28,7 @@
       </a-col>
     </a-modal>
 
-    <a-modal
-      v-model:open="showLeaveModel"
-      title="Leave affirm"
-      @ok="funcAffirmLeave"
-    >
+    <a-modal v-model:open="showLeaveModel " title="Leave affirm" @ok="funcAffirmLeave">
       <p>Leave affirm...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>
@@ -50,40 +37,52 @@
     <div class="user-home" v-if="isUserHome">
       <a-row justify="space-around">
         <a-col
-          :span="4"
-          v-for="(item, index) in userParkingStateList"
-          :key="index"
+            :span="4"
+            v-for="(item, index) in userParkingStateList"
+            :key="index"
         >
           <a-row
-            justify="center"
-            align="middle"
-            class="parking-0"
-            v-if="item === 0"
+              justify="center"
+              align="middle"
+              class="parking-0"
+              v-if="item === 0"
           >
             <a-button @click="funcFreeMintParking(index)">Free Mint</a-button>
           </a-row>
           <a-row
-            justify="center"
-            align="middle"
-            class="parking-1"
-            v-if="item === 1"
+              justify="center"
+              align="middle"
+              class="parking-1"
+              v-if="item === 1"
           >
             <h2>空车位</h2>
           </a-row>
           <a-row
-            justify="center"
-            align="middle"
-            class="parking-2"
-            v-if="item === 2"
+              justify="center"
+              align="middle"
+              class="parking-2"
+              v-if="item === 2"
           >
             <a-col :span="24">
-              <h3>当前车辆URL: xxx</h3>
+              <a-row justify="center" align="middle">
+                <a-image
+                    :src="require('../assets/car.jpg')"
+                    :preview="false"
+                />
+              </a-row>
             </a-col>
-            <a-col :span="24">
-              <a-button @click="funcSticker(index)">贴条</a-button>
-            </a-col>
-            <a-col :span="24">
-              <p>预计收益: 123 LLT</p>
+            <a-col :span="18" class="parking-info">
+              <a-row>
+                <a-col :span="24">
+                  <h3>当前车辆ID: xxx</h3>
+                </a-col>
+                <a-col :span="24">
+                  <a-button @click="funcSticker(index)">贴条</a-button>
+                </a-col>
+                <a-col :span="24">
+                  <p>预计收益: 123 LLT</p>
+                </a-col>
+              </a-row>
             </a-col>
           </a-row>
         </a-col>
@@ -92,25 +91,11 @@
 
     <div class="friend-Home" v-else>
       <a-row justify="space-around">
-        <a-col
-          :span="4"
-          v-for="(item, index) in userParkingStateList"
-          :key="index"
-        >
-          <a-row
-            justify="center"
-            align="middle"
-            class="parking-0"
-            v-if="item === 0"
-          >
+        <a-col :span="4" v-for="(item, index) in userParkingStateList" :key="index">
+          <a-row justify="center" align="middle" class="parking-0" v-if="item === 0">
             <h2>未铸造</h2>
           </a-row>
-          <a-row
-            justify="center"
-            align="middle"
-            class="parking-1"
-            v-if="item === 1"
-          >
+          <a-row justify="center" align="middle" class="parking-1" v-if="item === 1">
             <a-col :span="24">
               <h2>空车位</h2>
             </a-col>
@@ -118,27 +103,29 @@
               <a-button @click="funcRobParking(index)">抢车位</a-button>
             </a-col>
           </a-row>
-          <a-row
-            justify="center"
-            align="middle"
-            class="parking-2"
-            v-if="item === 2"
-          >
+          <a-row justify="center" align="middle" class="parking-2" v-if="item === 2">
             <a-col :span="24">
-              <h3>当前车辆URL: xxx</h3>
+              <a-row justify="center" align="middle">
+                <a-image
+                    :src="require('../assets/car.jpg')"
+                    :preview="false"
+                />
+              </a-row>
+              <h3>当前车辆ID: xxx</h3>
             </a-col>
             <a-col :span="24">
               <h3>Owner URL: xxx</h3>
             </a-col>
           </a-row>
-          <a-row
-            justify="center"
-            align="middle"
-            class="parking-3"
-            v-if="item === 3"
-          >
+          <a-row justify="center" align="middle" class="parking-3" v-if="item === 3">
             <a-col :span="24">
-              <h3>当前车辆URL: xxx</h3>
+              <a-row justify="center" align="middle">
+                <a-image
+                    :src="require('../assets/car.jpg')"
+                    :preview="false"
+                />
+              </a-row>
+              <h3>当前车辆ID: xxx</h3>
             </a-col>
             <a-col :span="24">
               <a-button @click="funcLeave(index)">离开</a-button>
@@ -150,6 +137,7 @@
         </a-col>
       </a-row>
     </div>
+
   </div>
 </template>
 
@@ -248,9 +236,10 @@ export default defineComponent({
   },
 });
 </script>
-
 <style scoped>
+
 .parkingList {
+
 }
 
 .user-home {
@@ -271,36 +260,55 @@ export default defineComponent({
   background-color: #fff9e6;
 }
 
+.parking-info-2 {
+  height: auto;
+  border: 1px solid #ffd77a;
+  border-radius: 0.5rem;
+  box-sizing: content-box;
+  background-color: #fff9e6;
+}
+
 .parking-0 {
   border: 1px solid #8ce6b0;
   border-radius: 0.5rem;
-  height: 20rem;
   box-sizing: content-box;
   background-color: #edfff3;
+  width: 220px;
+  height: 290px;
 }
 
 .parking-1 {
   border: 1px solid #abdcff;
   border-radius: 0.5rem;
-  height: 20rem;
   box-sizing: content-box;
   background-color: #f0faff;
+  width: 220px;
+  height: 290px;
+  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-position: center; /* 图片在div中居中显示 */
 }
 
 .parking-2 {
   border: 1px solid #ffd77a;
   border-radius: 0.5rem;
-  height: 20rem;
   box-sizing: content-box;
   background-color: #fff9e6;
+  width: 220px;
+  height: 290px;
+  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-position: center; /* 图片在div中居中显示 */
 }
 
 .parking-3 {
   border: 1px solid #fa8072;
   border-radius: 0.5rem;
-  height: 20rem;
   box-sizing: content-box;
   background-color: #ffe5e4;
+  width: 220px;
+  height: 290px;
+  background-image: url('../assets/parking.jpg'); /* 替换 'your-image.jpg' 为你的图片文件名 */
+  background-position: center; /* 图片在div中居中显示 */
+
 }
 
 .choose-car-margin {
