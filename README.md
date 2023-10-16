@@ -12,7 +12,7 @@
 - 试玩地址: [https://lotloot.osairo.xyz](https://lotloot.osairo.xyz)
 - 所选赛道：Layer2 Application
 - 项目图片
-  - ![screen](https://github.com/WeDAOLabs/ParkingSpaceBattle/assets/screen.jpg)
+  - ![screen](https://lotloot.osairo.xyz/screen.jpg)
 - 简介：LotLoot 是一个基于区块链技术的社交抢车位游戏。玩家可以通过社交账号登录，拥有多辆车和 5 个车位，并与其他玩家互动，以获得代币收益。
 - [白皮书](https://github.com/WeDAOLabs/ParkingSpaceBattle/design/litepaper.md)
 - 玩法：
