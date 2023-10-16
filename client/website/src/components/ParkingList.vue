@@ -228,6 +228,7 @@ import { Toast } from "../plugins/Toast";
 import { GameEventBuyParkings } from "../events/GameEventBuyParkings";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 import { GameEventParkCar } from "../events/GameEventParkCar";
+import { GameEventUnParkCar } from "../events/GameEventUnParkCar";
 
 export default defineComponent({
   name: "ParkingList",
@@ -242,6 +243,7 @@ export default defineComponent({
         refreshHome
       );
       EventBus.instance.on(GameEventParkCar.eventAsync, onParkCar);
+      EventBus.instance.on(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
 
     onUnmounted(() => {
@@ -253,6 +255,7 @@ export default defineComponent({
         refreshHome
       );
       EventBus.instance.off(GameEventParkCar.eventAsync, onParkCar);
+      EventBus.instance.off(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
 
     const onPageRefresh = async (address: any) => {
@@ -317,9 +320,21 @@ export default defineComponent({
       }
     };
 
-    const funcLeave = (index: number) => {
-      showLeaveModel.value = true;
-      userParkingStateIndex.value = index;
+    const funcLeave = async (index: number) => {
+      const address = homeData.currentPlyer;
+      const player = await playerData.getPlayerData(address);
+      if (player) {
+        const parking = player.parkings[index];
+        if (parking && parking.carTokenId > 0) {
+          Loading.open();
+          try {
+            await contractData.lotLootContract.unPark(parking.carTokenId);
+          } catch (e) {
+            console.error(e);
+            Loading.close();
+          }
+        }
+      }
     };
 
     const funcAffirmFreeMintParking = () => {
@@ -382,6 +397,15 @@ export default defineComponent({
     const onParkCar = async () => {
       Loading.close();
       refreshFriendHome();
+    };
+
+    const onUnPackCar = async () => {
+      Loading.close();
+      if (homeData.isInHome) {
+        await refreshHome();
+      } else {
+        await refreshFriendHome();
+      }
     };
 
     return {
