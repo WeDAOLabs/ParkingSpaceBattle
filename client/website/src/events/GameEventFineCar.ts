@@ -1,3 +1,4 @@
+import { playerData } from "@/data/PlayerData";
 import { GameEventBase } from "./GameEventBase";
 
 export class GameEventFineCar extends GameEventBase {
@@ -9,5 +10,6 @@ export class GameEventFineCar extends GameEventBase {
 
   public async exec(who: string, carTokenId: number, parkTokenId: number) {
     console.log("fine car complete", who, carTokenId, parkTokenId);
+    await playerData.getPlayerData(who, true);
   }
 }
