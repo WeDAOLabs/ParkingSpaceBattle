@@ -20,6 +20,8 @@ export class ContractLLTToken extends ContractBase {
     return balance;
   }
 
+  async balanceOf6551(address: string) {}
+
   public registerEvents() {
     // TODO
   }

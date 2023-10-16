@@ -61,7 +61,7 @@
         <a-col
           :span="4"
           v-for="(item, index) in playerParkingList"
-          :key="index"
+          :key="item.tokenId"
         >
           <a-row
             justify="center"
@@ -129,7 +129,7 @@
         <a-col
           :span="4"
           v-for="(item, index) in playerParkingList"
-          :key="index"
+          :key="item.tokenId"
         >
           <a-row
             justify="center"
@@ -395,6 +395,7 @@ export default defineComponent({
             status: parking.status,
             carTokenId: parking.carTokenId,
             balance: 123.456,
+            tokenId: parking.tokenId,
           };
         });
       }
@@ -411,6 +412,7 @@ export default defineComponent({
             status: parking.status,
             carTokenId: parking.carTokenId,
             balance: 123.456,
+            tokenId: parking.tokenId,
           };
         });
       }
