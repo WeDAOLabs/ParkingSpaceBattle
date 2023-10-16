@@ -3,7 +3,7 @@
     <div class="list-div">
       <a-row justify="left" align="middle">
         <a-col :span="24" class="list-item-margin">
-          <a-button size="large" @click="funcFreeMintCar">Buying Cars</a-button>
+          <a-button size="large" @click="funcFreeMintCar">Buy Car</a-button>
         </a-col>
       </a-row>
 
