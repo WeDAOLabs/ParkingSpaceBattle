@@ -3,7 +3,7 @@ import ContractLotLootABI from "../abi/contracts/systems/core/LotLoot.sol/LotLoo
 import { contractData } from "../../data/ContractData";
 import { EventBus } from "../../plugins/EventBus";
 import { GameEventParkCar } from "../../events/GameEventParkCar";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { GameEventUnParkCar } from "../../events/GameEventUnParkCar";
 import { GameEventFineCar } from "../../events/GameEventFineCar";
 
@@ -39,39 +39,38 @@ export class ContractLotLoot extends ContractBase {
   public registerEvents() {
     this.contract.on(
       "ParkCar",
-      (who: string, carTokenId: number, parkingTokenId: number) => {
-        console.log("ParkCar", who, carTokenId, parkingTokenId);
+      (who: string, carTokenId: BigNumber, parkingTokenId: BigNumber) => {
         EventBus.instance.emit(
           GameEventParkCar.event,
           ethers.utils.getAddress(who),
-          carTokenId,
-          parkingTokenId
+          carTokenId.toNumber(),
+          parkingTokenId.toNumber()
         );
       }
     );
 
     this.contract.on(
       "UnParkCar",
-      (who: string, carTokenId: number, parkingTokenId: number) => {
+      (who: string, carTokenId: BigNumber, parkingTokenId: BigNumber) => {
         console.log("UnParkCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
           GameEventUnParkCar.event,
           ethers.utils.getAddress(who),
-          carTokenId,
-          parkingTokenId
+          carTokenId.toNumber(),
+          parkingTokenId.toNumber()
         );
       }
     );
 
     this.contract.on(
       "FineCar",
-      (who: string, carTokenId: number, parkingTokenId: number) => {
+      (who: string, carTokenId: BigNumber, parkingTokenId: BigNumber) => {
         console.log("FineCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
           GameEventFineCar.event,
           ethers.utils.getAddress(who),
-          carTokenId,
-          parkingTokenId
+          carTokenId.toNumber(),
+          parkingTokenId.toNumber()
         );
       }
     );

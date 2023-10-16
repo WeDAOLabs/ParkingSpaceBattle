@@ -41,6 +41,9 @@ export class WalletData extends Singleton {
   }
 
   public get address(): string {
+    if (StringUtil.isEmpty(this.data.address)) {
+      return this.data.address;
+    }
     return ethers.utils.getAddress(this.data.address);
   }
 

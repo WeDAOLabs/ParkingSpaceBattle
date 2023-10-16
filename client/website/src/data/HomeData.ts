@@ -1,7 +1,6 @@
 import { EventBus } from "../plugins/EventBus";
 import { Singleton } from "../core/game/Singleton";
 import { registerDataModel } from "./DataRegister";
-import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
 import { GO_HOME } from "../const/Constants";
 import { walletData } from "./WalletData";
 import { ethers } from "ethers";
@@ -19,11 +18,9 @@ export class HomeData extends Singleton {
     return this.currentPlyer === ethers.utils.getAddress(walletData.address);
   }
 
-  async init() {
-    EventBus.instance.on(GameEventGoFriendHome.eventAsync, this.onChangeScene);
-  }
+  async init() {}
 
-  private onChangeScene(address: string) {
+  public onChangeScene(address: string) {
     if (address === GO_HOME) {
       this._currentUserAddress = null;
     } else {

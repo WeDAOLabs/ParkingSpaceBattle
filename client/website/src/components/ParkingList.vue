@@ -380,6 +380,7 @@ export default defineComponent({
     };
 
     const onParkCar = async () => {
+      Loading.close();
       refreshFriendHome();
     };
 
