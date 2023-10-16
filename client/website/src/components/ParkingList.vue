@@ -384,10 +384,15 @@ export default defineComponent({
       );
       isMinted.value = player && player.hasParkings ? true : false;
 
-      if (player)
+      if (player) {
+        console.log(
+          player,
+          player.parkings.map((parking) => parking.status)
+        );
         userParkingStateList.value = player.parkings.map(
           (parking) => parking.status
         );
+      }
     };
 
     const refreshHome = async () => {

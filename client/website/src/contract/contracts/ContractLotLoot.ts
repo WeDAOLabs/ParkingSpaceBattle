@@ -52,7 +52,6 @@ export class ContractLotLoot extends ContractBase {
     this.contract.on(
       "UnParkCar",
       (who: string, carTokenId: BigNumber, parkingTokenId: BigNumber) => {
-        console.log("UnParkCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
           GameEventUnParkCar.event,
           ethers.utils.getAddress(who),
@@ -65,7 +64,6 @@ export class ContractLotLoot extends ContractBase {
     this.contract.on(
       "FineCar",
       (who: string, carTokenId: BigNumber, parkingTokenId: BigNumber) => {
-        console.log("FineCar", who, carTokenId, parkingTokenId);
         EventBus.instance.emit(
           GameEventFineCar.event,
           ethers.utils.getAddress(who),
