@@ -1,48 +1,42 @@
 <template>
   <div class="carList">
     <div class="list-div">
-      <a-divider orientation="left" orientation-margin="10px"
-        >My Cars</a-divider
-      >
+
+      <a-divider orientation="left" orientation-margin="10px">My Cars</a-divider>
 
       <a-row justify="left">
-        <a-col :span="4" v-if="userCarList.length < 5">
+        <a-col :span="4" v-if="userCarList.length<5">
           <a-row justify="space-around" align="middle" class="car-0">
             <a-button size="large" @click="funcFreeMintCar">Buy Car</a-button>
           </a-row>
         </a-col>
-        <a-col
-          :span="4"
-          v-for="item in userCarList"
-          :index="item.tokenId"
-          class="car-0"
-        >
+        <a-col :span="4" v-for="item in userCarList" :index="item.tokenId" class="car-0">
           <a-row justify="left" align="middle">
             <a-col :offset="2" :span="8">
               <div class="car-img">
                 <a-image
-                  width="50px"
-                  height="73px"
-                  :src="require('../assets/car.jpg')"
-                  :preview="false"
+                    width="50px"
+                    height="73px"
+                    :src="require('../assets/car.jpg')"
+                    :preview="false"
                 />
               </div>
             </a-col>
             <a-col :offset="2" :span="8">
               <a-button
-                v-if="item.ParkingAddress === 'IDLE'"
-                size="large"
-                type="primary"
-                danger
-                @click="onUpgrade(item.tokenId)"
-                >Upgrade
+                  v-if="item.ParkingAddress === 'IDLE'"
+                  size="large"
+                  type="primary"
+                  danger
+                  @click="onUpgrade(item.tokenId)"
+              >Upgrade
               </a-button>
               <a-button
-                v-else
-                size="large"
-                type="primary"
-                @click="onUnPackClick(item.tokenId)"
-                >Leave
+                  v-else
+                  size="large"
+                  type="primary"
+                  @click="onUnPackClick(item.tokenId)"
+              >Leave
               </a-button>
             </a-col>
           </a-row>
@@ -52,8 +46,8 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                      :src="require('../assets/id.png')"
-                      :preview="false"
+                        :src="require('../assets/id.png')"
+                        :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -63,21 +57,21 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                      :src="require('../assets/erc20_llt_mini.png')"
-                      :preview="false"
+                        :src="require('../assets/erc20_llt_mini.png')"
+                        :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
-                    <span class="font-color">{{
-                      item.ProspectiveEarnings
-                    }}</span>
+                    <span class="font-color">{{ item.ProspectiveEarnings }}</span>
                   </a-col>
                 </a-row>
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                      :src="require('../assets/erc20_llt_mini.png')"
-                      :preview="false"
+                        :width="25"
+                        :height="24"
+                        :src="require('../assets/parking.jpg')"
+                        :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
@@ -87,8 +81,11 @@
               </div>
             </a-col>
           </a-row>
+
+
         </a-col>
       </a-row>
+
     </div>
   </div>
 </template>
@@ -115,8 +112,8 @@ export default defineComponent({
       EventBus.instance.on(GameEventWalletConnected.eventAsync, refreshCar);
       EventBus.instance.on(GameEventBuyCar.eventAsync, refreshCar);
       EventBus.instance.on(
-        GameEventWalletAccountChanged.eventAsync,
-        refreshCar
+          GameEventWalletAccountChanged.eventAsync,
+          refreshCar
       );
       EventBus.instance.on(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
@@ -126,8 +123,8 @@ export default defineComponent({
       EventBus.instance.off(GameEventWalletConnected.eventAsync, refreshCar);
       EventBus.instance.off(GameEventBuyCar.eventAsync, refreshCar);
       EventBus.instance.off(
-        GameEventWalletAccountChanged.eventAsync,
-        refreshCar
+          GameEventWalletAccountChanged.eventAsync,
+          refreshCar
       );
       EventBus.instance.off(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
@@ -138,17 +135,17 @@ export default defineComponent({
       const player = await playerData.getPlayerData(homeData.currentPlyer);
       isHome.value = homeData.isInHome;
       let cars = player
-        ? player.cars.map((car) => {
+          ? player.cars.map((car) => {
             return {
               tokenId: car.tokenId,
               status: car.status,
               ParkingAddress:
-                car.parkingTokenId === 0 ? "IDLE" : car.parkingTokenId,
+                  car.parkingTokenId === 0 ? "IDLE" : car.parkingTokenId,
               url: "0",
               ProspectiveEarnings: 999,
             };
           })
-        : [];
+          : [];
       //@ts-ignore
       userCarList.value = cars;
       Loading.close();
@@ -238,7 +235,7 @@ export default defineComponent({
 .car-0 {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
-  padding-bottom: 2rem;
+  padding-bottom: 2.2rem;
   border: 1px solid #8ce6b0;
   border-radius: 0.5rem;
   height: 8rem;
@@ -249,6 +246,7 @@ export default defineComponent({
 .car-info {
   /*left: 15%;*/
   /*width: 70%;*/
+  padding: 0.1rem;
   border: 1px solid #ffd77a;
   border-radius: 0.5rem;
   box-sizing: content-box;
@@ -279,4 +277,6 @@ export default defineComponent({
 .test01 {
   background-color: red;
 }
+
+
 </style>
