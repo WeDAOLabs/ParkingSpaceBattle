@@ -377,8 +377,11 @@ export default defineComponent({
       userParkingStateList.value[userParkingStateIndex.value] = 1;
     };
 
-    const refreshFriendHome = async () => {
-      const player = await playerData.getPlayerData(homeData.currentPlyer);
+    const refreshFriendHome = async (refresh = false) => {
+      const player = await playerData.getPlayerData(
+        homeData.currentPlyer,
+        refresh
+      );
       isMinted.value = player && player.hasParkings ? true : false;
 
       if (player)
@@ -415,7 +418,7 @@ export default defineComponent({
     };
 
     const onParkCar = async () => {
-      refreshFriendHome();
+      await refreshFriendHome(true);
       Loading.close();
     };
 
@@ -423,7 +426,7 @@ export default defineComponent({
       if (homeData.isInHome) {
         await refreshHome();
       } else {
-        await refreshFriendHome();
+        await refreshFriendHome(true);
       }
       Loading.close();
     };
