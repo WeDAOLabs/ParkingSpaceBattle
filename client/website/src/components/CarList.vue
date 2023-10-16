@@ -14,11 +14,19 @@
         <a-col :span="2"><h3>Prospective Earnings</h3></a-col>
         <a-col :span="3"><h3>operation</h3></a-col>
 
-        <a-col :offset="2" :span="2"><h3>URL</h3></a-col>
-        <a-col :span="1"><h3>ID</h3></a-col>
-        <a-col :span="3"><h3>Parking Address</h3></a-col>
-        <a-col :span="2"><h3>Prospective Earnings</h3></a-col>
-        <a-col :span="3"><h3>operation</h3></a-col>
+        <a-col :offset="2" :span="2" v-if="userCarList.length > 1"
+          ><h3>URL</h3></a-col
+        >
+        <a-col :span="1" v-if="userCarList.length > 1"><h3>ID</h3></a-col>
+        <a-col :span="3" v-if="userCarList.length > 1"
+          ><h3>Parking Address</h3></a-col
+        >
+        <a-col :span="2" v-if="userCarList.length > 1"
+          ><h3>Prospective Earnings</h3></a-col
+        >
+        <a-col :span="3" v-if="userCarList.length > 1"
+          ><h3>operation</h3></a-col
+        >
       </a-row>
       <a-row align="middle">
         <a-col v-for="item in userCarList" :span="12" :index="item.tokenId">
