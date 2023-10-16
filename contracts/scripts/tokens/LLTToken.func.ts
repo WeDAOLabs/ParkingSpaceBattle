@@ -16,7 +16,7 @@ async function grantRole() {
   //grant minter role to default caller
   const tx = await contract.grantRole(
     ethers.utils.id("MINTER_ROLE"),
-    "0x2867E168855aA631255612EA925dC361BA294dE7"
+    "0xE52035d3584306508853dd10eBbFfF59bEa43267"
   );
   const receipt = await tx.wait();
   console.log(receipt);
