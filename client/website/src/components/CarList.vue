@@ -1,7 +1,7 @@
 <template>
   <div class="carList">
     <div class="list-div">
-      <a-row justify="left" align="middle" v-if="isHome">
+      <a-row justify="left" align="middle" v-if="userCarList.length <= 5">
         <a-col :span="24" class="list-item-margin">
           <a-button size="large" @click="funcFreeMintCar">Buy Car</a-button>
         </a-col>
@@ -90,6 +90,7 @@ import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
 import { contractData } from "../data/ContractData";
 import { homeData } from "../data/HomeData";
 import { playerData } from "../data/PlayerData";
+import { walletData } from "../data/WalletData";
 import { GameEventBuyCar } from "../events/GameEventBuyCar";
 import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
 import { GameEventUnParkCar } from "../events/GameEventUnParkCar";
@@ -127,8 +128,9 @@ export default defineComponent({
     const isHome = ref(true);
 
     const refreshCar = async () => {
+      // 只展示自己的车
       Loading.close();
-      const player = await playerData.getPlayerData(homeData.currentPlyer);
+      const player = await playerData.getPlayerData(walletData.address);
       isHome.value = homeData.isInHome;
       let cars = player
         ? player.cars.map((car) => {
@@ -165,6 +167,7 @@ export default defineComponent({
       }
 
       try {
+        Loading.open();
         await contractData.lotLootContract.unPark(tokenId);
       } catch (e) {
         console.error(e);
@@ -174,8 +177,8 @@ export default defineComponent({
     };
 
     const onUnPackCar = async () => {
-      Loading.close();
       await refreshCar();
+      Loading.close();
     };
 
     const onUpgrade = async () => {
