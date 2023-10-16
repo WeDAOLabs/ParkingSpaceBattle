@@ -1,7 +1,7 @@
 <template>
   <div class="carList">
     <div class="list-div">
-      <a-row justify="left" align="middle">
+      <a-row justify="left" align="middle" v-if="isHome">
         <a-col :span="24" class="list-item-margin">
           <a-button size="large" @click="funcFreeMintCar">Buy Car</a-button>
         </a-col>
@@ -56,9 +56,9 @@
             <a-col :span="6" class="list-item-margin list-item-text-align">
               <h4>{{ item.ParkingAddress }}</h4>
             </a-col>
-            <!-- <a-col :span="4" class="list-item-margin list-item-text-align">
+            <a-col :span="4" class="list-item-margin list-item-text-align">
               <h4>{{ item.ProspectiveEarnings }}</h4>
-            </a-col> -->
+            </a-col>
             <a-col :span="4">
               <a-button
                 v-if="item.ParkingAddress === 'IDLE'"
@@ -87,7 +87,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
-import { CarStatus } from "../const/enum/CarStatus";
 import { contractData } from "../data/ContractData";
 import { homeData } from "../data/HomeData";
 import { playerData } from "../data/PlayerData";
@@ -139,17 +138,10 @@ export default defineComponent({
               ParkingAddress:
                 car.parkingTokenId === 0 ? "IDLE" : car.parkingTokenId,
               url: "0",
+              ProspectiveEarnings: 999,
             };
           })
         : [];
-      if (isHome.value) {
-        // cars.push({
-        //   url: "0",
-        //   tokenId: 0,
-        //   status: CarStatus.UN_MINT,
-        //   ParkingAddress: 0,
-        // });
-      }
       //@ts-ignore
       userCarList.value = cars;
     };
