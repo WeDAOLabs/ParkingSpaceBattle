@@ -204,7 +204,9 @@
               </div>
             </a-col>
             <a-col :span="24">
-              <a-button type="primary" @click="funcLeave(index)">离开</a-button>
+              <a-button type="primary" @click="funcLeave(index)"
+                >Leave</a-button
+              >
             </a-col>
           </a-row>
         </a-col>
@@ -229,6 +231,7 @@ import { GameEventBuyParkings } from "../events/GameEventBuyParkings";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 import { GameEventParkCar } from "../events/GameEventParkCar";
 import { GameEventUnParkCar } from "../events/GameEventUnParkCar";
+import { GameEventFineCar } from "../events/GameEventFineCar";
 
 export default defineComponent({
   name: "ParkingList",
@@ -244,6 +247,7 @@ export default defineComponent({
       );
       EventBus.instance.on(GameEventParkCar.eventAsync, onParkCar);
       EventBus.instance.on(GameEventUnParkCar.eventAsync, onUnPackCar);
+      EventBus.instance.on(GameEventFineCar.eventAsync, onFineCar);
     });
 
     onUnmounted(() => {
@@ -256,6 +260,7 @@ export default defineComponent({
       );
       EventBus.instance.off(GameEventParkCar.eventAsync, onParkCar);
       EventBus.instance.off(GameEventUnParkCar.eventAsync, onUnPackCar);
+      EventBus.instance.off(GameEventFineCar.eventAsync, onFineCar);
     });
 
     const onPageRefresh = async (address: any) => {
@@ -290,9 +295,23 @@ export default defineComponent({
       userParkingStateIndex.value = index;
     };
 
-    const funcSticker = (index: number) => {
-      showStickerModel.value = true;
-      userParkingStateIndex.value = index;
+    const funcSticker = async (index: number) => {
+      if (!homeData.isInHome) {
+        return Promise.resolve();
+      }
+
+      const player = await playerData.getPlayerData(homeData.currentPlyer);
+      if (player) {
+        try {
+          Loading.open();
+          await contractData.lotLootContract.fineCar(
+            player.parkings[index].tokenId
+          );
+        } catch (e) {
+          console.error(e);
+          Loading.close();
+        }
+      }
     };
 
     const funcRobParking = async (index: number) => {
@@ -406,6 +425,11 @@ export default defineComponent({
       } else {
         await refreshFriendHome();
       }
+      Loading.close();
+    };
+
+    const onFineCar = async () => {
+      await refreshHome();
       Loading.close();
     };
 
