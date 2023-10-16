@@ -7,6 +7,7 @@ export interface IContractAddress {
   LotLoot: string;
   LLTToken: string;
   Registry6551: string;
+  Account6551: string;
 }
 
 export const CONTRACT_ADDRESS_MUMBAI = {
@@ -18,6 +19,7 @@ export const CONTRACT_ADDRESS_MUMBAI = {
   LotLoot: "0xE52035d3584306508853dd10eBbFfF59bEa43267",
   LLTToken: "0xaA6838b86183E1FA892B1D911F4517724fA52028",
   Registry6551: "0x38cf1C772EC1121b5a9cc1A4CCE07B25c71305eE",
+  Account6551: "0x6cf706A92a234652f36995e5004c4Cb72483E529",
 };
 
 export const CONTRACT_ADDRESS_ARBITRUM = {
@@ -29,4 +31,5 @@ export const CONTRACT_ADDRESS_ARBITRUM = {
   LotLoot: "",
   LLTToken: "",
   Registry6551: "",
+  Account6551: "",
 };

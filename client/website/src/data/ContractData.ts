@@ -13,6 +13,7 @@ import { ContractParkingERC721 } from "../contract/contracts/ContractParkingERC7
 import { ContractCarStore } from "../contract/contracts/ContractCarStore";
 import { ContractLotLoot } from "../contract/contracts/ContractLotLoot";
 import { ContractLLTToken } from "../contract/contracts/ContractLLTToken";
+import { ContractERC6551Registry } from "../contract/contracts/ContractRegistry6551";
 
 export class ContractData extends Singleton {
   private _carStoreContractIns: any = null!;
@@ -21,6 +22,7 @@ export class ContractData extends Singleton {
   private _parkingERC721StoreContractIns: any = null!;
   private _lotLootContractIns: any = null;
   private _lltTokenContractIns: any = null;
+  private _6551RegistryContractIns: any = null;
 
   public get carStoreContract(): any {
     if (!this._carStoreContractIns) {
@@ -62,6 +64,13 @@ export class ContractData extends Singleton {
       this._lltTokenContractIns = ContractLLTToken.create();
     }
     return this._lltTokenContractIns;
+  }
+
+  public get registry6551Contract(): any {
+    if (!this._6551RegistryContractIns) {
+      this._6551RegistryContractIns = ContractERC6551Registry.create();
+    }
+    return this._6551RegistryContractIns;
   }
 
   public get contractAddress(): IContractAddress {

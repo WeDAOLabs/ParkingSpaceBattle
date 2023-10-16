@@ -12,6 +12,8 @@ export class ParkingDTO extends BaseDTO {
   owner: string = "";
   carOwner: string = "";
 
+  account: string = "";
+
   public get isMyParking(): boolean {
     return this.owner === walletData.address;
   }
@@ -53,6 +55,11 @@ export class ParkingDTO extends BaseDTO {
       );
       parkingDTO.carOwner = ethers.utils.getAddress(carOwner);
     }
+
+    parkingDTO.account = await contractData.registry6551Contract.account(
+      tokenId,
+      contractData.contractAddress.ParkingERC721
+    );
 
     return parkingDTO;
   }

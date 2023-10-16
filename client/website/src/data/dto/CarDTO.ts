@@ -10,6 +10,8 @@ export class CarDTO extends BaseDTO {
   owner: string = "";
   parkingOwner: string = "";
 
+  account: string = "";
+
   public get isParking(): boolean {
     return this.parkingTokenId > 0;
   }
@@ -44,6 +46,11 @@ export class CarDTO extends BaseDTO {
       );
       carDTO.parkingOwner = ethers.utils.getAddress(parkingOwner);
     }
+
+    carDTO.account = await contractData.registry6551Contract.account(
+      tokenId,
+      contractData.contractAddress.CarERC721
+    );
 
     return carDTO;
   }
