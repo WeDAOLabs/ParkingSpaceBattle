@@ -296,7 +296,6 @@ export default defineComponent({
     const showChooseCarModel = ref(false);
     const showLeaveModel = ref(false);
 
-    const userParkingStateList = ref([1, 2, 1, 1, 3]); // 0表示未mint 1表示车位空 2表示他人占用 3表示自己占用(3仅出现在朋友的车库)
     const playerParkingList = ref([]);
 
     const funcFreeMintParking = (index: number) => {
@@ -368,17 +367,14 @@ export default defineComponent({
 
     const funcAffirmFreeMintParking = () => {
       showFreeMintParkingModel.value = false;
-      userParkingStateList.value[userParkingStateIndex.value] = 1;
     };
 
     const funcAffirmSticker = () => {
       showStickerModel.value = false;
-      userParkingStateList.value[userParkingStateIndex.value] = 1;
     };
 
     const funcAffirmRobParking = () => {
       showChooseCarModel.value = false;
-      userParkingStateList.value[userParkingStateIndex.value] = 3;
     };
 
     const funcAffirmLeave = () => {
@@ -393,10 +389,6 @@ export default defineComponent({
       isMinted.value = player && player.hasParkings ? true : false;
 
       if (player) {
-        userParkingStateList.value = player.parkings.map(
-          (parking) => parking.status
-        );
-
         //@ts-ignore
         playerParkingList.value = player.parkings.map((parking) => {
           return {
@@ -413,10 +405,6 @@ export default defineComponent({
       isMinted.value = player && player.hasParkings ? true : false;
 
       if (player) {
-        userParkingStateList.value = player.parkings.map(
-          (parking) => parking.status
-        );
-
         //@ts-ignore
         playerParkingList.value = player.parkings.map((parking) => {
           return {
@@ -469,7 +457,6 @@ export default defineComponent({
       showStickerModel,
       showChooseCarModel,
       showLeaveModel,
-      userParkingStateList,
       isUserHome,
       isMinted,
       funcFreeMintParking,
