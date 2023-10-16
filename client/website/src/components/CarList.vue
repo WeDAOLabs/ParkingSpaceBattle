@@ -1,13 +1,11 @@
 <template>
   <div class="carList">
     <div class="list-div">
-
       <a-row justify="left" align="middle">
         <a-col :span="24" class="list-item-margin">
           <a-button size="large" @click="funcFreeMintCar">Buying Cars</a-button>
         </a-col>
       </a-row>
-
 
       <a-row v-if="userCarList.length" justify="left" align="middle">
         <a-col :span="2"><h3>URL</h3></a-col>
@@ -34,10 +32,10 @@
                   <!--//TODO:静态图片-->
                   <div class="car-img">
                     <a-image
-                        width="50px"
-                        height="73"
-                        :src="require('../assets/car.jpg')"
-                        :preview="false"
+                      width="50px"
+                      height="73"
+                      :src="require('../assets/car.jpg')"
+                      :preview="false"
                     />
                   </div>
                   <!--  <a-input size="large" v-model:value="item.URL"/>-->
@@ -55,26 +53,23 @@
             </a-col> -->
             <a-col :span="4">
               <a-button
-                  v-if="item.ParkingAddress === 0"
-                  size="large"
-                  type="primary"
-                  danger
-              >升级
-              </a-button
-              >
+                v-if="item.ParkingAddress === 0"
+                size="large"
+                type="primary"
+                danger
+                @click="onUpgrade(item.tokenId)"
+                >Upgrade
+              </a-button>
               <a-button
-                  v-else
-                  size="large"
-                  type="primary"
-                  @click="onUnPackClick(item.tokenId)"
-              >离开
-              </a-button
-              >
+                v-else
+                size="large"
+                type="primary"
+                @click="onUnPackClick(item.tokenId)"
+                >Leave
+              </a-button>
               <!--            <a-button   icon="delete"-->
               <!--                      @click="buttonDeleteList(index,'learn')"/>-->
             </a-col>
-
-
           </a-row>
         </a-col>
       </a-row>
@@ -83,19 +78,19 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onBeforeMount, onUnmounted} from "vue";
-import {CarStatus} from "../const/enum/CarStatus";
-import {contractData} from "../data/ContractData";
-import {homeData} from "../data/HomeData";
-import {playerData} from "../data/PlayerData";
-import {GameEventBuyCar} from "../events/GameEventBuyCar";
-import {GameEventGoFriendHome} from "../events/GameEventGoFriendHome";
-import {GameEventUnParkCar} from "../events/GameEventUnParkCar";
-import {GameEventWalletAccountChanged} from "../events/GameEventWalletAccountChanged";
-import {GameEventWalletConnected} from "../events/GameEventWalletConnected";
-import {EventBus} from "../plugins/EventBus";
-import {Loading} from "../plugins/Loading";
-import {Toast} from "../plugins/Toast";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import { CarStatus } from "../const/enum/CarStatus";
+import { contractData } from "../data/ContractData";
+import { homeData } from "../data/HomeData";
+import { playerData } from "../data/PlayerData";
+import { GameEventBuyCar } from "../events/GameEventBuyCar";
+import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
+import { GameEventUnParkCar } from "../events/GameEventUnParkCar";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
+import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { EventBus } from "../plugins/EventBus";
+import { Loading } from "../plugins/Loading";
+import { Toast } from "../plugins/Toast";
 
 export default defineComponent({
   name: "CarList",
@@ -105,8 +100,8 @@ export default defineComponent({
       EventBus.instance.on(GameEventWalletConnected.eventAsync, refreshCar);
       EventBus.instance.on(GameEventBuyCar.eventAsync, refreshCar);
       EventBus.instance.on(
-          GameEventWalletAccountChanged.eventAsync,
-          refreshCar
+        GameEventWalletAccountChanged.eventAsync,
+        refreshCar
       );
       EventBus.instance.on(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
@@ -116,8 +111,8 @@ export default defineComponent({
       EventBus.instance.off(GameEventWalletConnected.eventAsync, refreshCar);
       EventBus.instance.off(GameEventBuyCar.eventAsync, refreshCar);
       EventBus.instance.off(
-          GameEventWalletAccountChanged.eventAsync,
-          refreshCar
+        GameEventWalletAccountChanged.eventAsync,
+        refreshCar
       );
       EventBus.instance.off(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
@@ -129,7 +124,7 @@ export default defineComponent({
       const player = await playerData.getPlayerData(homeData.currentPlyer);
       isHome.value = homeData.isInHome;
       let cars = player
-          ? player.cars.map((car) => {
+        ? player.cars.map((car) => {
             return {
               tokenId: car.tokenId,
               status: car.status,
@@ -137,7 +132,7 @@ export default defineComponent({
               url: "0",
             };
           })
-          : [];
+        : [];
       if (isHome.value) {
         // cars.push({
         //   url: "0",
@@ -182,15 +177,17 @@ export default defineComponent({
       await refreshCar();
     };
 
-    const funcBuyCar = () => {
+    const onUpgrade = async () => {
+      Toast.warn(`Coming soon`);
+      return Promise.resolve();
     };
 
     return {
       userCarList,
       funcFreeMintCar,
-      funcBuyCar,
       isHome,
       onUnPackClick,
+      onUpgrade,
     };
   },
 });
