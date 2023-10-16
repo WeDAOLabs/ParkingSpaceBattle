@@ -8,14 +8,14 @@
       </a-row>
 
       <a-row v-if="userCarList.length" justify="left" align="middle">
-        <a-col :span="2"><h3>URL</h3></a-col>
+        <a-col :span="2"><h3>Car</h3></a-col>
         <a-col :span="1"><h3>ID</h3></a-col>
         <a-col :span="3"><h3>Parking Address</h3></a-col>
         <a-col :span="2"><h3>Prospective Earnings</h3></a-col>
         <a-col :span="3"><h3>operation</h3></a-col>
 
         <a-col :offset="2" :span="2" v-if="userCarList.length > 1"
-          ><h3>URL</h3></a-col
+          ><h3>Car</h3></a-col
         >
         <a-col :span="1" v-if="userCarList.length > 1"><h3>ID</h3></a-col>
         <a-col :span="3" v-if="userCarList.length > 1"
@@ -136,7 +136,8 @@ export default defineComponent({
             return {
               tokenId: car.tokenId,
               status: car.status,
-              ParkingAddress: car.parkingTokenId,
+              ParkingAddress:
+                car.parkingTokenId === 0 ? "IDLE" : car.parkingTokenId,
               url: "0",
             };
           })
