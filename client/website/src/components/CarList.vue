@@ -61,7 +61,7 @@
             </a-col> -->
             <a-col :span="4">
               <a-button
-                v-if="item.ParkingAddress === 0"
+                v-if="item.ParkingAddress === 'IDLE'"
                 size="large"
                 type="primary"
                 danger
