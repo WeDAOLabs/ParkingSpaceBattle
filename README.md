@@ -40,13 +40,15 @@
 - 本项目在这次黑客松的目标：实现 LotLoot 全链游戏从 0 到 1 开发，聚合以太坊生态 NFT&Token，利用代币机制提升游戏玩法多样性，通过博弈方式达到预期收益，玩法机制结合 Game 和 Social，对于 Fi 属性有很好的拓展，项目能够给予链上应用新赋能。
 - 黑客松前两日的进度：
   1. Day1：
-- [ ] 待办事项：代码调试，合约实现
+- [x] 待办事项：代码调试，合约实现
 - [x] 完成前端页面设计
 - [x] 搭建合约框架
   1. Day2：
-- [ ] 待办事项：功能完善
-- [x] 实现代码，完成测试
-- Demo 视频链接（可以是录屏或其他形式），可以选择的视频平台：Youtube，Bilibili，Loom，视频长度不能超过 3 分钟，否则扣分。
+- [x] 待办事项：功能完善
+- [x] 实现游戏逻辑合约，完成测试
+- [x] 实现分账合约
+- [x] 完成客户端交互逻辑
+- Demo 视频链接: [https://youtu.be/yIbsNTIHkjU](https://youtu.be/yIbsNTIHkjU)
 - 项目 github repo 链接：https://github.com/WeDAOLabs/ParkingSpaceBattle
 - 声明未基于之前的项目: 该项目是本次 hackathon 期间，从 0 到 1 开发的项目，完全原创。
 - 项目 Demo 链接（选填）：[https://lotloot.osairo.xyz/](https://lotloot.osairo.xyz/)
