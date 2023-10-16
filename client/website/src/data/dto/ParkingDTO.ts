@@ -1,4 +1,4 @@
-import { StringUtil } from "@/core/utils/StringUtil";
+import { StringUtil } from "../../core/utils/StringUtil";
 import { ParkingStatus } from "../../const/enum/ParkingStatus";
 import { contractData } from "../ContractData";
 import { BaseDTO } from "./BaseDTO";
@@ -34,6 +34,15 @@ export class ParkingDTO extends BaseDTO {
 
   public get isParked(): boolean {
     return this.carTokenId > 0;
+  }
+
+  public async getBalance() {
+    if (StringUtil.isEmpty(this.account)) {
+      return ethers.utils.formatEther(0);
+    }
+
+    const balance = await contractData.lltTokenContract.balance(this.account);
+    return balance;
   }
 
   public static async create(tokenId: number, carTokenId = 0) {

@@ -1,7 +1,8 @@
 import { ContractBase } from "./ContractBase";
 import ContractLLTTokenABI from "../abi/contracts/tokens/LLTToken.sol/LLTToken.json";
 import { contractData } from "../../data/ContractData";
-import { BigNumber, ethers } from "ethers";
+import { ethers } from "ethers";
+import { playerData } from "../../data/PlayerData";
 
 export class ContractLLTToken extends ContractBase {
   static create(): any {
@@ -20,7 +21,12 @@ export class ContractLLTToken extends ContractBase {
     return balance;
   }
 
-  async balanceOf6551(address: string) {}
+  async balanceOf6551(address: string) {
+    const player = await playerData.getPlayerData(address);
+    if (!player) {
+      return "0";
+    }
+  }
 
   public registerEvents() {
     // TODO
