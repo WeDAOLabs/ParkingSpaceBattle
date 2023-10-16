@@ -1,9 +1,9 @@
 <template>
   <div class="parkingList">
     <a-modal
-        v-model:open="showFreeMintParkingModel"
-        title="Mint Parking affirm"
-        @ok="funcAffirmFreeMintParking"
+      v-model:open="showFreeMintParkingModel"
+      title="Mint Parking affirm"
+      @ok="funcAffirmFreeMintParking"
     >
       <p>Mint Parking</p>
       <p>Some contents...</p>
@@ -11,9 +11,9 @@
     </a-modal>
 
     <a-modal
-        v-model:open="showStickerModel"
-        title="Sticker affirm"
-        @ok="funcAffirmSticker"
+      v-model:open="showStickerModel"
+      title="Sticker affirm"
+      @ok="funcAffirmSticker"
     >
       <p>贴条...</p>
       <p>Some contents...</p>
@@ -21,9 +21,9 @@
     </a-modal>
 
     <a-modal
-        v-model:open="showChooseCarModel"
-        title="Choose car"
-        @ok="funcAffirmRobParking"
+      v-model:open="showChooseCarModel"
+      title="Choose car"
+      @ok="funcAffirmRobParking"
     >
       <p>Choose Car...</p>
       <a-col :span="24" class="choose-car-margin">
@@ -38,9 +38,9 @@
     </a-modal>
 
     <a-modal
-        v-model:open="showLeaveModel"
-        title="Leave affirm"
-        @ok="funcAffirmLeave"
+      v-model:open="showLeaveModel"
+      title="Leave affirm"
+      @ok="funcAffirmLeave"
     >
       <p>Leave affirm...</p>
       <p>Some contents...</p>
@@ -48,71 +48,71 @@
     </a-modal>
 
     <div class="user-home" v-if="isUserHome">
-
-      <a-divider orientation="left" orientation-margin="10px">My Parking</a-divider>
+      <a-divider orientation="left" orientation-margin="10px"
+        >My Parking</a-divider
+      >
 
       <a-row v-if="!isMinted" justify="space-around">
         <a-button size="large" class="buy-parking" @click="buyParkingPlace"
-        >Buying Parking Place
-        </a-button
-        >
+          >Buying Parking Place
+        </a-button>
       </a-row>
       <a-row v-else justify="space-around">
         <a-col
-            :span="4"
-            v-for="(item, index) in userParkingStateList"
-            :key="index"
+          :span="4"
+          v-for="(item, index) in playerParkingList"
+          :key="index"
         >
           <a-row
-              justify="center"
-              align="middle"
-              class="parking-1"
-              v-if="item === 1"
+            justify="center"
+            align="middle"
+            class="parking-1"
+            v-if="item.status === 1"
           >
           </a-row>
           <a-row
-              justify="center"
-              align="middle"
-              class="parking-2"
-              v-if="item === 2"
+            justify="center"
+            align="middle"
+            class="parking-2"
+            v-if="item.status === 2"
           >
             <a-col :span="24">
-              <a-image :src="require('../assets/car.jpg')" :preview="false"/>
+              <a-image :src="require('../assets/car.jpg')" :preview="false" />
             </a-col>
             <a-col :span="20">
               <div class="car-info">
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
-                    <span class="font-color">xxx</span>
+                    <span class="font-color">{{ item.carTokenId }}</span>
                   </a-col>
                 </a-row>
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/erc20_llt_mini.png')"
-                        :preview="false"
+                      :src="require('../assets/erc20_llt_mini.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
-                    <span class="font-color">123.001</span>
+                    <span class="font-color">{{ item.balance }}</span>
                   </a-col>
                 </a-row>
               </div>
             </a-col>
             <a-col :span="24">
               <a-image
-                  width="50%"
-                  height="50%"
-                  class="pointer"
-                  @click="funcSticker(index)"
-                  :src="require('../assets/sticker_button02.png')"
-                  :preview="false"
+                width="50%"
+                height="50%"
+                class="pointer"
+                @click="funcSticker(index)"
+                :src="require('../assets/sticker_button02.png')"
+                :preview="false"
               />
             </a-col>
           </a-row>
@@ -121,41 +121,41 @@
     </div>
 
     <div class="friend-Home" v-else>
-
-      <a-divider orientation="left" orientation-margin="10px">Friend's Parking</a-divider>
+      <a-divider orientation="left" orientation-margin="10px"
+        >Friend's Parking</a-divider
+      >
 
       <a-row justify="space-around">
         <a-col
-            :span="4"
-            v-for="(item, index) in userParkingStateList"
-            :key="index"
+          :span="4"
+          v-for="(item, index) in playerParkingList"
+          :key="index"
         >
           <a-row
-              justify="center"
-              align="middle"
-              class="parking-1"
-              v-if="item === 1"
+            justify="center"
+            align="middle"
+            class="parking-1"
+            v-if="item.status === 1"
           >
             <a-col :span="24">
               <a-button
-                  size="large"
-                  type="primary"
-                  danger
-                  @click="funcRobParking(index)"
-              >Park
-              </a-button
-              >
+                size="large"
+                type="primary"
+                danger
+                @click="funcRobParking(index)"
+                >Park
+              </a-button>
             </a-col>
           </a-row>
           <a-row
-              justify="center"
-              align="middle"
-              class="parking-2"
-              v-if="item === 2"
+            justify="center"
+            align="middle"
+            class="parking-2"
+            v-if="item.status === 2"
           >
             <a-col :span="24">
               <a-row justify="center" align="middle">
-                <a-image :src="require('../assets/car.jpg')" :preview="false"/>
+                <a-image :src="require('../assets/car.jpg')" :preview="false" />
               </a-row>
             </a-col>
             <a-col :span="20">
@@ -163,26 +163,26 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
-                    <span class="font-color">xxx</span>
+                    <span class="font-color">{{ item.carTokenId }}</span>
                   </a-col>
                 </a-row>
               </div>
             </a-col>
           </a-row>
           <a-row
-              justify="center"
-              align="middle"
-              class="parking-3"
-              v-if="item === 3"
+            justify="center"
+            align="middle"
+            class="parking-3"
+            v-if="item === 3"
           >
             <a-col :span="24">
               <a-row justify="center" align="middle">
-                <a-image :src="require('../assets/car.jpg')" :preview="false"/>
+                <a-image :src="require('../assets/car.jpg')" :preview="false" />
               </a-row>
             </a-col>
             <a-col :span="20">
@@ -190,32 +190,31 @@
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/id.png')"
-                        :preview="false"
+                      :src="require('../assets/id.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
-                    <span class="font-color">xxx</span>
+                    <span class="font-color">{{ item.carTokenId }}</span>
                   </a-col>
                 </a-row>
                 <a-row justify="left" align="middle">
                   <a-col :offset="4" :span="5">
                     <a-image
-                        :src="require('../assets/erc20_llt_mini.png')"
-                        :preview="false"
+                      :src="require('../assets/erc20_llt_mini.png')"
+                      :preview="false"
                     />
                   </a-col>
                   <a-col :offset="1" :span="5">
-                    <span class="font-color">123.001</span>
+                    <span class="font-color">{{ item.balance }}</span>
                   </a-col>
                 </a-row>
               </div>
             </a-col>
             <a-col :span="24">
               <a-button type="primary" @click="funcLeave(index)"
-              >Leave
-              </a-button
-              >
+                >Leave
+              </a-button>
             </a-col>
           </a-row>
         </a-col>
@@ -225,22 +224,22 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onBeforeMount, onUnmounted} from "vue";
-import {EventBus} from "../plugins/EventBus";
-import {GameEventGoFriendHome} from "../events/GameEventGoFriendHome";
-import {GO_HOME} from "../const/Constants";
-import {homeData} from "../data/HomeData";
-import {playerData} from "../data/PlayerData";
-import {walletData} from "../data/WalletData";
-import {GameEventWalletConnected} from "../events/GameEventWalletConnected";
-import {Loading} from "../plugins/Loading";
-import {contractData} from "../data/ContractData";
-import {Toast} from "../plugins/Toast";
-import {GameEventBuyParkings} from "../events/GameEventBuyParkings";
-import {GameEventWalletAccountChanged} from "../events/GameEventWalletAccountChanged";
-import {GameEventParkCar} from "../events/GameEventParkCar";
-import {GameEventUnParkCar} from "../events/GameEventUnParkCar";
-import {GameEventFineCar} from "../events/GameEventFineCar";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import { EventBus } from "../plugins/EventBus";
+import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
+import { GO_HOME } from "../const/Constants";
+import { homeData } from "../data/HomeData";
+import { playerData } from "../data/PlayerData";
+import { walletData } from "../data/WalletData";
+import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { Loading } from "../plugins/Loading";
+import { contractData } from "../data/ContractData";
+import { Toast } from "../plugins/Toast";
+import { GameEventBuyParkings } from "../events/GameEventBuyParkings";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
+import { GameEventParkCar } from "../events/GameEventParkCar";
+import { GameEventUnParkCar } from "../events/GameEventUnParkCar";
+import { GameEventFineCar } from "../events/GameEventFineCar";
 
 export default defineComponent({
   name: "ParkingList",
@@ -251,8 +250,8 @@ export default defineComponent({
       EventBus.instance.on(GameEventWalletConnected.eventAsync, onSignIn);
       EventBus.instance.on(GameEventBuyParkings.eventAsync, onParkingBought);
       EventBus.instance.on(
-          GameEventWalletAccountChanged.eventAsync,
-          refreshHome
+        GameEventWalletAccountChanged.eventAsync,
+        refreshHome
       );
       EventBus.instance.on(GameEventParkCar.eventAsync, onParkCar);
       EventBus.instance.on(GameEventUnParkCar.eventAsync, onUnPackCar);
@@ -264,8 +263,8 @@ export default defineComponent({
       EventBus.instance.off(GameEventWalletConnected.eventAsync, onSignIn);
       EventBus.instance.off(GameEventBuyParkings.eventAsync, onParkingBought);
       EventBus.instance.off(
-          GameEventWalletAccountChanged.eventAsync,
-          refreshHome
+        GameEventWalletAccountChanged.eventAsync,
+        refreshHome
       );
       EventBus.instance.off(GameEventParkCar.eventAsync, onParkCar);
       EventBus.instance.off(GameEventUnParkCar.eventAsync, onUnPackCar);
@@ -298,6 +297,7 @@ export default defineComponent({
     const showLeaveModel = ref(false);
 
     const userParkingStateList = ref([1, 2, 1, 1, 3]); // 0表示未mint 1表示车位空 2表示他人占用 3表示自己占用(3仅出现在朋友的车库)
+    const playerParkingList = ref([]);
 
     const funcFreeMintParking = (index: number) => {
       showFreeMintParkingModel.value = true;
@@ -314,7 +314,7 @@ export default defineComponent({
         try {
           Loading.open();
           await contractData.lotLootContract.fineCar(
-              player.parkings[index].tokenId
+            player.parkings[index].tokenId
           );
         } catch (e) {
           console.error(e);
@@ -336,8 +336,8 @@ export default defineComponent({
         Loading.open();
         try {
           await contractData.lotLootContract.park(
-              myData.cars[carIndex].tokenId,
-              tokenId
+            myData.cars[carIndex].tokenId,
+            tokenId
           );
         } catch (e) {
           console.error(e);
@@ -383,7 +383,6 @@ export default defineComponent({
 
     const funcAffirmLeave = () => {
       showLeaveModel.value = false;
-
     };
 
     const refreshFriendHome = async (refresh = false) => {
@@ -395,8 +394,17 @@ export default defineComponent({
 
       if (player) {
         userParkingStateList.value = player.parkings.map(
-            (parking) => parking.status
+          (parking) => parking.status
         );
+
+        //@ts-ignore
+        playerParkingList.value = player.parkings.map((parking) => {
+          return {
+            status: parking.status,
+            carTokenId: parking.carTokenId,
+            balance: 123.456,
+          };
+        });
       }
     };
 
@@ -406,8 +414,17 @@ export default defineComponent({
 
       if (player) {
         userParkingStateList.value = player.parkings.map(
-            (parking) => parking.status
+          (parking) => parking.status
         );
+
+        //@ts-ignore
+        playerParkingList.value = player.parkings.map((parking) => {
+          return {
+            status: parking.status,
+            carTokenId: parking.carTokenId,
+            balance: 123.456,
+          };
+        });
       }
     };
 
@@ -464,6 +481,7 @@ export default defineComponent({
       funcAffirmLeave,
       funcAffirmFreeMintParking,
       buyParkingPlace,
+      playerParkingList,
     };
   },
 });
