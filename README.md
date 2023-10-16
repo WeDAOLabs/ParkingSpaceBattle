@@ -46,10 +46,10 @@
   1. Day2：
 - [ ] 待办事项：功能完善
 - [x] 实现代码，完成测试
-- Demo 视频链接（可以是录屏或其他形式），可以选择的视频平台：Youtube，Bilibili，Loom，视频长度不能超过 3 分钟，否则扣分。
+- Demo 视频链接（可以是录屏或其他形式），可以选择的视频平台：[Youtube，Bilibili，Loom，视频长度不能超过 3 分钟，否则扣分。](https://youtu.be/yIbsNTIHkjU)
 - 项目 github repo 链接：https://github.com/WeDAOLabs/ParkingSpaceBattle
 - 声明未基于之前的项目: 该项目是本次 hackathon 期间，从 0 到 1 开发的项目，完全原创。
-- 项目 Demo 链接（选填）
+- 项目 Demo 链接（选填）：[https://youtu.be/yIbsNTIHkjU](https://lotloot.osairo.xyz/)
 
 ## Contributors (sorted by frist charactor)
 
