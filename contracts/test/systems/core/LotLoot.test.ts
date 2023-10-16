@@ -47,8 +47,6 @@ describe('LotLoot', function () {
       erc6551Registry.address,
       erc6551Account.address
     ]);
-
-    await lotLoot.deployed();
   });
   it('success deploy', async () => {
     expect(await carERC721.address).to.not.equal(null);
@@ -86,6 +84,9 @@ describe('LotLoot', function () {
     await lotLoot.connect(addr2).parkCar(carTokenId2, parkTokenId1);
     // success parking
     expect(await lotLoot.viewCarOnPark(carTokenId1)).to.equal(parkTokenId2);
+    expect(await lotLoot.viewParkOnCar(parkTokenId2)).to.equal(carTokenId1);
+    expect(await lotLoot.viewParkOnCar(parkTokenId1)).to.equal(carTokenId2);
+    expect(await lotLoot.viewCarOnPark(carTokenId2)).to.equal(parkTokenId1);
     // can't park a parked setting
     await expect(
       lotLoot.connect(addr1).parkCar(carTokenId3, parkTokenId2)
@@ -122,6 +123,10 @@ describe('LotLoot', function () {
 
     await lotLoot.connect(addr1).parkCar(carTokenId1, parkTokenId2);
     await lotLoot.connect(addr2).parkCar(carTokenId2, parkTokenId1);
+    await expect(await lotLoot.viewCarOnPark(carTokenId1)).equal(parkTokenId2);
+    await expect(await lotLoot.viewParkOnCar(parkTokenId2)).equal(carTokenId1);
+    await expect(await lotLoot.viewCarOnPark(carTokenId2)).equal(parkTokenId1);
+    await expect(await lotLoot.viewParkOnCar(parkTokenId1)).equal(carTokenId2);
     await lltToken.connect(owner).grantRole(MINTER_ROLE, lotLoot.address);
     const accountAddress = await erc6551Registry.account(
       erc6551Account.address,
@@ -137,6 +142,7 @@ describe('LotLoot', function () {
     ).to.be.revertedWith('Not owner of car');
 
     expect(await lotLoot.viewCarOnPark(carTokenId1)).to.equal(0);
+    expect(await lotLoot.viewParkOnCar(parkTokenId2)).to.equal(0);
     expect(await lltToken.balanceOf(accountAddress)).to.not.equal(0);
   });
   it('test fine car', async () => {
@@ -170,6 +176,8 @@ describe('LotLoot', function () {
     );
 
     await lotLoot.connect(addr1).parkCar(carTokenId1, parkTokenId2);
+    expect(await lotLoot.viewParkOnCar(parkTokenId2)).to.equal(carTokenId1);
+    expect(await lotLoot.viewCarOnPark(carTokenId1)).to.equal(parkTokenId2);
     // You must be the owner of the parking space
     await expect(
       lotLoot.connect(addr1).fineCar(parkTokenId2)
@@ -183,6 +191,7 @@ describe('LotLoot', function () {
     await lotLoot.connect(addr2).fineCar(parkTokenId2);
 
     expect(await lotLoot.viewParkOnCar(parkTokenId2)).to.equal(0);
+    expect(await lotLoot.viewCarOnPark(carTokenId1)).to.equal(0);
     expect(await lltToken.balanceOf(accountAddress)).to.not.equal(0);
   });
 });

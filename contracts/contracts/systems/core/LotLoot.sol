@@ -15,9 +15,21 @@ contract LotLoot is
     AccessControlEnumerableUpgradeable,
     UUPSUpgradeable
 {
-    event ParkCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
-    event UnParkCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
-    event FineCar(address indexed who, uint256 indexed carTokenId, uint256 indexed parkingTokenId);
+    event ParkCar(
+        address indexed who,
+        uint256 indexed carTokenId,
+        uint256 indexed parkingTokenId
+    );
+    event UnParkCar(
+        address indexed who,
+        uint256 indexed carTokenId,
+        uint256 indexed parkingTokenId
+    );
+    event FineCar(
+        address indexed who,
+        uint256 indexed carTokenId,
+        uint256 indexed parkingTokenId
+    );
 
     LLTToken lltToken;
     IERC721Ext carNFT;
@@ -82,9 +94,9 @@ contract LotLoot is
 
         _handleUnparkCar(_carTokenId);
         uint parkingTokenId = cars[_carTokenId].parkTokenId;
-        cars[_carTokenId].parkTokenId = 0;
-        parks[cars[_carTokenId].parkTokenId].carTokenId = 0;
 
+        parks[cars[_carTokenId].parkTokenId].carTokenId = 0;
+        cars[_carTokenId].parkTokenId = 0;
         emit UnParkCar(msg.sender, _carTokenId, parkingTokenId);
     }
 
@@ -101,9 +113,8 @@ contract LotLoot is
         uint carTokenId = parks[_parkTokenId].carTokenId;
         address carOwner = carNFT.ownerOf(carTokenId);
 
-        parks[_parkTokenId].carTokenId = 0;
         cars[parks[_parkTokenId].carTokenId].parkTokenId = 0;
-
+        parks[_parkTokenId].carTokenId = 0;
         emit FineCar(carOwner, carTokenId, _parkTokenId);
     }
 
