@@ -25,7 +25,7 @@ export class ContractERC6551Registry extends ContractBase {
       []
     );
 
-    console.log("6551账户", account);
+    return account;
   }
 
   public registerEvents() {
