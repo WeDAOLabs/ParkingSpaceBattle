@@ -1,61 +1,92 @@
 <template>
   <div class="carList">
     <div class="list-div">
-      <a-row justify="left" align="middle">
-        <a-col :span="2"><h3>URL</h3></a-col>
-        <a-col :span="1"><h3>ID</h3></a-col>
-        <a-col :span="3"><h3>Parking Address</h3></a-col>
-        <a-col :span="2"><h3>Prospective Earnings</h3></a-col>
-        <a-col :span="3"><h3>operation</h3></a-col>
+      <a-divider orientation="left" orientation-margin="10px"
+        >My Cars</a-divider
+      >
 
-        <a-col :offset="2" :span="2"><h3>URL</h3></a-col>
-        <a-col :span="1"><h3>ID</h3></a-col>
-        <a-col :span="3"><h3>Parking Address</h3></a-col>
-        <a-col :span="2"><h3>Prospective Earnings</h3></a-col>
-        <a-col :span="3"><h3>operation</h3></a-col>
-      </a-row>
-      <a-row align="middle">
-        <a-col v-for="item in userCarList" :span="12" :index="item.tokenId">
-          <a-row>
-            <a-col v-if="index % 2 === 1" :span="1" class="list-item-margin">
+      <a-row justify="left">
+        <a-col :span="4" v-if="userCarList.length < 5">
+          <a-row justify="space-around" align="middle" class="car-0">
+            <a-button size="large" @click="funcFreeMintCar">Buy Car</a-button>
+          </a-row>
+        </a-col>
+        <a-col
+          :span="4"
+          v-for="item in userCarList"
+          :index="item.tokenId"
+          class="car-0"
+        >
+          <a-row justify="left" align="middle">
+            <a-col :offset="2" :span="8">
+              <div class="car-img">
+                <a-image
+                  width="50px"
+                  height="73px"
+                  :src="require('../assets/car.jpg')"
+                  :preview="false"
+                />
+              </div>
             </a-col>
-
-            <a-col :span="4" class="list-item-margin">
-              <a-row justify="space-around" align="middle">
-                <a-col :span="20">
-                  <!--//TODO:静态图片-->
-                  <div class="car-img">
-                    <a-image
-                      width="50px"
-                      height="73"
-                      :src="require('../assets/car.jpg')"
-                      :preview="false"
-                    />
-                  </div>
-                  <!--  <a-input size="large" v-model:value="item.URL"/>-->
-                </a-col>
-              </a-row>
-            </a-col>
-            <a-col :span="2" class="list-item-margin list-item-text-align">
-              <h3>{{ item.tokenId }}</h3>
-            </a-col>
-            <a-col :span="6" class="list-item-margin list-item-text-align">
-              <h4>{{ item.ParkingAddress }}</h4>
-            </a-col>
-            <!-- <a-col :span="4" class="list-item-margin list-item-text-align">
-              <h4>{{ item.ProspectiveEarnings }}</h4>
-            </a-col> -->
-            <a-col :span="4">
+            <a-col :offset="2" :span="8">
               <a-button
-                v-if="item.ParkingAddress === 0"
+                v-if="item.ParkingAddress === 'IDLE'"
                 size="large"
                 type="primary"
                 danger
-                >升级</a-button
-              >
-              <a-button v-else size="large" type="primary">离开</a-button>
-              <!--            <a-button   icon="delete"-->
-              <!--                      @click="buttonDeleteList(index,'learn')"/>-->
+                @click="onUpgrade(item.tokenId)"
+                >Upgrade
+              </a-button>
+              <a-button
+                v-else
+                size="large"
+                type="primary"
+                @click="onUnPackClick(item.tokenId)"
+                >Leave
+              </a-button>
+            </a-col>
+          </a-row>
+          <a-row>
+            <a-col :offset="2" :span="20">
+              <div class="car-info">
+                <a-row justify="left" align="middle">
+                  <a-col :offset="4" :span="5">
+                    <a-image
+                      :src="require('../assets/id.png')"
+                      :preview="false"
+                    />
+                  </a-col>
+                  <a-col :offset="1" :span="5">
+                    <span class="font-color">{{ item.tokenId }}</span>
+                  </a-col>
+                </a-row>
+                <a-row justify="left" align="middle">
+                  <a-col :offset="4" :span="5">
+                    <a-image
+                      :src="require('../assets/erc20_llt_mini.png')"
+                      :preview="false"
+                    />
+                  </a-col>
+                  <a-col :offset="1" :span="5">
+                    <span class="font-color">{{
+                      item.ProspectiveEarnings
+                    }}</span>
+                  </a-col>
+                </a-row>
+                <a-row justify="left" align="middle">
+                  <a-col :offset="4" :span="5">
+                    <a-image
+                      :width="25"
+                      :height="24"
+                      :src="require('../assets/parking.jpg')"
+                      :preview="false"
+                    />
+                  </a-col>
+                  <a-col :offset="1" :span="5">
+                    <span class="font-color">{{ item.ParkingAddress }}</span>
+                  </a-col>
+                </a-row>
+              </div>
             </a-col>
           </a-row>
         </a-col>
@@ -66,12 +97,13 @@
 
 <script lang="ts">
 import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
-import { CarStatus } from "../const/enum/CarStatus";
 import { contractData } from "../data/ContractData";
 import { homeData } from "../data/HomeData";
 import { playerData } from "../data/PlayerData";
+import { walletData } from "../data/WalletData";
 import { GameEventBuyCar } from "../events/GameEventBuyCar";
 import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
+import { GameEventUnParkCar } from "../events/GameEventUnParkCar";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { EventBus } from "../plugins/EventBus";
@@ -89,6 +121,7 @@ export default defineComponent({
         GameEventWalletAccountChanged.eventAsync,
         refreshCar
       );
+      EventBus.instance.on(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
 
     onUnmounted(() => {
@@ -99,34 +132,29 @@ export default defineComponent({
         GameEventWalletAccountChanged.eventAsync,
         refreshCar
       );
+      EventBus.instance.off(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
 
     const isHome = ref(true);
 
     const refreshCar = async () => {
-      Loading.close();
-      const player = await playerData.getPlayerData(homeData.currentPlyer);
+      const player = await playerData.getPlayerData(walletData.address);
       isHome.value = homeData.isInHome;
       let cars = player
         ? player.cars.map((car) => {
             return {
               tokenId: car.tokenId,
               status: car.status,
-              ParkingAddress: car.parkingTokenId,
+              ParkingAddress:
+                car.parkingTokenId === 0 ? "IDLE" : car.parkingTokenId,
               url: "0",
+              ProspectiveEarnings: 999,
             };
           })
         : [];
-      if (isHome.value) {
-        // cars.push({
-        //   url: "0",
-        //   tokenId: 0,
-        //   status: CarStatus.UN_MINT,
-        //   ParkingAddress: 0,
-        // });
-      }
       //@ts-ignore
       userCarList.value = cars;
+      Loading.close();
     };
 
     const userCarList = ref([]);
@@ -142,13 +170,36 @@ export default defineComponent({
       }
     };
 
-    const funcBuyCar = () => {};
+    const onUnPackClick = async (tokenId: number) => {
+      if (!homeData.isInHome) {
+        return Promise.resolve();
+      }
+
+      try {
+        await contractData.lotLootContract.unPark(tokenId);
+      } catch (e) {
+        console.error(e);
+        Loading.close();
+        Toast.error(`UnPark failed.`);
+      }
+    };
+
+    const onUnPackCar = async () => {
+      Loading.close();
+      await refreshCar();
+    };
+
+    const onUpgrade = async () => {
+      Toast.warn(`Coming soon`);
+      return Promise.resolve();
+    };
 
     return {
       userCarList,
       funcFreeMintCar,
-      funcBuyCar,
       isHome,
+      onUnPackClick,
+      onUpgrade,
     };
   },
 });
@@ -156,7 +207,7 @@ export default defineComponent({
 
 <style scoped>
 .list-div {
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 2rem;
   margin-top: 0.5rem;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -179,6 +230,8 @@ export default defineComponent({
 }
 
 .car-img {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
   border: 1px solid #abdcff;
   border-radius: 0.5rem;
   box-sizing: content-box;
@@ -186,11 +239,25 @@ export default defineComponent({
 }
 
 .car-0 {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  padding-bottom: 2.2rem;
   border: 1px solid #8ce6b0;
   border-radius: 0.5rem;
   height: 8rem;
   box-sizing: content-box;
   background-color: #edfff3;
+}
+
+.car-info {
+  /*left: 15%;*/
+  /*width: 70%;*/
+  padding: 0.1rem;
+  border: 1px solid #ffd77a;
+  border-radius: 0.5rem;
+  box-sizing: content-box;
+  background-color: #fff9e6;
+  text-align: left;
 }
 
 .car-1 {

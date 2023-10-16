@@ -1,4 +1,4 @@
-import { StringUtil } from "@/core/utils/StringUtil";
+import { StringUtil } from "../../core/utils/StringUtil";
 import { ParkingStatus } from "../../const/enum/ParkingStatus";
 import { contractData } from "../ContractData";
 import { BaseDTO } from "./BaseDTO";
@@ -11,6 +11,8 @@ export class ParkingDTO extends BaseDTO {
 
   owner: string = "";
   carOwner: string = "";
+
+  account: string = "";
 
   public get isMyParking(): boolean {
     return this.owner === walletData.address;
@@ -34,6 +36,15 @@ export class ParkingDTO extends BaseDTO {
     return this.carTokenId > 0;
   }
 
+  public async getBalance() {
+    if (StringUtil.isEmpty(this.account)) {
+      return ethers.utils.formatEther(0);
+    }
+
+    const balance = await contractData.lltTokenContract.balance(this.account);
+    return balance;
+  }
+
   public static async create(tokenId: number, carTokenId = 0) {
     const parkingDTO = this.fillWith({
       tokenId: tokenId,
@@ -53,6 +64,11 @@ export class ParkingDTO extends BaseDTO {
       );
       parkingDTO.carOwner = ethers.utils.getAddress(carOwner);
     }
+
+    parkingDTO.account = await contractData.registry6551Contract.account(
+      tokenId,
+      contractData.contractAddress.ParkingERC721
+    );
 
     return parkingDTO;
   }

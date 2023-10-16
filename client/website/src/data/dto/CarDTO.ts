@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { contractData } from "../ContractData";
 import { BaseDTO } from "./BaseDTO";
 import { CarStatus } from "../../const/enum/CarStatus";
+import { StringUtil } from "../../core/utils/StringUtil";
 
 export class CarDTO extends BaseDTO {
   tokenId: number = 0;
@@ -9,6 +10,8 @@ export class CarDTO extends BaseDTO {
 
   owner: string = "";
   parkingOwner: string = "";
+
+  account: string = "";
 
   public get isParking(): boolean {
     return this.parkingTokenId > 0;
@@ -23,6 +26,15 @@ export class CarDTO extends BaseDTO {
       return CarStatus.PARKED;
     }
     return CarStatus.EMPTY;
+  }
+
+  public async getBalance() {
+    if (StringUtil.isEmpty(this.account)) {
+      return ethers.utils.formatEther(0);
+    }
+
+    const balance = await contractData.lltTokenContract.balance(this.account);
+    return balance;
   }
 
   public static async create(tokenId: number, parkingTokenId = 0) {
@@ -44,6 +56,11 @@ export class CarDTO extends BaseDTO {
       );
       carDTO.parkingOwner = ethers.utils.getAddress(parkingOwner);
     }
+
+    carDTO.account = await contractData.registry6551Contract.account(
+      tokenId,
+      contractData.contractAddress.CarERC721
+    );
 
     return carDTO;
   }
