@@ -391,22 +391,22 @@ export default defineComponent({
     };
 
     const onParkingBought = async () => {
-      Loading.close();
       await refreshHome();
+      Loading.close();
     };
 
     const onParkCar = async () => {
-      Loading.close();
       refreshFriendHome();
+      Loading.close();
     };
 
     const onUnPackCar = async () => {
-      Loading.close();
       if (homeData.isInHome) {
         await refreshHome();
       } else {
         await refreshFriendHome();
       }
+      Loading.close();
     };
 
     return {
