@@ -53,7 +53,13 @@
                 danger
                 >升级</a-button
               >
-              <a-button v-else size="large" type="primary">离开</a-button>
+              <a-button
+                v-else
+                size="large"
+                type="primary"
+                @click="onUnPackClick(item.tokenId)"
+                >离开</a-button
+              >
               <!--            <a-button   icon="delete"-->
               <!--                      @click="buttonDeleteList(index,'learn')"/>-->
             </a-col>
@@ -72,6 +78,7 @@ import { homeData } from "../data/HomeData";
 import { playerData } from "../data/PlayerData";
 import { GameEventBuyCar } from "../events/GameEventBuyCar";
 import { GameEventGoFriendHome } from "../events/GameEventGoFriendHome";
+import { GameEventUnParkCar } from "../events/GameEventUnParkCar";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { EventBus } from "../plugins/EventBus";
@@ -89,6 +96,7 @@ export default defineComponent({
         GameEventWalletAccountChanged.eventAsync,
         refreshCar
       );
+      EventBus.instance.on(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
 
     onUnmounted(() => {
@@ -99,6 +107,7 @@ export default defineComponent({
         GameEventWalletAccountChanged.eventAsync,
         refreshCar
       );
+      EventBus.instance.off(GameEventUnParkCar.eventAsync, onUnPackCar);
     });
 
     const isHome = ref(true);
@@ -142,6 +151,25 @@ export default defineComponent({
       }
     };
 
+    const onUnPackClick = async (tokenId: number) => {
+      if (!homeData.isInHome) {
+        return Promise.resolve();
+      }
+
+      try {
+        await contractData.lotLootContract.unPark(tokenId);
+      } catch (e) {
+        console.error(e);
+        Loading.close();
+        Toast.error(`UnPark failed.`);
+      }
+    };
+
+    const onUnPackCar = async () => {
+      Loading.close();
+      await refreshCar();
+    };
+
     const funcBuyCar = () => {};
 
     return {
@@ -149,6 +177,7 @@ export default defineComponent({
       funcFreeMintCar,
       funcBuyCar,
       isHome,
+      onUnPackClick,
     };
   },
 });

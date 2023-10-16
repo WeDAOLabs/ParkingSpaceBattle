@@ -332,6 +332,7 @@ export default defineComponent({
           } catch (e) {
             console.error(e);
             Loading.close();
+            Toast.error(`UnPark failed.`);
           }
         }
       }
