@@ -12,9 +12,9 @@
 - 试玩地址: [https://lotloot.osairo.xyz](https://lotloot.osairo.xyz)
 - 所选赛道：Layer2 Application
 - 项目图片
-  - TODO 游戏截图
+  - [screen](https://github.com/WeDAOLabs/ParkingSpaceBattle/assets/screen.jpg)
 - 简介：LotLoot 是一个基于区块链技术的社交抢车位游戏。玩家可以通过社交账号登录，拥有多辆车和 5 个车位，并与其他玩家互动，以获得代币收益。
-- [白皮书](./design/litepaper.md)
+- [白皮书](https://github.com/WeDAOLabs/ParkingSpaceBattle/design/litepaper.md)
 - 玩法：
   1. 账号注册与登录:
      用户需要使用社交账号（如 Facebook, Twitter 等）登录游戏；首次登录的用户将获得随机分配的 3 辆初始车辆和 5 个车位。
@@ -49,7 +49,7 @@
 - Demo 视频链接（可以是录屏或其他形式），可以选择的视频平台：Youtube，Bilibili，Loom，视频长度不能超过 3 分钟，否则扣分。
 - 项目 github repo 链接：https://github.com/WeDAOLabs/ParkingSpaceBattle
 - 声明未基于之前的项目: 该项目是本次 hackathon 期间，从 0 到 1 开发的项目，完全原创。
-- 项目 Demo 链接（选填）
+- 项目 Demo 链接（选填）：[https://lotloot.osairo.xyz/](https://lotloot.osairo.xyz/)
 
 ## Contributors (sorted by frist charactor)
 
