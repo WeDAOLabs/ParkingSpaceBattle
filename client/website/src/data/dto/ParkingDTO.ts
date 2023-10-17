@@ -38,10 +38,10 @@ export class ParkingDTO extends BaseDTO {
 
   public async getBalance() {
     if (StringUtil.isEmpty(this.account)) {
-      return ethers.utils.formatEther(0);
+      return ethers.constants.Zero;
     }
 
-    const balance = await contractData.lltTokenContract.balance(this.account);
+    const balance = await contractData.lltTokenContract.balanceOf(this.account);
     return balance;
   }
 
