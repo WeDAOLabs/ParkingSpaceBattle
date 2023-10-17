@@ -1,15 +1,16 @@
-import {createApp} from "vue";
+import { createApp } from "vue";
 import App from "./App.vue";
 // @ts-ignore
 import Antd from "ant-design-vue";
-import {ethers} from "ethers";
+import { ethers } from "ethers";
 import "ant-design-vue/dist/reset.css";
-import {dataModels} from "./data/DataRegister";
+import { dataModels } from "./data/DataRegister";
 import { message } from "ant-design-vue";
 import { Toast } from "./plugins/Toast";
 import { GameEventManager } from "./events/GameEventManager";
+import ModalConfirm from "./components/ModalConfirm.vue";
 
-import './assets/iconfont/iconfont.js'
+import "./assets/iconfont/iconfont.js";
 
 const app = createApp(App);
 app.use(Antd);
@@ -24,6 +25,7 @@ const startUp = async () => {
   app.config.globalProperties.$gameEventListener =
     GameEventManager.getInstance();
   app.config.globalProperties.$message = message;
+  app.config.globalProperties.$confirmModal = ModalConfirm;
 
   Toast.$app = app;
 
