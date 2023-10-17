@@ -116,7 +116,7 @@ export default defineComponent({
         onWalletConnect
       );
       EventBus.instance.off(
-        GameEventWalletDisconnect.event,
+        GameEventWalletDisconnect.eventAsync,
         onWalletDisConnect
       );
       EventBus.instance.off(
