@@ -8,7 +8,6 @@ import { dataModels } from "./data/DataRegister";
 import { message } from "ant-design-vue";
 import { Toast } from "./plugins/Toast";
 import { GameEventManager } from "./events/GameEventManager";
-import ModalConfirm from "./components/ModalConfirm.vue";
 
 import "./assets/iconfont/iconfont.js";
 
@@ -25,7 +24,6 @@ const startUp = async () => {
   app.config.globalProperties.$gameEventListener =
     GameEventManager.getInstance();
   app.config.globalProperties.$message = message;
-  app.config.globalProperties.$confirmModal = ModalConfirm;
 
   Toast.$app = app;
 

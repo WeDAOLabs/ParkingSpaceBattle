@@ -418,9 +418,7 @@ export default defineComponent({
         });
       }
 
-      setTimeout(() => {
-        DialogModal.open("Do your want to sign out?", () => {}, "哈哈");
-      }, 5000);
+      // DialogModal.open("Do your want to sign out?", () => {});
     };
 
     const buyParkingPlace = async () => {
