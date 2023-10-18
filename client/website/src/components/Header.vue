@@ -11,7 +11,7 @@
       <a-col v-if="!isLogin" :offset="16" :span="2">
         <a-button @click="connectWallet">Sign In</a-button>
       </a-col>
-      <a-col v-else :offset="12" :span="8" @onclick="onWalletClicked">
+      <a-col v-else :offset="12" :span="8">
         <a-row align="middle">
           <a-col :offset="8" :span="2">
             <a href="https://www.twitter.com">
@@ -23,10 +23,10 @@
               />
             </a>
           </a-col>
-          <a-col :offset="1" :span="2">
+          <a-col :offset="1" :span="2" @click="onWalletClicked">
             <IconSvg icon-name="#icon-metamask" />
           </a-col>
-          <a-col :span="4">
+          <a-col :span="4" @click="onWalletClicked">
             {{ userAddress }}
           </a-col>
           <a-col :offset="1" :span="2">
@@ -130,11 +130,11 @@ export default defineComponent({
       );
     });
 
-    const onWalletConnect = () => {
+    const onWalletConnect = async () => {
       userAddress.value = walletData.shortAddress;
       isLogin.value = walletData.isAuth;
 
-      refreshLLT();
+      await refreshLLT();
     };
 
     const onWalletDisConnect = () => {
@@ -159,7 +159,11 @@ export default defineComponent({
       const player = await playerData.getPlayerData(walletData.address);
       let balance = ethers.constants.Zero;
       if (player) {
-        balance = await player.balance();
+        try {
+          balance = await player.balance();
+        } catch (e) {
+          console.error(e);
+        }
       }
 
       const token = await contractData.lltTokenContract.balanceOf(

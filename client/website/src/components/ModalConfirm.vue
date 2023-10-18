@@ -12,6 +12,7 @@ import { EventBus } from "../plugins/EventBus";
 import { GameEventModalOpen } from "../events/GameEventModalOpen";
 import { APP_NAME } from "../const/Constants";
 import { StringUtil } from "../core/utils/StringUtil";
+import { DialogModal } from "../plugins/DialogModal";
 
 export default defineComponent({
   name: "ModalConfirm",
@@ -46,6 +47,7 @@ export default defineComponent({
       if (callbackFunc) {
         callbackFunc();
       }
+      DialogModal.close();
       return Promise.resolve();
     };
 
