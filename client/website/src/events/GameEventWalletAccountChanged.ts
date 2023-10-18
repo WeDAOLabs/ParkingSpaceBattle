@@ -9,7 +9,7 @@ export class GameEventWalletAccountChanged extends GameEventBase {
     return GameEventWalletAccountChanged.event;
   }
 
-  public async exec(accounts: string[]) {
+  public async exec(account: string) {
     Promise.resolve();
   }
 }
