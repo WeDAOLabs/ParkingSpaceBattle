@@ -23,10 +23,15 @@
               />
             </a>
           </a-col>
-          <a-col :offset="1" :span="2" @click="onWalletClicked">
+          <a-col
+            class="metamask-icon"
+            :offset="1"
+            :span="2"
+            @click="onWalletClicked"
+          >
             <IconSvg icon-name="#icon-metamask" />
           </a-col>
-          <a-col :span="4" @click="onWalletClicked">
+          <a-col class="wallet-address" :span="4" @click="onWalletClicked">
             {{ userAddress }}
           </a-col>
           <a-col :offset="1" :span="2">
@@ -195,11 +200,11 @@ export default defineComponent({
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(255, 255, 204, 0.9); /* 页眉的背景颜色 */
-  padding: 10px 0; /* 页眉的内边距 */
+  background-color: rgba(255, 255, 204, 0.9);
+  padding: 10px 0;
   text-align: center;
-  z-index: 100; /* 控制页眉的层叠顺序 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* 为页眉添加阴影效果 */
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .logo-size {
@@ -213,7 +218,11 @@ export default defineComponent({
   height: 50%;
 }
 
-.test01 {
-  background-color: red;
+.metamask-icon {
+  cursor: pointer;
+}
+
+.wallet-address {
+  cursor: pointer;
 }
 </style>
