@@ -3,9 +3,9 @@
     <a-row>
       <a-col :offset="1" :span="3">
         <a-image
-            class="logo"
-            :src="require('../assets/logo.jpg')"
-            :preview="false"
+          class="logo"
+          :src="require('../assets/logo.jpg')"
+          :preview="false"
         />
       </a-col>
       <a-col v-if="!isLogin" :offset="16" :span="2">
@@ -16,30 +16,33 @@
           <a-col :offset="8" :span="2">
             <a href="https://www.twitter.com">
               <a-image
-                  width="70%"
-                  height="70%"
-                  :src="require('../assets/twitter.png')"
-                  :preview="false"
+                width="70%"
+                height="70%"
+                :src="require('../assets/twitter.png')"
+                :preview="false"
               />
             </a>
           </a-col>
-          <a-col :offset="1" :span="2">
-            <IconSvg icon-name="#icon-metamask"/>
+          <a-col
+            class="metamask-icon"
+            :offset="1"
+            :span="2"
+            @click="onWalletClicked"
+          >
+            <IconSvg icon-name="#icon-metamask" />
           </a-col>
-          <a-col :span="4">
+          <a-col class="wallet-address" :span="4" @click="onWalletClicked">
             {{ userAddress }}
           </a-col>
           <a-col :offset="1" :span="2">
             <a-image
-                width="70%"
-                height="70%"
-                :src="require('../assets/erc20_llt.jpg')"
-                :preview="false"
+              width="70%"
+              height="70%"
+              :src="require('../assets/erc20_llt.jpg')"
+              :preview="false"
             />
           </a-col>
-          <a-col :span="3">
-            {{ balanceOfLLT }} LLT
-          </a-col>
+          <a-col :span="3"> {{ balanceOfLLT }} LLT </a-col>
         </a-row>
       </a-col>
     </a-row>
@@ -47,30 +50,33 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, onBeforeMount, onUnmounted} from "vue";
-import {StringUtil} from "../core/utils/StringUtil";
-import {EventBus} from "../plugins/EventBus";
-import {GameEventWalletConnected} from "../events/GameEventWalletConnected";
-import {GameEventWalletDisconnect} from "../events/GameEventWalletDisconnect";
-import {GameEventWalletChainChanged} from "../events/GameEventWalletChainChanged";
-import {ChainID} from "../const/enum/Chain";
-import {walletData} from "../data/WalletData";
-import {Toast} from "../plugins/Toast";
-import {GameEventWalletAccountChanged} from "../events/GameEventWalletAccountChanged";
+import { defineComponent, ref, onBeforeMount, onUnmounted } from "vue";
+import { StringUtil } from "../core/utils/StringUtil";
+import { EventBus } from "../plugins/EventBus";
+import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
+import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
+import { GameEventWalletChainChanged } from "../events/GameEventWalletChainChanged";
+import { ChainID } from "../const/enum/Chain";
+import { walletData } from "../data/WalletData";
+import { Toast } from "../plugins/Toast";
+import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
 import IconSvg from "../components/IconSvg.vue";
-import {contractData} from "../data/ContractData";
+import { contractData } from "../data/ContractData";
+import { playerData } from "../data/PlayerData";
+import { ethers } from "ethers";
+import { DialogModal } from "../plugins/DialogModal";
 
 export default defineComponent({
   name: "Header",
 
-  components: {IconSvg},
+  components: { IconSvg },
   setup() {
     const isLogin = ref(walletData.isAuth);
     const balanceOfLLT = ref("0");
     const userAddress = ref(
-        !StringUtil.isEmpty(walletData.address)
-            ? walletData.shortAddress
-            : "Sign In"
+      !StringUtil.isEmpty(walletData.address)
+        ? walletData.shortAddress
+        : "Sign In"
     );
 
     const connectWallet = async () => {
@@ -93,47 +99,47 @@ export default defineComponent({
 
     onBeforeMount(() => {
       EventBus.instance.on(
-          GameEventWalletConnected.eventAsync,
-          onWalletConnect
+        GameEventWalletConnected.eventAsync,
+        onWalletConnect
       );
       EventBus.instance.on(
-          GameEventWalletDisconnect.eventAsync,
-          onWalletDisConnect
+        GameEventWalletDisconnect.eventAsync,
+        onWalletDisConnect
       );
       EventBus.instance.on(
-          GameEventWalletChainChanged.eventAsync,
-          onChainChanged
+        GameEventWalletChainChanged.eventAsync,
+        onChainChanged
       );
       EventBus.instance.on(
-          GameEventWalletAccountChanged.eventAsync,
-          onAccountChange
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChange
       );
     });
 
     onUnmounted(() => {
       EventBus.instance.off(
-          GameEventWalletConnected.eventAsync,
-          onWalletConnect
+        GameEventWalletConnected.eventAsync,
+        onWalletConnect
       );
       EventBus.instance.off(
-          GameEventWalletDisconnect.event,
-          onWalletDisConnect
+        GameEventWalletDisconnect.eventAsync,
+        onWalletDisConnect
       );
       EventBus.instance.off(
-          GameEventWalletChainChanged.eventAsync,
-          onChainChanged
+        GameEventWalletChainChanged.eventAsync,
+        onChainChanged
       );
       EventBus.instance.off(
-          GameEventWalletAccountChanged.eventAsync,
-          onAccountChange
+        GameEventWalletAccountChanged.eventAsync,
+        onAccountChange
       );
     });
 
-    const onWalletConnect = () => {
+    const onWalletConnect = async () => {
       userAddress.value = walletData.shortAddress;
       isLogin.value = walletData.isAuth;
 
-      refreshLLT();
+      await refreshLLT();
     };
 
     const onWalletDisConnect = () => {
@@ -155,10 +161,26 @@ export default defineComponent({
     };
 
     const refreshLLT = async () => {
+      const player = await playerData.getPlayerData(walletData.address);
+      let balance = ethers.constants.Zero;
+      if (player) {
+        try {
+          balance = await player.balance();
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
       const token = await contractData.lltTokenContract.balanceOf(
-          walletData.address
+        walletData.address
       );
-      balanceOfLLT.value = token;
+      balanceOfLLT.value = ethers.utils.formatEther(balance.add(token));
+    };
+
+    const onWalletClicked = async () => {
+      DialogModal.open("Do your want to sign out?", async () => {
+        await walletData.disconnect();
+      });
     };
 
     return {
@@ -166,6 +188,7 @@ export default defineComponent({
       userAddress,
       connectWallet,
       balanceOfLLT,
+      onWalletClicked,
     };
   },
 });
@@ -177,11 +200,11 @@ export default defineComponent({
   top: 0;
   left: 0;
   width: 100%;
-  background-color: rgba(255, 255, 204, 0.9); /* 页眉的背景颜色 */
-  padding: 10px 0; /* 页眉的内边距 */
+  background-color: rgba(255, 255, 204, 0.9);
+  padding: 10px 0;
   text-align: center;
-  z-index: 100; /* 控制页眉的层叠顺序 */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* 为页眉添加阴影效果 */
+  z-index: 100;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .logo-size {
@@ -195,7 +218,11 @@ export default defineComponent({
   height: 50%;
 }
 
-.test01 {
-  background-color: red;
+.metamask-icon {
+  cursor: pointer;
+}
+
+.wallet-address {
+  cursor: pointer;
 }
 </style>

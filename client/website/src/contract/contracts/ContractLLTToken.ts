@@ -12,13 +12,7 @@ export class ContractLLTToken extends ContractBase {
   }
 
   async balanceOf(address: string): Promise<string> {
-    const balanceBigNumber = await this.contract.balanceOf(address);
-    if (balanceBigNumber.isZero()) {
-      return "0";
-    }
-
-    const balance = ethers.utils.formatEther(balanceBigNumber);
-    return balance;
+    return await this.contract.balanceOf(address);
   }
 
   async balanceOf6551(address: string) {

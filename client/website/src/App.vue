@@ -2,18 +2,23 @@
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <!-- <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/> -->
   <!--  <Demo/>-->
-  <Index/>
-  <Loading/>
+  <Index />
+  <ModalConfirm />
+  <Loading />
 </template>
 
 <script setup lang="ts">
-import {onBeforeMount} from 'vue';
-import Loading from './components/Loading.vue';
-import Demo from './components/Demo.vue';
-import Index from './components/Index.vue';
+import { onBeforeMount } from "vue";
+import Loading from "./components/Loading.vue";
+import Demo from "./components/Demo.vue";
+import Index from "./components/Index.vue";
+import ModalConfirm from "./components/ModalConfirm.vue";
 
 const components = {
-  Loading, Demo, Index
+  Loading,
+  Demo,
+  Index,
+  ModalConfirm,
 };
 
 onBeforeMount(() => {
@@ -23,8 +28,8 @@ onBeforeMount(() => {
 
   document.documentElement.style.zoom = String(clientZoom);
   // background UI
-  document.documentElement.style.background = 'linear-gradient(30deg, #9FA5D5, #E8F5C8) no-repeat fixed';
-
+  document.documentElement.style.background =
+    "linear-gradient(30deg, #9FA5D5, #E8F5C8) no-repeat fixed";
 });
 </script>
 

@@ -88,14 +88,12 @@ export class WalletData extends Singleton {
       return;
     }
     this.ethereum.on("accountsChanged", (accounts: string[]) =>
-      EventBus.instance.emit(GameEventWalletAccountChanged.event, accounts)
+      this.changeAccount(accounts.length > 0 ? accounts[0] : "")
     );
     this.ethereum.on("chainChanged", (chainId: string) =>
-      EventBus.instance.emit(GameEventWalletChainChanged.event, chainId)
+      this.chainChange(parseInt(chainId, 16))
     );
-    this.ethereum.on("disconnect", () => {
-      EventBus.instance.emit(GameEventWalletDisconnect.event);
-    });
+    this.ethereum.on("disconnect", () => this.disconnect());
   }
 
   private async loadData() {
@@ -148,6 +146,7 @@ export class WalletData extends Singleton {
     } else {
       this.data.address = account;
       this.saveData();
+      EventBus.instance.emit(GameEventWalletAccountChanged.event, account);
     }
   }
 
@@ -155,10 +154,10 @@ export class WalletData extends Singleton {
     // TODO
     if (chainId !== ChainID.Mumbai) {
       await this.disconnect();
-      EventBus.instance.emit(GameEventWalletDisconnect.event);
     } else {
       this.data.chainId = chainId;
       this.saveData();
+      EventBus.instance.emit(GameEventWalletChainChanged.event, chainId);
     }
   }
 
@@ -200,6 +199,8 @@ export class WalletData extends Singleton {
     this.data.chainId = -1;
     await IndexDB.instance.deleteItem(this.cacheKey);
     this.saveData();
+
+    EventBus.instance.emit(GameEventWalletDisconnect.event);
   }
 }
 export const walletData: Readonly<WalletData> = WalletData.getInstance();
