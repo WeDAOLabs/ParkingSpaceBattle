@@ -240,7 +240,6 @@ import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountC
 import { GameEventParkCar } from "../events/GameEventParkCar";
 import { GameEventUnParkCar } from "../events/GameEventUnParkCar";
 import { GameEventFineCar } from "../events/GameEventFineCar";
-import { DialogModal } from "../plugins/DialogModal";
 
 export default defineComponent({
   name: "ParkingList",
@@ -417,8 +416,6 @@ export default defineComponent({
           };
         });
       }
-
-      // DialogModal.open("Do your want to sign out?", () => {});
     };
 
     const buyParkingPlace = async () => {

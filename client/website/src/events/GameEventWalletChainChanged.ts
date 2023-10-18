@@ -9,7 +9,7 @@ export class GameEventWalletChainChanged extends GameEventBase {
     return GameEventWalletChainChanged.event;
   }
 
-  public async exec(chainId: string) {
-    await walletData.chainChange(parseInt(chainId, 16));
+  public async exec(chainId: number) {
+    Promise.resolve();
   }
 }

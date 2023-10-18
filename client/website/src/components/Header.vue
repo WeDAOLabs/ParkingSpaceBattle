@@ -11,7 +11,7 @@
       <a-col v-if="!isLogin" :offset="16" :span="2">
         <a-button @click="connectWallet">Sign In</a-button>
       </a-col>
-      <a-col v-else :offset="12" :span="8">
+      <a-col v-else :offset="12" :span="8" @onclick="onWalletClicked">
         <a-row align="middle">
           <a-col :offset="8" :span="2">
             <a href="https://www.twitter.com">
@@ -59,6 +59,7 @@ import IconSvg from "../components/IconSvg.vue";
 import { contractData } from "../data/ContractData";
 import { playerData } from "../data/PlayerData";
 import { ethers } from "ethers";
+import { DialogModal } from "../plugins/DialogModal";
 
 export default defineComponent({
   name: "Header",
@@ -167,11 +168,18 @@ export default defineComponent({
       balanceOfLLT.value = ethers.utils.formatEther(balance.add(token));
     };
 
+    const onWalletClicked = async () => {
+      DialogModal.open("Do your want to sign out?", async () => {
+        await walletData.disconnect();
+      });
+    };
+
     return {
       isLogin,
       userAddress,
       connectWallet,
       balanceOfLLT,
+      onWalletClicked,
     };
   },
 });

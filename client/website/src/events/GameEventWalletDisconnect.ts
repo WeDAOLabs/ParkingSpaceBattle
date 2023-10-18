@@ -9,6 +9,6 @@ export class GameEventWalletDisconnect extends GameEventBase {
   }
 
   public async exec() {
-    await walletData.disconnect();
+    Promise.resolve();
   }
 }
