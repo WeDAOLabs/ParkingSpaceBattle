@@ -10,10 +10,15 @@
 
 - Project Name: LotLoot
 - Try it out: [https://lotloot.osairo.xyz](https://lotloot.osairo.xyz)
-- Selected Track: Layer2 Application
+- Selected Track:
+  
+  - SCROLL & ON-CHAIN INNOVATION
+  
 - Project Images
   - ![screen](https://lotloot.osairo.xyz/screen.jpg)
-- Introduction: LotLoot is a social parking space battle game based on blockchain technology. Players can log in with their social accounts, own multiple cars and 5 parking spaces, and interact with other players to earn token rewards.
+- Introduction:
+  
+  - LotLoot is a social parking space battle game based on blockchain technology. Players can log in with their social accounts, own multiple cars and 5 parking spaces, and interact with other players to earn token rewards.
 - [Whitepaper](./design/litepaper_en.md)
 - Game Design:
   1. Network
@@ -43,8 +48,8 @@
 
 - Project Goals for the Hackathon Period: To develop LotLoot, a fully on-chain game from 0 to 1, integrating Ethereum NFTs & Tokens. The project utilizes token mechanisms to diversify gameplay, achieve expected profits through gaming, combines gameplay and social interaction, and expands into the realm of DeFi. The project empowers on-chain applications with new capabilities.
 
-- Demo Video Link: [https://youtu.be/yIbsNTIHkjU](https://youtu.be/yIbsNTIHkjU)
-- Try the Project Demo: [https://lotloot.osairo.xyz/](https://lotloot.osairo.xyz/)
+- Demo Video Link: [https://youtu.be/WsRujp43jzY](https://youtu.be/WsRujp43jzY)
+- [Pitch Deck](https://lotloot.osairo.xyz/LotLoot-Pitch-Deck.pdf)
 
 ## Contributors
 
