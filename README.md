@@ -18,7 +18,7 @@
 - Game Design:
   1. Network
      - [Scroll Sepolia Testnet](https://www.ankr.com/rpc/scroll/scroll_sepolia_testnet/)
-     - [Mumbai](wss://polygon-mumbai-bor.publicnode.com)
+     - [Mumbai](https://polygon-mumbai.blockpi.network/v1/rpc/public)
   2. Account Registration and Login:
      Users need to log in to the game with their social accounts like Facebook, Twitter, etc. New users will receive 3 randomly assigned initial cars and 5 parking spaces upon their first login.
   3. Parking Space and Car Rules:
