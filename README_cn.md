@@ -18,7 +18,7 @@
 - 玩法：
   1. Network
      - (Scroll Sepolia Testnet)[https://www.ankr.com/rpc/scroll/scroll_sepolia_testnet/]
-     - (Mumbai)[wss://polygon-mumbai-bor.publicnode.com]
+     - (Mumbai)[https://polygon-mumbai.blockpi.network/v1/rpc/public]
   2. 账号注册与登录:
      用户需要使用社交账号（如 Facebook, Twitter 等）登录游戏；首次登录的用户将获得随机分配的 3 辆初始车辆和 5 个车位。
   3. 车位与车辆规则:
