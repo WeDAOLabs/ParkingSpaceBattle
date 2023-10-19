@@ -14,7 +14,7 @@
 - 项目图片
   - ![screen](https://lotloot.osairo.xyz/screen.jpg)
 - 简介：LotLoot 是一个基于区块链技术的社交抢车位游戏。玩家可以通过社交账号登录，拥有多辆车和 5 个车位，并与其他玩家互动，以获得代币收益。
-- [白皮书](./design/litepaper.md)
+- [白皮书](./design/litepaper_cn.md)
 - 玩法：
   1. Network
      - (Scroll Sepolia Testnet)[https://www.ankr.com/rpc/scroll/scroll_sepolia_testnet/]
