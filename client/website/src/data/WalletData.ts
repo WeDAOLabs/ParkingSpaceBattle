@@ -9,7 +9,7 @@ import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { StringUtil } from "../core/utils/StringUtil";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { registerDataModel } from "./DataRegister";
-import { Toast } from "@/plugins/Toast";
+import { Toast } from "../plugins/Toast";
 
 interface WalletCache {
   address: string;
@@ -61,6 +61,10 @@ export class WalletData extends Singleton {
 
   public get chainId(): number {
     return this.data.chainId;
+  }
+
+  public get isCurrentChainValid(): boolean {
+    return this.chainId === ChainID.Mumbai || this.chainId === ChainID.Scroll;
   }
 
   public get provider(): any {
@@ -152,7 +156,7 @@ export class WalletData extends Singleton {
 
   public async chainChange(chainId: number) {
     // TODO
-    if (chainId !== ChainID.Mumbai) {
+    if (chainId !== ChainID.Mumbai && chainId !== ChainID.Scroll) {
       await this.disconnect();
     } else {
       this.data.chainId = chainId;

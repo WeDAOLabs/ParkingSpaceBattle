@@ -149,7 +149,7 @@ export default defineComponent({
 
     const onChainChanged = (chainId: any) => {
       // TODO
-      if (chainId === ChainID.Mumbai) {
+      if (chainId === ChainID.Mumbai || chainId === ChainID.Scroll) {
         onWalletConnect();
       }
     };

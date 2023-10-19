@@ -3,7 +3,8 @@ import { ethers } from "hardhat";
 async function getContract() {
   const contract = await ethers.getContractAt(
     "CarERC721",
-    "0x4DDbF5Ddf8819dE761fC708F8A522D341E03cBE5"
+    // "0x4DDbF5Ddf8819dE761fC708F8A522D341E03cBE5"
+    "0x51e49799490A4469fb73edFC09822b3b566cE445"
   );
   const [owner] = await ethers.getSigners();
 
@@ -16,7 +17,8 @@ async function grantRole() {
   //grant minter role to default caller
   const tx = await contract.grantRole(
     ethers.utils.id("MINTER_ROLE"),
-    "0x25ea0Cd74A37b5Ff129BdE58EFff87c00338Fe20"
+    // "0x25ea0Cd74A37b5Ff129BdE58EFff87c00338Fe20"
+    "0x048100185609b70F8BaCE807Fa4fF98AabE7a6d6"
   );
   const receipt = await tx.wait();
   console.log(receipt);

@@ -1,6 +1,6 @@
 import {
-  CONTRACT_ADDRESS_ARBITRUM,
   CONTRACT_ADDRESS_MUMBAI,
+  CONTRACT_ADDRESS_SCROLL,
   IContractAddress,
 } from "../const/Contracts";
 import { ChainID } from "../const/enum/Chain";
@@ -76,8 +76,8 @@ export class ContractData extends Singleton {
   public get contractAddress(): IContractAddress {
     if (walletData.chainId === ChainID.Mumbai) {
       return CONTRACT_ADDRESS_MUMBAI;
-    } else if (walletData.chainId === ChainID.Arbitrum) {
-      return CONTRACT_ADDRESS_ARBITRUM;
+    } else if (walletData.chainId === ChainID.Scroll) {
+      return CONTRACT_ADDRESS_SCROLL;
     }
     return CONTRACT_ADDRESS_MUMBAI;
   }

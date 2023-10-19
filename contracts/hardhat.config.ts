@@ -8,8 +8,11 @@ import "@openzeppelin/hardhat-upgrades";
 import "@zero-dao/eno-hardhat-plugin-deploy";
 import "hardhat-abi-exporter";
 
-const { POLYGON_TESTNET_URL, POLYGON_TESTNET_DEPLOYER_PRIVATE_KEY } =
-  process.env;
+const {
+  POLYGON_TESTNET_URL,
+  POLYGON_TESTNET_DEPLOYER_PRIVATE_KEY,
+  SCROLL_TESTNET_URL,
+} = process.env;
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -34,6 +37,12 @@ const config: HardhatUserConfig = {
     polygon_testnet: {
       url: POLYGON_TESTNET_URL,
       chainId: 80001,
+      gasPrice: 20000000000,
+      accounts: [`0x${POLYGON_TESTNET_DEPLOYER_PRIVATE_KEY}`],
+    },
+    scroll_testnet: {
+      url: SCROLL_TESTNET_URL,
+      chainId: 534351,
       gasPrice: 20000000000,
       accounts: [`0x${POLYGON_TESTNET_DEPLOYER_PRIVATE_KEY}`],
     },
