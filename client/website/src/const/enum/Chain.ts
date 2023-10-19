@@ -1,10 +1,10 @@
 export enum ChainType {
   UNKNOWN = "UNKNOWN",
   Mumbai = "Mumbai",
-  Arbitrum = "Arbitrum One",
+  Scroll = "Scroll",
 }
 
 export enum ChainID {
   Mumbai = 80001,
-  Arbitrum = 42161,
+  Scroll = 534351,
 }

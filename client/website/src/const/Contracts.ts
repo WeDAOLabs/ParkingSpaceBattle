@@ -1,5 +1,4 @@
 export interface IContractAddress {
-  Sample: string;
   CarStore: string;
   ParkingStore: string;
   CarERC721: string;
@@ -11,7 +10,6 @@ export interface IContractAddress {
 }
 
 export const CONTRACT_ADDRESS_MUMBAI = {
-  Sample: "0x7B0312b3A1eEeD6C789b75d2556059063806830a",
   CarStore: "0x25ea0Cd74A37b5Ff129BdE58EFff87c00338Fe20",
   ParkingStore: "0xdf93FbeDc34fdF55643419801F488d8971A0FFbf",
   CarERC721: "0x4DDbF5Ddf8819dE761fC708F8A522D341E03cBE5",
@@ -22,14 +20,13 @@ export const CONTRACT_ADDRESS_MUMBAI = {
   Account6551: "0x6cf706A92a234652f36995e5004c4Cb72483E529",
 };
 
-export const CONTRACT_ADDRESS_ARBITRUM = {
-  Sample: "",
-  CarStore: "",
-  ParkingStore: "",
-  CarERC721: "",
-  ParkingERC721: "",
-  LotLoot: "",
-  LLTToken: "",
-  Registry6551: "",
-  Account6551: "",
+export const CONTRACT_ADDRESS_SCROLL = {
+  CarStore: "0x048100185609b70F8BaCE807Fa4fF98AabE7a6d6",
+  ParkingStore: "0x6bD9545D6b2D3D0Cda38865EafED9bAEFc5F5ED3",
+  CarERC721: "0x51e49799490A4469fb73edFC09822b3b566cE445",
+  ParkingERC721: "0x27F4108167D3B38ca45f533F6197635927A29A63",
+  LotLoot: "0x3764a127513c60CebEEc34B179c7DEaf06D49b72",
+  LLTToken: "0x5AB4AADf5903163F2C095b5950942d30b584B1A0",
+  Registry6551: "0x6550755AEE41CC87E72A849Fdf9022aa74DEC1F4",
+  Account6551: "0xf412719c2dDe7e83B2Ff3bDdBE92C48525C4DE18",
 };
