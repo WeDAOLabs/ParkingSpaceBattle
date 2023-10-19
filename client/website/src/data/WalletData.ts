@@ -140,6 +140,7 @@ export class WalletData extends Singleton {
     });
 
     const chainId = parseInt(chainId0x, 16);
+    console.log("chainId", chainId);
     const idx = ChainIds.findIndex((id) => id === chainId);
     return idx >= 0;
   }
