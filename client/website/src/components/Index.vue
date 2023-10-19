@@ -4,7 +4,7 @@
     <div v-if="!isLogin">
       <a-divider/>
       <a-row>
-        <a-col :offset="5" :span="10">
+        <a-col :offset="1" :span="22">
           <WelcomePage/>
         </a-col>
       </a-row>
