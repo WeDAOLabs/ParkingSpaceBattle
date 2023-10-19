@@ -14,7 +14,7 @@
 - Project Images
   - ![screen](https://lotloot.osairo.xyz/screen.jpg)
 - Introduction: LotLoot is a social parking space battle game based on blockchain technology. Players can log in with their social accounts, own multiple cars and 5 parking spaces, and interact with other players to earn token rewards.
-- [Whitepaper](./design/litepaper.md)
+- [Whitepaper](./design/litepaper_en.md)
 - Game Design:
   1. Network
      - [Scroll Sepolia Testnet](https://www.ankr.com/rpc/scroll/scroll_sepolia_testnet/)
