@@ -5,7 +5,6 @@ import {
 } from "../const/Contracts";
 import { ChainID } from "../const/enum/Chain";
 import { Singleton } from "../core/game/Singleton";
-import { registerDataModel } from "./DataRegister";
 import { walletData } from "./WalletData";
 import { ContractParkingStore } from "../contract/contracts/ContractParkingStore";
 import { ContractCarERC721 } from "../contract/contracts/ContractCarERC721";
@@ -95,5 +94,3 @@ export class ContractData extends Singleton {
   init() {}
 }
 export const contractData: Readonly<ContractData> = ContractData.getInstance();
-
-registerDataModel(contractData);
