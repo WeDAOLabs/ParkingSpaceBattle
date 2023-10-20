@@ -6,7 +6,7 @@
     <div class="team-members">
       <div v-for="(member, index) in teamMembers" :key="index" class="team-member">
         <div class="member-image">
-          <img :src="member.image" alt="Team Member Image" class="rounded-image" />
+          <img :src="member.image" alt="Team Member Image" class="rounded-image"/>
           <div class="member-info">
             <p>{{ member.name }}</p>
             <p class="position">{{ member.position }}</p>
@@ -18,15 +18,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import {ref} from 'vue';
 
 const teamMembers = ref([
-  { name: "Member 1", position: "Position 1", image: "https://via.placeholder.com/150x150" },
-  { name: "Member 2", position: "Position 2", image: "https://via.placeholder.com/150x150" },
-  { name: "Member 3", position: "Position 3", image: "https://via.placeholder.com/150x150" },
-  { name: "Member 4", position: "Position 4", image: "https://via.placeholder.com/150x150" },
-  { name: "Member 5", position: "Position 5", image: "https://via.placeholder.com/150x150" },
-  { name: "Member 6", position: "Position 6", image: "https://via.placeholder.com/150x150" }
+  {name: "enixlee", position: "Team Leader", image: require('../../assets/welcome/enixlee.jpg')},
+  {name: "0x00pluto", position: "Product Manager", image: require('../../assets/welcome/pluto.jpeg')},
+  {name: "Member 3", position: "Position 3", image: "https://via.placeholder.com/150x150"},
+  {name: "Member 4", position: "Position 4", image: "https://via.placeholder.com/150x150"},
+  {name: "Member 5", position: "Position 5", image: "https://via.placeholder.com/150x150"},
+  {name: "Member 6", position: "Position 6", image: "https://via.placeholder.com/150x150"}
 ]);
 </script>
 
@@ -44,8 +44,8 @@ const teamMembers = ref([
 h2 {
   font-size: 28px;
   margin-bottom: 1rem;
-  color: #007bff;
   text-align: center;
+  font-weight: bold;
 }
 
 .team-description {

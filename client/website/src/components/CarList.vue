@@ -116,7 +116,7 @@ export default defineComponent({
     onBeforeMount(() => {
       EventBus.instance.on(GameEventGoFriendHome.eventAsync, refreshCar);
       EventBus.instance.on(GameEventWalletConnected.eventAsync, refreshCar);
-      EventBus.instance.on(GameEventBuyCar.eventAsync, refreshCar);
+      EventBus.instance.on(GameEventBuyCar.eventAsync, onCarBought);
       EventBus.instance.on(
         GameEventWalletAccountChanged.eventAsync,
         refreshCar
@@ -127,7 +127,7 @@ export default defineComponent({
     onUnmounted(() => {
       EventBus.instance.off(GameEventGoFriendHome.eventAsync, refreshCar);
       EventBus.instance.off(GameEventWalletConnected.eventAsync, refreshCar);
-      EventBus.instance.off(GameEventBuyCar.eventAsync, refreshCar);
+      EventBus.instance.off(GameEventBuyCar.eventAsync, onCarBought);
       EventBus.instance.off(
         GameEventWalletAccountChanged.eventAsync,
         refreshCar
@@ -136,6 +136,11 @@ export default defineComponent({
     });
 
     const isHome = ref(true);
+
+    const onCarBought = async ()=>{
+      await refreshCar();
+      Toast.success(`mint car success.`)
+    }
 
     const refreshCar = async () => {
       const player = await playerData.getPlayerData(walletData.address);

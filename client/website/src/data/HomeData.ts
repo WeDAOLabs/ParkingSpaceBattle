@@ -1,6 +1,4 @@
-import { EventBus } from "../plugins/EventBus";
 import { Singleton } from "../core/game/Singleton";
-import { registerDataModel } from "./DataRegister";
 import { GO_HOME } from "../const/Constants";
 import { walletData } from "./WalletData";
 import { ethers } from "ethers";
@@ -30,4 +28,3 @@ export class HomeData extends Singleton {
 }
 
 export const homeData: Readonly<HomeData> = HomeData.getInstance();
-registerDataModel(homeData);

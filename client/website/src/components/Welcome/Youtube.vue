@@ -10,7 +10,7 @@
         be moved to collect the earnings. The car's quality and income rate can be upgraded by spending tokens. </p>
     </div>
     <div class="video">
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/yIbsNTIHkjU" frameborder="0"
+      <iframe width="560" height="315" src="https://www.youtube.com/watch?v=WsRujp43jzY&feature=youtu.be" frameborder="0"
               allowfullscreen></iframe>
     </div>
   </div>
@@ -38,9 +38,9 @@
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 1rem;
-  color: #007bff;
+  font-weight: bold;
 }
 
 p {

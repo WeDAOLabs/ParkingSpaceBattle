@@ -15,7 +15,7 @@
       </p>
       <a-divider class="divider"/>
       <div class="small-images">
-        <!-- <img :src="require('../../assets/logo_lotloot_welcome.png')" alt="Small Image 0"/>-->
+        <img :src="require('../../assets/erc20_llt.jpg')" alt="Small Image 1" width="100" height="auto"/>
         <img src="https://via.placeholder.com/100x100" alt="Small Image 1"/>
         <img src="https://via.placeholder.com/100x100" alt="Small Image 2"/>
         <img src="https://via.placeholder.com/100x100" alt="Small Image 3"/>
@@ -67,9 +67,9 @@
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 1rem;
-  color: #007bff;
+  font-weight: bold;
 }
 
 p {
