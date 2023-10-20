@@ -177,9 +177,13 @@ export class WalletData extends Singleton {
     if (chainId !== ChainID.Mumbai && chainId !== ChainID.Scroll) {
       await this.disconnect();
     } else {
-      this.data.chainId = chainId;
-      this.saveData();
-      EventBus.instance.emit(GameEventWalletChainChanged.event, chainId);
+      if (StringUtil.isEmpty(this.data.address)) {
+        await this.disconnect();
+      } else {
+        this.data.chainId = chainId;
+        this.saveData();
+        EventBus.instance.emit(GameEventWalletChainChanged.event, chainId);
+      }
     }
   }
 
