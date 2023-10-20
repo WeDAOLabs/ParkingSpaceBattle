@@ -11,7 +11,7 @@
           @search="funcOnSearch"
           allowClear
           v-model:value="searchValue"
-          placeholder="input wallet address"
+          placeholder="Input your friend's wallet address and park your car in their parking space"
         />
       </a-col>
     </a-row>
