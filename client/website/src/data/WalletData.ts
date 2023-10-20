@@ -140,9 +140,24 @@ export class WalletData extends Singleton {
     });
 
     const chainId = parseInt(chainId0x, 16);
-    console.log("chainId", chainId);
     const idx = ChainIds.findIndex((id) => id === chainId);
     return idx >= 0;
+  }
+
+  public async switchNetwork(chainId = ChainID.Scroll) {
+    if (!this.provider) {
+      Toast.error("there's no provider.");
+      return Promise.resolve();
+    }
+
+    try {
+      await this.provider.send("wallet_switchEthereumChain", [
+        { chainId: chainId },
+      ]);
+    } catch (e) {
+      Toast.error(`change network failed.`);
+      console.error("change network", e);
+    }
   }
 
   public async changeAccount(account: string) {
