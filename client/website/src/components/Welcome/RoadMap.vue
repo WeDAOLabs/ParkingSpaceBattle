@@ -9,10 +9,16 @@
         </a-steps>
       </div>
       <div class="step-description">
-        <p>{{ steps[current].content }}</p>
+        <a-divider class="divider"/>
+        <p>{{ steps[current].content01 }}</p>
+        <p>{{ steps[current].content02 }}</p>
+        <p>{{ steps[current].content03 }}</p>
       </div>
       <div class="step-image">
-        <img src="https://via.placeholder.com/200x200" alt="Step Image"/>
+        <a-image
+            width="70%"
+            height="70%"
+            :src="require('../../assets/welcome/roadmap.png')" :preview="false"/>
       </div>
     </div>
   </div>
@@ -28,31 +34,31 @@ const steps = [
   {
     title: 'Product development and market research',
     description: '2023 Q4',
-    content: `1. Develop and release a basic version of the LotLot platform, including but not limited to auction, trading, community interaction, and other functions;\n
-2. Conduct in-depth market research to understand target user needs and industry trends, and optimize products to meet market demands;\n
-3. Establish and improve a network of partners to lay the foundation for expanding market share in the future.`,
+    content01: '1. Develop and release a basic version of the LotLot platform, including but not limited to auction, trading, community interaction, and other function;',
+    content02: '2. Conduct in-depth market research to understand target user needs and industry trends, and optimize products to meet market demands;',
+    content03: '3. Establish and improve a network of partners to lay the foundation for expanding market share in the future.',
   },
   {
     title: 'Market promotion and community construction',
     description: '2024 Q1',
-    content: '1.Promote the LotLoot platform through online, offline activities, and social media channels;\n' +
-        '2.Establish and operate the LotLoot community, attract more users to participate, and improve brand awareness;\n' +
-        '3.Enhance LotLoot\'s influence in the industry through cooperation and sponsorship\n.',
+    content01: '1. Promote the LotLoot platform through online, offline activities, and social media channels. Get more media exposure;',
+    content02: '2. Establish and operate the LotLoot community, attract more users to participate, and improve brand awareness;',
+    content03: '3. To enhance LotLoot\'s influence in the industry through cooperation and sponsorship, we need strategic partnerships.',
   },
   {
     title: 'Product Upgrade and Business Expansion',
     description: '2024 Q2',
-    content: '1.Based on user feedback and market trends, upgrade the LotLot platform to add new features or optimize existing ones;\n' +
-        '2.Expand business areas, such as introducing more types of digital assets, conducting digital collection auctions, etc;\n' +
-        '3.Collaborate with more industry enterprises to jointly promote the development of the digital collectible market\n.',
+    content01: '1. Based on user feedback and market trends, upgrade the LotLot platform to add new features or optimize existing ones;',
+    content02: '2. Expand business areas, such as introducing more types of digital assets, conducting digital collection auctions, etc;',
+    content03: '3. Collaborate with more industry enterprises to jointly promote the development of the digital collectible market',
   },
   {
     title: 'Continuous optimization & strategic cooperation',
     description: '2024 Q3',
-    content: '1.Continuously monitor market dynamics and user needs, and conduct long-term optimization and updates on the LotLot platform;\n' +
-        '2.Deeply cooperate with more strategic partners to jointly promote the growth of the digital collectible market;\n' +
-        '3.At the appropriate time, consider expanding LotLot to the international market and providing digital collectible services to global users\n',
-  },
+    content01: '1. Continuously monitor market dynamics and user needs, and conduct long-term optimization and updates on the LotLot platform;',
+    content02: '2. Deeply cooperate with more strategic partners to jointly promote the growth of the digital collectible market;',
+    content03: '3. At the appropriate time, consider expanding LotLot to the international market and providing digital collectible services to global users.',
+  }
 ];
 
 const onChange = (newCurrent: number) => {
@@ -74,8 +80,8 @@ const onChange = (newCurrent: number) => {
 h2 {
   font-size: 28px;
   margin-bottom: 1rem;
-  color: #007bff;
   text-align: center;
+  font-weight: bold;
 }
 
 .steps-content {

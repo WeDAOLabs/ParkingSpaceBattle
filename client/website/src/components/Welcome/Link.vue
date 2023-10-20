@@ -1,27 +1,38 @@
 <template>
   <div class="footer-module">
-    <div class="links">
-      <div class="link">
+
+    <a-row justify="space-around" align="middle">
+      <a-col class="link link-border">
         <a href="https://mumbai.polygonscan.com/address/0x4ddbf5ddf8819de761fc708f8a522d341e03cbe5" target="_blank">
           ContractAddress: 0x4ddbf5ddf8819de761fc708f8a522d341e03cbe5
         </a>
-      </div>
-      <div class="link">
-        <a href="https://github.com/WeDAOLabs/ParkingSpaceBattle/blob/main/design/litepaper_en.md" target="_blank"> | WhitePaper</a>
-      </div>
-      <div class="link">
-        <a href="https://twitter.com" target="_blank"> | X(Twitter)</a>
-      </div>
-      <div class="link">
-        <a href="https://github.com/WeDAOLabs/ParkingSpaceBattle" target="_blank"> | GitHub</a>
-      </div>
-      <div class="link">
-        <a href="" target="_blank"> | Privacy Concerns</a>
-      </div>
-      <div class="link">
-        <a href="" target="_blank"> | Terms & Conditions</a>
-      </div>
-    </div>
+      </a-col>
+      <a-col class="link link-border">
+        <a href="https://github.com/WeDAOLabs/ParkingSpaceBattle/blob/main/design/litepaper_en.md" target="_blank">
+          WhitePaper
+        </a>
+      </a-col>
+      <a-col class="link link-border">
+        <a href="https://twitter.com" target="_blank">
+          X(Twitter)
+        </a>
+      </a-col>
+      <a-col class="link link-border">
+        <a href="https://github.com/WeDAOLabs/ParkingSpaceBattle" target="_blank">
+          GitHub
+        </a>
+      </a-col>
+      <a-col class="link link-border">
+        <a href="https://github.com/WeDAOLabs/ParkingSpaceBattle" target="_blank">
+          Privacy Concerns
+        </a>
+      </a-col>
+      <a-col class="link">
+        <a href="https://github.com/WeDAOLabs/ParkingSpaceBattle" target="_blank">
+          Terms & Conditions
+        </a>
+      </a-col>
+    </a-row>
   </div>
 </template>
 
@@ -33,14 +44,15 @@
 .footer-module {
   background-color: #333;
   color: #fff;
-  padding: 1rem;
+  padding: 1rem 0.5rem 0.5rem;
   text-align: center;
 }
 
-.links {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+.link-border {
+  padding-left: 0.7rem;
+  padding-right: 1.1rem;
+  /*border-left: 1px solid #ffd77a;*/
+  border-right: 2px solid #fff;
 }
 
 .link a {
@@ -52,4 +64,5 @@
 .link a:hover {
   text-decoration: underline;
 }
+
 </style>

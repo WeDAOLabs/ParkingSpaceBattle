@@ -65,9 +65,9 @@
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 1rem;
-  color: #007bff;
+  font-weight: bold;
 }
 
 p {
