@@ -8,10 +8,17 @@ import { EonDeploy } from "../../deploy/eon-deploy.class";
 
 async function main() {
   const deployer = new EonDeploy();
+  // mumbai
+  // const contract = await deployer.deployUpgradeWithData("ParkingStore", [
+  //   "0xb792f1E31D3a19DB2C8A88eE10b35D8bC2DEA6A5",
+  //   "0x38cf1C772EC1121b5a9cc1A4CCE07B25c71305eE",
+  //   "0x6cf706A92a234652f36995e5004c4Cb72483E529",
+  // ]);
+  // scroll
   const contract = await deployer.deployUpgradeWithData("ParkingStore", [
-    "0xb792f1E31D3a19DB2C8A88eE10b35D8bC2DEA6A5",
-    "0x38cf1C772EC1121b5a9cc1A4CCE07B25c71305eE",
-    "0x6cf706A92a234652f36995e5004c4Cb72483E529",
+    "0x27F4108167D3B38ca45f533F6197635927A29A63",
+    "0x6550755AEE41CC87E72A849Fdf9022aa74DEC1F4",
+    "0xf412719c2dDe7e83B2Ff3bDdBE92C48525C4DE18",
   ]);
   console.log("deployed to:", contract.address);
 }

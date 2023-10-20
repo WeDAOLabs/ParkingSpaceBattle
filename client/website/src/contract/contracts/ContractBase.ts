@@ -86,6 +86,7 @@ export abstract class ContractBase {
     const signer = walletData.provider.getSigner();
 
     this._contractIns = contract.connect(signer);
+
     this.registerEvents();
     return this;
   }

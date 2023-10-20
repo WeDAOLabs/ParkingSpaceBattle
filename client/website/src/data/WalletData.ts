@@ -4,12 +4,12 @@ import { ChainID } from "../const/enum/Chain";
 import { EventBus } from "../plugins/EventBus";
 import { IndexDB } from "../plugins/indexDB";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
-import { GameEventWalletChainChanged } from "../events/GameEventWalletChainChanged";
 import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { StringUtil } from "../core/utils/StringUtil";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
 import { registerDataModel } from "./DataRegister";
 import { Toast } from "../plugins/Toast";
+import { contractData } from "./ContractData";
 
 interface WalletCache {
   address: string;
@@ -91,9 +91,11 @@ export class WalletData extends Singleton {
     if (!this.hasProvider) {
       return;
     }
-    this.ethereum.on("accountsChanged", (accounts: string[]) =>
-      this.changeAccount(accounts.length > 0 ? accounts[0] : "")
-    );
+    this.ethereum.on("accountsChanged", (accounts: string[]) => {
+      if (accounts.length > 0) {
+        this.changeAccount(accounts[0]);
+      }
+    });
     this.ethereum.on("chainChanged", (chainId: string) =>
       this.chainChange(parseInt(chainId, 16))
     );
@@ -144,6 +146,22 @@ export class WalletData extends Singleton {
     return idx >= 0;
   }
 
+  public async switchNetwork(chainId: number = ChainID.Scroll) {
+    if (!this.provider) {
+      Toast.error("there's no provider.");
+      return Promise.resolve();
+    }
+
+    try {
+      await this.provider.send("wallet_switchEthereumChain", [
+        { chainId: `0x${chainId.toString(16)}` },
+      ]);
+    } catch (e) {
+      Toast.error(`change network failed.`);
+      console.error("change network", e);
+    }
+  }
+
   public async changeAccount(account: string) {
     if (StringUtil.isEmpty(account)) {
       await this.disconnect();
@@ -155,14 +173,10 @@ export class WalletData extends Singleton {
   }
 
   public async chainChange(chainId: number) {
+    this._provider = null;
+    contractData.clearAllContracts();
     // TODO
-    if (chainId !== ChainID.Mumbai && chainId !== ChainID.Scroll) {
-      await this.disconnect();
-    } else {
-      this.data.chainId = chainId;
-      this.saveData();
-      EventBus.instance.emit(GameEventWalletChainChanged.event, chainId);
-    }
+    await this.disconnect();
   }
 
   public async connectWallet(): Promise<void> {
@@ -177,10 +191,11 @@ export class WalletData extends Singleton {
     const chainId = parseInt(chainId0x, 16);
     const idx = ChainIds.findIndex((id) => id === chainId);
     if (idx < 0) {
-      Toast.error(
-        `chain ${chainId} is not supported, please switch your network`
-      );
-      return Promise.resolve();
+      // Toast.error(
+      //   `chain ${chainId} is not supported, please switch your network`
+      // );
+      // return Promise.resolve();
+      return await this.switchNetwork();
     }
 
     const accounts = await this.ethereum.request({
@@ -192,7 +207,6 @@ export class WalletData extends Singleton {
     const address = accounts[0];
     this.data.address = address;
     this.data.chainId = chainId;
-
     this.saveData();
 
     EventBus.instance.emit(GameEventWalletConnected.event, accounts[0]);
@@ -203,7 +217,6 @@ export class WalletData extends Singleton {
     this.data.chainId = -1;
     await IndexDB.instance.deleteItem(this.cacheKey);
     this.saveData();
-
     EventBus.instance.emit(GameEventWalletDisconnect.event);
   }
 }
