@@ -216,3 +216,5 @@ artifacts
 .DS_Store
 
 contracts/.env
+
+client/website/.env
