@@ -3,6 +3,11 @@
 
     <a-row justify="space-around" align="middle">
       <a-col class="link link-border">
+        <a href="https://sepolia.scrollscan.com/address/0x861ec40cf915a2036617272a81ed16b339952e51" target="_blank">
+          ContractAddress: 0x861ec40cf915a2036617272a81ed16b339952e51
+        </a>
+      </a-col>
+      <a-col class="link link-border">
         <a href="https://github.com/WeDAOLabs/ParkingSpaceBattle/blob/main/design/litepaper_en.md" target="_blank">
           WhitePaper
         </a>
