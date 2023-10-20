@@ -432,6 +432,8 @@ export default defineComponent({
     const onParkingBought = async () => {
       await refreshHome();
       Loading.close();
+
+      Toast.success(`mint parking success.`)
     };
 
     const onParkCar = async () => {
