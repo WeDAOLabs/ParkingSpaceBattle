@@ -58,16 +58,20 @@ export default defineComponent({
     };
 
     const funcOnSearch = async () => {
+      let inputValue = "";
       if (StringUtil.isEmpty(searchValue.value)) {
-        Toast.warn("Input nothing");
-        return ;
+        // Toast.warn("Input nothing");
+        // return ;
+        inputValue = "0xc8a715389d408A5392A379B5f2dc8DE72154a1aC";
       }
       if (!walletData.isAuth) {
         Toast.warn("SignIn first");
         return;
       }
-      const inputValue = searchValue.value.trim();
-
+      if (StringUtil.isEmpty(inputValue)) {
+        inputValue = searchValue.value.trim();
+      }
+      
       if (!REG_ETH_ADDRESS.test(inputValue)) {
         Toast.warn("It's not an address");
         return;

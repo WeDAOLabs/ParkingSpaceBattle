@@ -7,7 +7,6 @@ import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountC
 import { GameEventWalletDisconnect } from "../events/GameEventWalletDisconnect";
 import { StringUtil } from "../core/utils/StringUtil";
 import { GameEventWalletConnected } from "../events/GameEventWalletConnected";
-import { registerDataModel } from "./DataRegister";
 import { Toast } from "../plugins/Toast";
 import { contractData } from "./ContractData";
 
@@ -221,5 +220,3 @@ export class WalletData extends Singleton {
   }
 }
 export const walletData: Readonly<WalletData> = WalletData.getInstance();
-
-registerDataModel(walletData);

@@ -1,7 +1,6 @@
 import { IndexDB } from "../plugins/indexDB";
 import { Singleton } from "../core/game/Singleton";
 import { contractData } from "./ContractData";
-import { registerDataModel } from "./DataRegister";
 import { PlayerDTO } from "./dto/PlayerDTO";
 import { ethers } from "ethers";
 import { ParkingDTO } from "./dto/ParkingDTO";
@@ -71,4 +70,3 @@ export class PlayerData extends Singleton {
   }
 }
 export const playerData: Readonly<PlayerData> = PlayerData.getInstance();
-registerDataModel(playerData);
