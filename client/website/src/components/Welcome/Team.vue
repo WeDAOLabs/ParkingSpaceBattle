@@ -1,0 +1,111 @@
+<template>
+  <div class="team-members-module">
+    <h2 class="gradient-color">Our Team</h2>
+    <p class="team-description">Meet the talented individuals behind our project.</p>
+    <a-divider class="divider"/>
+    <div class="team-members">
+      <div v-for="(member, index) in teamMembers" :key="index" class="team-member">
+        <div class="member-image">
+          <img :src="member.image" alt="Team Member Image" class="rounded-image" />
+          <div class="member-info">
+            <p>{{ member.name }}</p>
+            <p class="position">{{ member.position }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const teamMembers = ref([
+  { name: "Member 1", position: "Position 1", image: "https://via.placeholder.com/150x150" },
+  { name: "Member 2", position: "Position 2", image: "https://via.placeholder.com/150x150" },
+  { name: "Member 3", position: "Position 3", image: "https://via.placeholder.com/150x150" },
+  { name: "Member 4", position: "Position 4", image: "https://via.placeholder.com/150x150" },
+  { name: "Member 5", position: "Position 5", image: "https://via.placeholder.com/150x150" },
+  { name: "Member 6", position: "Position 6", image: "https://via.placeholder.com/150x150" }
+]);
+</script>
+
+<style scoped>
+.team-members-module {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  background-color: rgba(240, 240, 240, 0.6);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 1rem;
+  color: #007bff;
+  text-align: center;
+}
+
+.team-description {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.team-members {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
+
+.team-member {
+  flex: 0 0 calc(16.666% - 10px);
+  margin-right: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.member-image {
+  position: relative;
+}
+
+.member-image img {
+  max-width: 150px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.member-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+.member-info p {
+  margin: 0;
+}
+
+.position {
+  font-size: 14px;
+}
+
+.gradient-color {
+  background: linear-gradient(to right, #007bff, #19be6b);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.divider {
+  height: 3px;
+  background: transparent linear-gradient(to right, #2db7f5, #19be6b);
+}
+
+</style>
