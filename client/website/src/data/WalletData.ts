@@ -91,9 +91,11 @@ export class WalletData extends Singleton {
     if (!this.hasProvider) {
       return;
     }
-    this.ethereum.on("accountsChanged", (accounts: string[]) =>
-      this.changeAccount(accounts.length > 0 ? accounts[0] : "")
-    );
+    this.ethereum.on("accountsChanged", (accounts: string[]) => {
+      if (accounts.length > 0) {
+        this.changeAccount(accounts[0]);
+      }
+    });
     this.ethereum.on("chainChanged", (chainId: string) =>
       this.chainChange(parseInt(chainId, 16))
     );
@@ -144,7 +146,7 @@ export class WalletData extends Singleton {
     return idx >= 0;
   }
 
-  public async switchNetwork(chainId = ChainID.Scroll) {
+  public async switchNetwork(chainId: number = ChainID.Scroll) {
     if (!this.provider) {
       Toast.error("there's no provider.");
       return Promise.resolve();
@@ -152,7 +154,7 @@ export class WalletData extends Singleton {
 
     try {
       await this.provider.send("wallet_switchEthereumChain", [
-        { chainId: chainId },
+        { chainId: `0x${chainId.toString(16)}` },
       ]);
     } catch (e) {
       Toast.error(`change network failed.`);
@@ -193,10 +195,11 @@ export class WalletData extends Singleton {
     const chainId = parseInt(chainId0x, 16);
     const idx = ChainIds.findIndex((id) => id === chainId);
     if (idx < 0) {
-      Toast.error(
-        `chain ${chainId} is not supported, please switch your network`
-      );
-      return Promise.resolve();
+      // Toast.error(
+      //   `chain ${chainId} is not supported, please switch your network`
+      // );
+      // return Promise.resolve();
+      return await this.switchNetwork();
     }
 
     const accounts = await this.ethereum.request({

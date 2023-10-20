@@ -86,8 +86,9 @@ export default defineComponent({
     const connectWallet = async () => {
       const isChainValid = await walletData.isChainValid();
       if (!isChainValid) {
-        Toast.error("Please switch to the Scroll Sepolia network");
-        return Promise.resolve();
+        // Toast.error("Please switch to the Scroll Sepolia network");
+        // return Promise.resolve();
+        return walletData.switchNetwork();
       }
       if (!StringUtil.isEmpty(walletData.address)) {
         Toast.warn("Wallet already connected");
