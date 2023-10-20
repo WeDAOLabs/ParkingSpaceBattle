@@ -26,6 +26,7 @@ import { walletData } from "../data/WalletData";
 import { GO_HOME, REG_ETH_ADDRESS } from "../const/Constants";
 import { Toast } from "../plugins/Toast";
 import { GameEventWalletAccountChanged } from "../events/GameEventWalletAccountChanged";
+import { StringUtil } from "../core/utils/StringUtil";
 
 export default defineComponent({
   name: "SearchBar",
@@ -57,6 +58,10 @@ export default defineComponent({
     };
 
     const funcOnSearch = async () => {
+      if (StringUtil.isEmpty(searchValue.value)) {
+        Toast.warn("Input nothing");
+        return ;
+      }
       if (!walletData.isAuth) {
         Toast.warn("SignIn first");
         return;
