@@ -215,3 +215,4 @@ artifacts
 
 .DS_Store
 
+contracts/.env
