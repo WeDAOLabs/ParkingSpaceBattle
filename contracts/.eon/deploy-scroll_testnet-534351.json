@@ -19,5 +19,17 @@
   "StandardERC6551Account": {
     "contractName": "StandardERC6551Account",
     "address": "0xf412719c2dDe7e83B2Ff3bDdBE92C48525C4DE18"
+  },
+  "CarStore": {
+    "contractName": "CarStore",
+    "address": "0x861eC40cF915A2036617272a81ed16b339952E51"
+  },
+  "ParkingStore": {
+    "contractName": "ParkingStore",
+    "address": "0x58aBD61715C8825a76bf89A61DCAc4884EeD8599"
+  },
+  "LotLoot": {
+    "contractName": "LotLoot",
+    "address": "0xC66bf87E05BF03468DE4ba671b97EE22b884458B"
   }
 }
