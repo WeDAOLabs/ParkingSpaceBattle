@@ -82,6 +82,16 @@ export class ContractData extends Singleton {
     return CONTRACT_ADDRESS_MUMBAI;
   }
 
+  public clearAllContracts() {
+    this._carStoreContractIns = null;
+    this._parkingStoreContractIns = null;
+    this._carERC721ContractIns = null;
+    this._parkingERC721StoreContractIns = null;
+    this._lotLootContractIns = null;
+    this._lltTokenContractIns = null;
+    this._6551RegistryContractIns = null;
+  }
+
   init() {}
 }
 export const contractData: Readonly<ContractData> = ContractData.getInstance();
