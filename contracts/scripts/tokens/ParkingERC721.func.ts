@@ -18,7 +18,7 @@ async function grantRole() {
   const tx = await contract.grantRole(
     ethers.utils.id("MINTER_ROLE"),
     // "0xdf93FbeDc34fdF55643419801F488d8971A0FFbf"
-    "0x6bD9545D6b2D3D0Cda38865EafED9bAEFc5F5ED3"
+    "0x58aBD61715C8825a76bf89A61DCAc4884EeD8599"
   );
   const receipt = await tx.wait();
   console.log(receipt);
