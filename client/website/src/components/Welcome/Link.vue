@@ -3,11 +3,6 @@
 
     <a-row justify="space-around" align="middle">
       <a-col class="link link-border">
-        <a href="https://mumbai.polygonscan.com/address/0x4ddbf5ddf8819de761fc708f8a522d341e03cbe5" target="_blank">
-          ContractAddress: 0x4ddbf5ddf8819de761fc708f8a522d341e03cbe5
-        </a>
-      </a-col>
-      <a-col class="link link-border">
         <a href="https://github.com/WeDAOLabs/ParkingSpaceBattle/blob/main/design/litepaper_en.md" target="_blank">
           WhitePaper
         </a>
