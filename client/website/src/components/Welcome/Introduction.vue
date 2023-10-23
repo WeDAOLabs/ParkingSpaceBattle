@@ -16,12 +16,17 @@
       <a-divider class="divider"/>
       <div class="small-images">
         <img :src="require('../../assets/erc20_llt.jpg')" alt="Small Image 1" width="100" height="auto"/>
-        <img src="https://via.placeholder.com/100x100" alt="Small Image 1"/>
-        <img src="https://via.placeholder.com/100x100" alt="Small Image 2"/>
-        <img src="https://via.placeholder.com/100x100" alt="Small Image 3"/>
-        <img src="https://via.placeholder.com/100x100" alt="Small Image 4"/>
-        <img src="https://via.placeholder.com/100x100" alt="Small Image 5"/>
-        <img src="https://via.placeholder.com/100x100" alt="Small Image 6"/>
+        <img :src="require('../../assets/erc20_llt.jpg')" alt="Small Image 2" width="100" height="auto"/>
+        <img :src="require('../../assets/erc20_llt.jpg')" alt="Small Image 3" width="100" height="auto"/>
+        <img :src="require('../../assets/erc20_llt.jpg')" alt="Small Image 4" width="100" height="auto"/>
+        <img :src="require('../../assets/erc20_llt.jpg')" alt="Small Image 5" width="100" height="auto"/>
+        <img :src="require('../../assets/erc20_llt.jpg')" alt="Small Image 6" width="100" height="auto"/>
+        <!--        <img src="https://via.placeholder.com/100x100" alt="Small Image 1"/>-->
+        <!--        <img src="https://via.placeholder.com/100x100" alt="Small Image 2"/>-->
+        <!--        <img src="https://via.placeholder.com/100x100" alt="Small Image 3"/>-->
+        <!--        <img src="https://via.placeholder.com/100x100" alt="Small Image 4"/>-->
+        <!--        <img src="https://via.placeholder.com/100x100" alt="Small Image 5"/>-->
+        <!--        <img src="https://via.placeholder.com/100x100" alt="Small Image 6"/>-->
       </div>
     </div>
   </div>
@@ -80,6 +85,7 @@ p {
 }
 
 .small-images {
+  margin-left: 2rem;
   display: flex;
   align-items: center;
   margin-bottom: 1rem;

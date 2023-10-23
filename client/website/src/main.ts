@@ -18,7 +18,6 @@ app.config.globalProperties.$ethers = ethers;
 const startUp = async () => {
   for (let i = 0; i < dataModels.length; i++) {
     let dataModal = dataModels[i];
-    console.log(dataModal);
     await dataModal.init();
   }
 

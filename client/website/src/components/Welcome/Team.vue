@@ -23,10 +23,10 @@ import {ref} from 'vue';
 const teamMembers = ref([
   {name: "enixlee", position: "Team Leader", image: require('../../assets/welcome/enixlee.jpg')},
   {name: "0x00pluto", position: "Product Manager", image: require('../../assets/welcome/pluto.jpeg')},
-  {name: "Member 3", position: "Position 3", image: "https://via.placeholder.com/150x150"},
-  {name: "Member 4", position: "Position 4", image: "https://via.placeholder.com/150x150"},
-  {name: "Member 5", position: "Position 5", image: "https://via.placeholder.com/150x150"},
-  {name: "Member 6", position: "Position 6", image: "https://via.placeholder.com/150x150"}
+  {name: "0xSkipper", position: "Frontend Developer", image: require('../../assets/welcome/Skipper.jpeg')},
+  {name: "andor", position: "Blockchain Developer", image: require('../../assets/welcome/andor.jpg')},
+  {name: "zzzzzz2004", position: "Blockchain Developer", image: require('../../assets/welcome/zzzzzz2004.jpg')},
+  {name: "0xSoren", position: "Designer", image: require('../../assets/welcome/0xSoren.jpg')}
 ]);
 </script>
 
