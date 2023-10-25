@@ -1,6 +1,7 @@
 import { StringUtil } from "../core/utils/StringUtil";
 import { Singleton } from "../core/game/Singleton";
 import { APP_NAME } from "../const/Constants";
+import axios from "axios";
 
 export class TwitterData extends Singleton {
   public get tid(): string {
@@ -15,7 +16,39 @@ export class TwitterData extends Singleton {
   }
 
   async init() {
-    console.log("环境", this.tid, this.token);
+    // setTimeout(() => {
+    //   this.authTwitter();
+    // }, 5000);
+  }
+
+  async authTwitter() {
+    // https://api.twitter.com/oauth/authenticate?oauth_token=rK6RqQAAAAABqq1gAAABi2C2HTY
+
+    axios
+      .get(
+        `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${
+          this.tid
+        }&redirect_uri=${encodeURIComponent(
+          "https://lotloot.osairo.xyz"
+        )}&scope=tweet.read%20users.read%20offline.access&state=state&code_challenge=challenge&code_challenge_method=plain`
+      )
+      .then((response) => {
+        // 处理响应
+        console.log("返回值", response);
+      })
+      .catch((error) => {
+        // 处理错误
+        console.log("一次", error);
+      });
+
+    console.log(
+      "request",
+      `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${
+        this.tid
+      }&redirect_uri=${encodeURIComponent(
+        "https://lotloot.osairo.xyz"
+      )}&scope=tweet.read%20users.read%20offline.access&state=state&code_challenge=challenge&code_challenge_method=plain`
+    );
   }
 }
 

@@ -8,11 +8,13 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
+    "@particle-network/auth": "^1.2.2",
+    "@particle-network/provider": "^1.2.1",
     "ant-design-vue": "^4.0.3",
+    "axios": "^1.5.1",
     "core-js": "^3.6.5",
     "ethers": "^5.7.2",
     "eventemitter3": "^5.0.1",
-    "twitter-api-sdk": "^1.2.1",
     "viem": "^0.3.39",
     "vue": "^3.0.0"
   },
