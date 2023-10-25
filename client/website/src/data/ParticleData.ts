@@ -7,6 +7,12 @@ import { ethers } from "ethers";
 /**
  * doc: https://docs.particle.network/developers/auth-service/sdks/web
  */
+export enum SocialLoginType {
+  Twitter = "twitter",
+  Github = "github",
+  Google = "google",
+}
+
 export class ParticleData extends Singleton {
   private _client: ParticleNetwork = null!;
   private _provider: ethers.providers.Web3Provider = null!;
@@ -133,10 +139,11 @@ export class ParticleData extends Singleton {
     "redirect_type": "login"
 }
    */
-  async loginWithTwitter() {
+  async loginWithSocialAccount(loginType = SocialLoginType.Twitter) {
     const userInfo = await this.client.auth.login({
-      preferredAuthType: "twitter",
+      preferredAuthType: loginType,
     });
+    console.log(userInfo);
   }
 }
 

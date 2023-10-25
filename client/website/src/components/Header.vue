@@ -70,6 +70,7 @@ import {playerData} from "../data/PlayerData";
 import {ethers} from "ethers";
 import {DialogModal} from "../plugins/DialogModal";
 import {WalletOutlined} from '@ant-design/icons-vue';
+// import { particleData ,SocialLoginType} from "../data/ParticleData";
 
 export default defineComponent({
   name: "Header",
@@ -190,7 +191,7 @@ export default defineComponent({
     };
 
     const onTwitterLogin = async () => {
-      // await particleData.loginWithTwitter();
+      // await particleData.loginWithSocialAccount(SocialLoginType.Github);
     }
 
     return {
