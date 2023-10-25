@@ -16,13 +16,14 @@
       </a-col>
       <a-col v-else :offset="12" :span="8">
         <a-row align="middle">
-          <a-col :offset="8" :span="2">
+          <a-col :offset="8" :span="2" class="twitter-logo">
             <a href="https://www.twitter.com">
               <a-image
                   width="70%"
                   height="70%"
                   :src="require('../assets/twitter.png')"
                   :preview="false"
+                  @click="onTwitterLogin"
               />
             </a>
           </a-col>
@@ -188,12 +189,17 @@ export default defineComponent({
       });
     };
 
+    const onTwitterLogin = async () => {
+      // await particleData.loginWithTwitter();
+    }
+
     return {
       isLogin,
       userAddress,
       connectWallet,
       balanceOfLLT,
       onWalletClicked,
+      onTwitterLogin
     };
   },
 });
@@ -244,5 +250,9 @@ export default defineComponent({
 .sign-button {
   font-weight: bold;
   border: 2px solid #2db7f5;
+}
+
+.twitter-logo{
+  cursor: pointer;
 }
 </style>
