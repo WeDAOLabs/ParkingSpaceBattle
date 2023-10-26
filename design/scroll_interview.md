@@ -103,3 +103,9 @@ LotLoot 项目的 NFT 在 Mint 时，会具有随机的唯一属性，每个 NFT
 总体来说，LotLoot 项目与 Loot 生态之间的关联不仅仅体现在名字和核心特性上，更体现在我们对开放、多元和互操作性的追求，以及对为玩家创造独特游戏体验的执着和热情。💖 我们相信，通过与 Loot 生态的深度融合和互动，能为玩家带来更多未知的刺激和乐趣。
 
 最后也非常感谢 Scroll 对 LotLoot 项目的关注和扶持，也希望 Scroll 在 Layer2 生态系统的发展和创新上取得更大的成功。
+
+## x 账号
+
+0x00pluto: https://twitter.com/0x00pluto
+enixlee: https://twitter.com/enixlee0x00
+WeDAOLabs: https://twitter.com/WeDAO_Labs
